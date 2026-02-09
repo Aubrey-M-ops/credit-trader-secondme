@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id             String   @id @default(cuid())
+  secondmeUserId String   @unique @map("secondme_user_id")
+  email          String?
+  name           String?
+  avatarUrl      String?  @map("avatar_url")
+  accessToken    String   @map("access_token")
+  refreshToken   String   @map("refresh_token")
+  tokenExpiresAt DateTime @map("token_expires_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  chatSessions ChatSession[]
+  notes        Note[]
+
+  @@map("users")
+}
+
+model ChatSession {
+  id              String   @id @default(cuid())
+  secondmeSession String?  @map("secondme_session")
+  title           String?
+  userId          String   @map("user_id")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages ChatMessage[]
+
+  @@map("chat_sessions")
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  sessionId String   @map("session_id")
+  role      String
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  session ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@map("chat_messages")
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  content   String
+  noteId    Int?     @map("secondme_note_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notes")
+}
