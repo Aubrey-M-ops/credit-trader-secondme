@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -16,11 +16,26 @@ model User {
   accessToken    String   @map("access_token")
   refreshToken   String   @map("refresh_token")
   tokenExpiresAt DateTime @map("token_expires_at")
+
+  // Wallet fields
+  balance        Decimal  @default(100.00) @db.Decimal(10, 2)
+  totalEarned    Decimal  @default(0.00) @map("total_earned") @db.Decimal(10, 2)
+  totalSpent     Decimal  @default(0.00) @map("total_spent") @db.Decimal(10, 2)
+
+  // Statistics
+  completedTasks Int      @default(0) @map("completed_tasks")
+  rating         Decimal? @db.Decimal(3, 2)
+
+  // Status
+  status         String   @default("active") // active, suspended
+
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
 
-  chatSessions ChatSession[]
-  notes        Note[]
+  chatSessions   ChatSession[]
+  notes          Note[]
+  publishedTasks Task[]        @relation("publisher")
+  workerTasks    Task[]        @relation("worker")
 
   @@map("users")
 }
@@ -61,4 +76,92 @@ model Note {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("notes")
+}
+
+// Task table for Agent Labor Market
+model Task {
+  id              String    @id @default(cuid())
+  title           String
+  description     String    @db.Text
+  estimatedTokens Int       @map("estimated_tokens")
+  budgetRmb       Decimal   @map("budget_rmb") @db.Decimal(10, 2)
+  status          String    @default("open") // open, accepted, executing, completed, cancelled
+  deadline        DateTime?
+
+  publisherId     String    @map("publisher_id")
+  publisher       User      @relation("publisher", fields: [publisherId], references: [id], onDelete: Cascade)
+
+  workerId        String?   @map("worker_id")
+  worker          User?     @relation("worker", fields: [workerId], references: [id], onDelete: SetNull)
+
+  result          String?   @db.Text
+  rating          Int?
+
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  completedAt     DateTime? @map("completed_at")
+
+  executions      Execution[]
+
+  @@map("tasks")
+  @@index([status])
+  @@index([publisherId])
+  @@index([workerId])
+}
+
+// Execution record table
+model Execution {
+  id            String    @id @default(cuid())
+  taskId        String    @map("task_id")
+  task          Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  workerId      String    @map("worker_id")
+  status        String    @default("pending") // pending, running, success, failed
+  tokensUsed    Int?      @map("tokens_used")
+  result        String?   @db.Text
+  error         String?   @db.Text
+
+  startedAt     DateTime  @default(now()) @map("started_at")
+  completedAt   DateTime? @map("completed_at")
+
+  transactions  Transaction[]
+
+  @@map("executions")
+  @@index([taskId])
+  @@index([workerId])
+}
+
+// Transaction record table
+model Transaction {
+  id                String    @id @default(cuid())
+  executionId       String    @map("execution_id")
+  execution         Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  fromAgentId       String    @map("from_agent_id")
+  toAgentId         String    @map("to_agent_id")
+  amountRmb         Decimal   @map("amount_rmb") @db.Decimal(10, 2)
+  tokensTransferred Int       @map("tokens_transferred")
+  status            String    @default("pending") // pending, completed, failed, refunded
+
+  createdAt         DateTime  @default(now()) @map("created_at")
+  completedAt       DateTime? @map("completed_at")
+
+  @@map("transactions")
+  @@index([fromAgentId])
+  @@index([toAgentId])
+}
+
+// Rating table
+model Rating {
+  id            String   @id @default(cuid())
+  transactionId String   @map("transaction_id")
+  raterId       String   @map("rater_id")
+  rateeId       String   @map("ratee_id")
+  score         Int
+  comment       String?  @db.Text
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("ratings")
+  @@index([raterId])
+  @@index([rateeId])
 }
