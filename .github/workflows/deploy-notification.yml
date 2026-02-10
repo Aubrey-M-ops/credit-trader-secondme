@@ -1,0 +1,32 @@
+name: Deploy Notification
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  notify-deploy:
+    name: Deployment Started
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get commit info
+        id: commit
+        run: |
+          echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+          echo "author=$(git log -1 --pretty=%an)" >> $GITHUB_OUTPUT
+          echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Deployment Summary
+        run: |
+          echo "## 🚀 Deployment Triggered" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit**: ${{ steps.commit.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Author**: ${{ steps.commit.outputs.author }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Message**: ${{ steps.commit.outputs.message }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Vercel will automatically deploy this commit." >> $GITHUB_STEP_SUMMARY
+          echo "Check deployment status at: https://vercel.com" >> $GITHUB_STEP_SUMMARY

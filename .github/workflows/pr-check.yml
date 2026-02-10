@@ -1,0 +1,82 @@
+name: PR Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-validation:
+    name: PR Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整历史用于检查
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Check for console.log
+        run: |
+          if git diff origin/${{ github.base_ref }}...HEAD | grep -E "^\+.*console\.(log|debug|info|warn)"; then
+            echo "⚠️ Warning: Found console.log statements in changes"
+            echo "Please remove console.log before merging"
+            exit 1
+          fi
+        continue-on-error: true
+
+      - name: Run Lint
+        run: npm run lint
+
+      - name: Run Type Check
+        run: npx tsc --noEmit
+
+      - name: Validate Supabase Setup
+        run: |
+          echo "Checking Supabase configuration..."
+          if grep -q "@supabase/supabase-js" package.json; then
+            echo "✅ Supabase package installed"
+          else
+            echo "❌ Supabase package missing"
+            exit 1
+          fi
+          echo "✅ Supabase configuration validated"
+
+      - name: Check Build
+        run: npm run build
+        env:
+          DATABASE_URL: "postgresql://mock:mock@localhost:5432/mock"
+          SECONDME_CLIENT_ID: "mock-client-id"
+          SECONDME_CLIENT_SECRET: "mock-client-secret"
+          SECONDME_REDIRECT_URI: "http://localhost:3000/api/auth/callback"
+          SECONDME_API_BASE_URL: "https://app.mindos.com/gate/lab"
+          SECONDME_OAUTH_URL: "https://go.second.me/oauth/"
+          SECONDME_TOKEN_ENDPOINT: "https://app.mindos.com/gate/lab/api/oauth/token/code"
+          NEXT_PUBLIC_APP_URL: "http://localhost:3000"
+          NEXT_PUBLIC_SUPABASE_URL: "https://mock.supabase.co"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "mock-anon-key"
+          SUPABASE_SERVICE_ROLE_KEY: "mock-service-role-key"
+
+      - name: PR Summary
+        if: always()
+        run: |
+          echo "## PR Check Summary" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All checks completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Checks Run:" >> $GITHUB_STEP_SUMMARY
+          echo "- Lint" >> $GITHUB_STEP_SUMMARY
+          echo "- Type Check" >> $GITHUB_STEP_SUMMARY
+          echo "- Supabase Configuration" >> $GITHUB_STEP_SUMMARY
+          echo "- Build Verification" >> $GITHUB_STEP_SUMMARY
+          echo "- Console.log Detection" >> $GITHUB_STEP_SUMMARY

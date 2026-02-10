@@ -93,36 +93,67 @@
 
 ---
 
-### Step 2: 部署到 Vercel (优先级 P0)
-**时间**: 45 分钟
-**目标**: 将项目部署到 Vercel
+### Step 2: 配置 CI/CD 和部署 (优先级 P0)
+**时间**: 1 小时
+**目标**: 配置 GitHub Actions 和部署到 Vercel
 
-#### 2.1 推送代码到 GitHub (15 分钟)
-- 添加 Git remote（如果还没有）
-- 提交所有更改
-- 推送到 GitHub 仓库
+#### 2.1 配置 GitHub Actions (20 分钟)
 
-#### 2.2 部署到 Vercel (20 分钟)
+**创建 CI Workflow** - `.github/workflows/ci.yml`
+- 自动化代码检查：Lint、Type Check、Build 验证
+- 触发时机：每次 Push 和 Pull Request
+- 运行环境：Node.js 20.x
+- 包含 Prisma Client 生成步骤
+
+**创建 PR Check Workflow** - `.github/workflows/pr-check.yml`
+- PR 专用检查流程
+- 添加检查状态徽章
+- 确保代码质量后才能合并
+
+**创建 Deploy Workflow** - `.github/workflows/deploy.yml`（可选）
+- 推送到 main 分支时触发
+- 自动触发 Vercel 部署
+- 发送部署通知
+
+#### 2.3 配置 GitHub Secrets (5 分钟)
+在 GitHub 仓库设置中添加:
+- Settings → Secrets and variables → Actions
+- 添加必要的密钥（用于部署通知等）
+
+#### 2.4 部署到 Vercel (15 分钟)
 1. 访问 https://vercel.com/
 2. Import Git Repository
-3. 选择 `agent-labor-market` (或 `credit-trader-secondme`)
-4. 配置环境变量 (复制 `.env.local` 的所有内容)
+3. 选择 `credit-trader-secondme` 仓库
+4. 配置环境变量 (复制 `.env.local` 的所有内容):
+   - `SECONDME_CLIENT_ID`
+   - `SECONDME_CLIENT_SECRET`
+   - `SECONDME_REDIRECT_URI`
+   - `DATABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - 等其他环境变量
 5. 添加 Build Command: `npx prisma generate && npm run build`
 6. Deploy
 
-#### 2.3 更新 SecondMe Redirect URI (5 分钟)
+#### 2.5 更新 SecondMe Redirect URI (5 分钟)
 在 SecondMe 开发者平台添加:
 - `https://[your-vercel-domain].vercel.app/api/auth/callback`
 
-#### 2.4 验证部署 (5 分钟)
-- 访问 Vercel URL
-- 测试登录流程
-- 检查 `/api/user/info` 是否正常
+#### 2.6 验证部署和 CI/CD (5 分钟)
+- ✅ GitHub Actions 运行成功（查看 Actions 标签页）
+- ✅ 访问 Vercel 部署 URL
+- ✅ 测试登录流程
+- ✅ 检查 `/api/user/info` 是否正常
+- ✅ 创建测试 PR 验证 CI 流程
 
 **验收标准**:
+- ✅ GitHub Actions CI/CD 配置完成
+- ✅ 所有检查通过（Lint、Type Check、Build）
 - ✅ 项目成功部署到 Vercel
 - ✅ 生产环境可以访问
 - ✅ OAuth 登录在生产环境正常工作
+- ✅ PR 检查自动运行
 
 ---
 
