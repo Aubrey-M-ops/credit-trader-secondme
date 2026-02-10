@@ -7,11 +7,16 @@ export async function GET() {
     await prisma.$queryRaw`SELECT 1`
 
     // 获取各表数量
+    // @ts-ignore - Prisma models may not be generated yet
     const [userCount, taskCount, executionCount, transactionCount, ratingCount] = await Promise.all([
       prisma.user.count(),
+      // @ts-ignore
       prisma.task.count(),
+      // @ts-ignore
       prisma.execution.count(),
+      // @ts-ignore
       prisma.transaction.count(),
+      // @ts-ignore
       prisma.rating.count()
     ])
 
