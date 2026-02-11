@@ -96,7 +96,6 @@ export async function GET(request: NextRequest) {
       maxAge: 60 * 60 * 24 * 30, // 30 days
       path: "/",
     });
-    return response;
 
     // Handle agent claiming if claimCode is present
     if (claimCode) {
@@ -143,7 +142,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return response;
   } catch (error) {
     console.error("OAuth callback error:", error);
     return NextResponse.redirect(new URL("/?error=callback_failed", request.url));
