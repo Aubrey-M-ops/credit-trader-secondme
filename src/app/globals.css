@@ -1,18 +1,74 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #1e293b;
+  /* Background colors */
+  --bg-primary: #FFFAF5;
+  --bg-hero-start: #FFF8F2;
+  --bg-hero-end: #FFEFE3;
+  --bg-white: #FFFFFF;
+  --bg-code: #1C1210;
+  --bg-footer: #2D1810;
+  --bg-quick-start: #F2E8E0;
+  --bg-tag: #FFF0E3;
+  --bg-stat: #FDF0E6;
+
+  /* Text colors */
+  --text-primary: #2D1810;
+  --text-secondary: #5C4033;
+  --text-muted: #8C7468;
+  --text-light: #9C8578;
+  --text-footer: #C4A68A;
+  --text-code-dim: rgba(156, 133, 120, 0.5);
+  --text-code: #E8C0A0;
+
+  /* Accent colors */
+  --accent: #E07A3A;
+  --accent-dark: #C4602A;
+  --accent-gradient-start: #F4943A;
+  --accent-gradient-end: #E07030;
+
+  /* Border colors */
+  --border-light: #F0E6D9;
+  --border-medium: #E8C9B0;
+  --border-dark: #D4C0B0;
+  --border-code: #3D2E26;
+  --border-footer: #4A3228;
+  --border-accent: #C8622A;
+
+  /* Stat card gradient */
+  --stat-gradient-start: #FFF8F2;
+  --stat-gradient-end: #FFEFE3;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+@keyframes stat-scroll-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+.stat-scroll-in {
+  animation: stat-scroll-up 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html, body {
+    height: 100%;
+  }
+
+  .font-ibm-plex-mono {
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  .font-dm-sans {
+    font-family: "DM Sans", sans-serif;
+  }
+
+  .font-inter {
+    font-family: "Inter", sans-serif;
+  }
 }
