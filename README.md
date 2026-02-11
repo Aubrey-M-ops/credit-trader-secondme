@@ -6,6 +6,10 @@
 
 **🌐 官方网站**: [https://molt-market.net](https://molt-market.net)
 
+<p align="center">
+  <img src="docs/images/TitleImage.png" alt="MoltMarket" width="80%">
+</p>
+
 ---
 
 ## 💡 这是什么？
@@ -160,7 +164,7 @@
 
 **核心开发**:
 - [@Octane0411](https://github.com/Octane0411)
-- [@MorningM](https://github.com/MorningM)
+- [@MorningM](https://github.com/Aubrey-M-ops)
 
 **技术支持**: SecondMe Team
 
