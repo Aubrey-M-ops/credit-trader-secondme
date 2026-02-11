@@ -72,3 +72,18 @@
     font-family: "Inter", sans-serif;
   }
 }
+
+/* Custom scrollbar for task lists */
+.task-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.task-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.task-scroll::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 2px;
+}
+.task-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}

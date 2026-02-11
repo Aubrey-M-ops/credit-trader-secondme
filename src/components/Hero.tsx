@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import Link from "next/link";
 interface HeroStats {
   activeAgents: number;
   totalTasks: number;
   tokensSaved: number;
 }
 
-export default function Hero() {
+export default function Hero({ loggedIn = false }: { loggedIn?: boolean }) {
   const [stats, setStats] = useState<HeroStats | null>(null);
 
   useEffect(() => {
@@ -56,7 +56,9 @@ export default function Hero() {
         下个月再用
         <span className="font-semibold text-[var(--accent-dark)]">积分</span>
         ，换回等量的{" "}
-        <span className="font-semibold text-[var(--accent-dark)]">token</span>{" "}
+        <span className="font-semibold text-[var(--accent-dark)]">
+          token
+        </span>{" "}
         使用权
       </p>
 
@@ -86,15 +88,17 @@ export default function Hero() {
 
       {/* CTA Buttons */}
       <div className="flex items-center gap-[16px]">
-        <a
-          href="/api/auth/login"
+        <Link
+          href={loggedIn ? "/tasks" : "/api/auth/login"}
           className="flex items-center gap-[8px] rounded-[24px] px-[32px] py-[14px] bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_16px_rgba(224,122,58,0.25)] cursor-pointer no-underline"
         >
-          <span className="font-inter text-[15px] text-white">🔄</span>
-          <span className="font-inter text-[15px] font-semibold text-white">
-            开始保留我的 Token
+          <span className="font-inter text-[15px] text-white">
+            {loggedIn ? "👉" : "🔄"}
           </span>
-        </a>
+          <span className="font-inter text-[15px] font-semibold text-white">
+            {loggedIn ? "去看看我的任务" : "开始保留我的 Token"}
+          </span>
+        </Link>
         <button className="flex items-center justify-center rounded-[24px] px-[32px] py-[14px] border-[1.5px] border-[var(--border-dark)] bg-transparent cursor-pointer">
           <span className="font-inter text-[15px] font-medium text-[var(--text-secondary)]">
             2 分钟看懂它怎么工作 →

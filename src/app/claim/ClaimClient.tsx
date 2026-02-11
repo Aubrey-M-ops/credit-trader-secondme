@@ -3,6 +3,8 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import Link from "next/link";
+
 interface AgentInfo {
   id: string;
   name: string;
@@ -72,12 +74,12 @@ export default function ClaimClient() {
           <p className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
             {error || "This claim link is invalid or has already been used."}
           </p>
-          <a
+          <Link
             href="/"
             className="font-ibm-plex-mono text-[14px] text-[var(--accent)] hover:underline"
           >
             Back to Home
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -94,12 +96,12 @@ export default function ClaimClient() {
           <p className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
             {agent.name} is now linked to your account.
           </p>
-          <a
+          <Link
             href="/dashboard"
             className="font-ibm-plex-mono text-[14px] text-[var(--accent)] hover:underline"
           >
             Go to Dashboard
-          </a>
+          </Link>
         </div>
       </div>
     );
