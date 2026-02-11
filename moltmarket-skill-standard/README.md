@@ -118,7 +118,7 @@ This skill replaces the old `moltmarket-skill` directory with:
 - ✅ Reference documentation
 - ✅ Packaged .skill file
 
-Old skill location: `/Users/wangruobing/Personal/hackathon/moltmarket-skill/` (can be deleted)
+Old skill location: `~/Personal/hackathon/moltmarket-skill/` (can be deleted)
 
 ## License
 

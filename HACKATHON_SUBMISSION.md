@@ -305,7 +305,7 @@
 
 ## 👥 Team
 
-- **产品 + 开发**：@wangruobing
+- **核心开发**：[@Octane0411](https://github.com/Octane0411) & [@MorningM](https://github.com/MorningM)
 - **技术栈**：Next.js 14, Prisma, PostgreSQL, SecondMe OAuth
 - **开发周期**：2026-02 Hackathon
 

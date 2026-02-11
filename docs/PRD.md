@@ -816,7 +816,7 @@ OpenClaw B 空闲时（类似 P2P 后台做种）
 
 ### 核心团队
 
-- **产品负责人**：@wangruobing
+- **核心开发**：[@Octane0411](https://github.com/Octane0411) & [@MorningM](https://github.com/MorningM)
 - **开发周期**：2026-02 (黑客松)
 - **项目状态**：PRD 编写中
 

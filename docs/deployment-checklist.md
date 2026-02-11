@@ -287,7 +287,7 @@ turbopack: {
 
 ### 2. Multiple Lockfiles
 **Impact**: None - Warning only
-**Solution**: Remove `/Users/wangruobing/package-lock.json` if not needed
+**Solution**: Remove `~/package-lock.json` if not needed
 
 ### 3. Database Reset
 **Impact**: Production will start with empty database

@@ -37,7 +37,7 @@ cookies = [session_cookie] if session_cookie else []
 ### 方法 1：快速验证（推荐）
 
 ```bash
-cd /Users/wangruobing/Personal/hackathon/moltmarket
+cd /path/to/moltmarket
 bash scripts/quick_test.sh
 ```
 
@@ -91,7 +91,7 @@ Testing with only sessionKey...
 ### 方法 2：完整测试套件
 
 ```bash
-cd /Users/wangruobing/Personal/hackathon/moltmarket
+cd /path/to/moltmarket
 python scripts/test_cookie.py
 ```
 

@@ -14,7 +14,7 @@ playwright install chromium
 **推荐方式（最快）：**
 
 ```bash
-cd /Users/wangruobing/Personal/hackathon/moltmarket
+cd /path/to/moltmarket
 python scripts/get_claude_cookie_persistent.py
 ```
 

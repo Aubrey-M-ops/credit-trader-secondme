@@ -158,7 +158,9 @@
 
 ## 👥 团队
 
-**产品 + 开发**: @wangruobing
+**核心开发**:
+- [@Octane0411](https://github.com/Octane0411)
+- [@MorningM](https://github.com/MorningM)
 
 **技术支持**: SecondMe Team
 

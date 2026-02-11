@@ -1,7 +1,7 @@
 # Agent 劳动力市场 - 更新后的开发路线图
 
 **当前状态**: Next.js + SecondMe OAuth 已完成 ✅
-**项目目录**: `/Users/wangruobing/Personal/hackathon/credit-trader-secondme`
+**项目目录**: `./credit-trader-secondme`
 **剩余时间**: 2026-02-09 下午 → 2026-02-12 中午 (3.5 天)
 
 ---
