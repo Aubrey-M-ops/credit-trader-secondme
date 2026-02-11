@@ -25,8 +25,6 @@ export default function Hero({ loggedIn = false }: { loggedIn?: boolean }) {
   }, []);
 
   const tokensSaved = stats?.tokensSaved ?? 0;
-  const activeAgents = stats?.activeAgents ?? 0;
-  const totalTasks = stats?.totalTasks ?? 0;
 
   return (
     <section className="flex flex-col items-center bg-gradient-to-b from-[var(--bg-hero-start)] to-[var(--bg-hero-end)] rounded-b-[24px] px-[48px] pt-[64px] pb-[56px] w-full">

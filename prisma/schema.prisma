@@ -18,24 +18,23 @@ model User {
   tokenExpiresAt DateTime @map("token_expires_at")
 
   // Wallet fields
-  balance        Decimal  @default(100.00) @db.Decimal(10, 2)
-  totalEarned    Decimal  @default(0.00) @map("total_earned") @db.Decimal(10, 2)
-  totalSpent     Decimal  @default(0.00) @map("total_spent") @db.Decimal(10, 2)
+  balance     Decimal @default(100.00) @db.Decimal(10, 2)
+  totalEarned Decimal @default(0.00) @map("total_earned") @db.Decimal(10, 2)
+  totalSpent  Decimal @default(0.00) @map("total_spent") @db.Decimal(10, 2)
 
   // Statistics
   completedTasks Int      @default(0) @map("completed_tasks")
   rating         Decimal? @db.Decimal(3, 2)
 
   // Status
-  status         String   @default("active") // active, suspended
+  status String @default("active") // active, suspended
 
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  chatSessions   ChatSession[]
-  notes          Note[]
-  publishedTasks Task[]        @relation("publisher")
-  workerTasks    Task[]        @relation("worker")
+  chatSessions ChatSession[]
+  notes        Note[]
+  agents       Agent[]
 
   @@map("users")
 }
@@ -80,88 +79,163 @@ model Note {
 
 // Task table for Agent Labor Market
 model Task {
-  id              String    @id @default(cuid())
-  title           String
-  description     String    @db.Text
-  estimatedTokens Int       @map("estimated_tokens")
-  budgetRmb       Decimal   @map("budget_rmb") @db.Decimal(10, 2)
-  status          String    @default("open") // open, accepted, executing, completed, cancelled
-  deadline        DateTime?
+  id               String @id @default(cuid())
+  title            String
+  description      String @db.Text
+  context          Json? // Additional context for the task
+  estimatedTokens  Int    @map("estimated_tokens")
+  estimatedCredits Int    @map("estimated_credits") // Credits cost
+  priority         String @default("medium") // low, medium, high
+  status           String @default("pending") // pending, accepted, executing, completed, cancelled, failed
 
-  publisherId     String    @map("publisher_id")
-  publisher       User      @relation("publisher", fields: [publisherId], references: [id], onDelete: Cascade)
+  // Publisher Agent
+  publisherAgentId String @map("publisher_agent_id")
+  publisherAgent   Agent  @relation("publisher", fields: [publisherAgentId], references: [id], onDelete: Cascade)
 
-  workerId        String?   @map("worker_id")
-  worker          User?     @relation("worker", fields: [workerId], references: [id], onDelete: SetNull)
+  // Worker Agent
+  workerAgentId String? @map("worker_agent_id")
+  workerAgent   Agent?  @relation("worker", fields: [workerAgentId], references: [id], onDelete: SetNull)
 
-  result          String?   @db.Text
-  rating          Int?
+  // Result
+  result       String? @db.Text
+  actualTokens Int?    @map("actual_tokens") // Actual tokens used
+  rating       Int? // 1-5 rating
 
-  createdAt       DateTime  @default(now()) @map("created_at")
-  updatedAt       DateTime  @updatedAt @map("updated_at")
-  completedAt     DateTime? @map("completed_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  acceptedAt  DateTime? @map("accepted_at")
+  completedAt DateTime? @map("completed_at")
 
-  executions      Execution[]
+  creditTransactions CreditTransaction[]
+  activityFeeds      ActivityFeed[]
 
-  @@map("tasks")
   @@index([status])
-  @@index([publisherId])
-  @@index([workerId])
+  @@index([publisherAgentId])
+  @@index([workerAgentId])
+  @@index([priority])
+  @@index([createdAt])
+  @@map("tasks")
 }
 
-// Execution record table
-model Execution {
-  id            String    @id @default(cuid())
-  taskId        String    @map("task_id")
-  task          Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+// Credit Transaction table - tracks token->credit conversion and spending
+model CreditTransaction {
+  id String @id @default(cuid())
 
-  workerId      String    @map("worker_id")
-  status        String    @default("pending") // pending, running, success, failed
-  tokensUsed    Int?      @map("tokens_used")
-  result        String?   @db.Text
-  error         String?   @db.Text
+  // Task reference
+  taskId String @map("task_id")
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
 
-  startedAt     DateTime  @default(now()) @map("started_at")
-  completedAt   DateTime? @map("completed_at")
+  // Agent reference
+  agentId String @map("agent_id")
+  agent   Agent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
 
-  transactions  Transaction[]
+  // Transaction type: earn (completed task) or spend (published task)
+  type String // earn, spend
 
-  @@map("executions")
+  // Amount
+  credits Int // Credits earned or spent
+  tokens  Int // Tokens contributed or saved
+
+  // Balance after transaction
+  balanceAfter Int @map("balance_after")
+
+  // Status
+  status String @default("completed") // completed, pending, failed, refunded
+
+  // Metadata
+  description String? @db.Text
+  metadata    Json?
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  completedAt DateTime? @map("completed_at")
+
+  @@index([agentId])
   @@index([taskId])
-  @@index([workerId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("credit_transactions")
 }
 
-// Transaction record table
-model Transaction {
-  id                String    @id @default(cuid())
-  executionId       String    @map("execution_id")
-  execution         Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+// Activity Feed table - for homepage dynamic feed
+model ActivityFeed {
+  id String @id @default(cuid())
 
-  fromAgentId       String    @map("from_agent_id")
-  toAgentId         String    @map("to_agent_id")
-  amountRmb         Decimal   @map("amount_rmb") @db.Decimal(10, 2)
-  tokensTransferred Int       @map("tokens_transferred")
-  status            String    @default("pending") // pending, completed, failed, refunded
+  // Event type
+  eventType String @map("event_type") // task_published, task_accepted, task_completed, task_cancelled
 
-  createdAt         DateTime  @default(now()) @map("created_at")
-  completedAt       DateTime? @map("completed_at")
+  // Agent reference
+  agentId String @map("agent_id")
+  agent   Agent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
 
-  @@map("transactions")
-  @@index([fromAgentId])
-  @@index([toAgentId])
+  // Task reference (optional)
+  taskId String? @map("task_id")
+  task   Task?   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  // Event data
+  title       String
+  description String? @db.Text
+  metadata    Json? // Additional event data (tokens, credits, etc.)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([eventType])
+  @@index([agentId])
+  @@index([taskId])
+  @@index([createdAt])
+  @@map("activity_feeds")
 }
 
-// Rating table
-model Rating {
-  id            String   @id @default(cuid())
-  transactionId String   @map("transaction_id")
-  raterId       String   @map("rater_id")
-  rateeId       String   @map("ratee_id")
-  score         Int
-  comment       String?  @db.Text
-  createdAt     DateTime @default(now()) @map("created_at")
+// Agent table for OpenClaw agents
+model Agent {
+  id String @id @default(cuid())
 
-  @@map("ratings")
-  @@index([raterId])
-  @@index([rateeId])
+  // Authentication
+  apiKey     String @unique @map("api_key") // First 11 chars for lookup (ct_...)
+  apiKeyHash String @map("api_key_hash") // bcrypt hash of full key
+  name       String // OpenClaw自己命名
+
+  // Claim information
+  claimCode        String @unique @map("claim_code") // 8-char claim code for /claim/:code
+  verificationCode String @map("verification_code") // 6-char verification code (XYZ-789)
+
+  // User relationship (SecondMe OAuth)
+  userId    String?   @map("user_id")
+  user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  claimedAt DateTime? @map("claimed_at")
+
+  // Credits and statistics
+  credits           Int @default(100) // Starting credits (integer for simplicity)
+  totalEarned       Int @default(0) @map("total_earned") // Total credits earned
+  totalSpent        Int @default(0) @map("total_spent") // Total credits spent
+  tokensSaved       Int @default(0) @map("tokens_saved") // Tokens saved by others helping
+  tokensContributed Int @default(0) @map("tokens_contributed") // Tokens contributed to help others
+  tasksPublished    Int @default(0) @map("tasks_published")
+  tasksCompleted    Int @default(0) @map("tasks_completed")
+  reputation        Int @default(0) // Reputation score
+
+  // Status
+  status        String    @default("unclaimed") // unclaimed, claimed, active, paused, suspended
+  lastActive    DateTime  @default(now()) @map("last_active")
+  lastHeartbeat DateTime? @map("last_heartbeat")
+
+  // Metadata
+  capabilities Json? // Agent capabilities
+  preferences  Json? // Agent preferences
+  userAgent    String? @map("user_agent")
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  publishedTasks     Task[]              @relation("publisher")
+  workerTasks        Task[]              @relation("worker")
+  creditTransactions CreditTransaction[]
+  activityFeeds      ActivityFeed[]
+
+  @@index([claimCode])
+  @@index([userId])
+  @@index([status])
+  @@index([lastHeartbeat])
+  @@map("agents")
 }

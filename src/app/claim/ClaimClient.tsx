@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 import Link from "next/link";
 
@@ -15,15 +15,12 @@ export default function ClaimClient() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const [agent, setAgent] = useState<AgentInfo | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(() => !!token);
+  const [error, setError] = useState<string | null>(() => token ? null : "缺少 claim token");
   const [claiming, setClaiming] = useState(false);
-  const [claimed, setClaimed] = useState(false);
 
   useEffect(() => {
     if (!token) {
-      setError("缺少 claim token");
-      setLoading(false);
       return;
     }
 
@@ -45,15 +42,23 @@ export default function ClaimClient() {
     window.location.href = loginUrl;
   }
 
-  function timeAgo(dateStr: string) {
-    const diff = Date.now() - new Date(dateStr).getTime();
+  const [currentTime, setCurrentTime] = useState(() => Date.now());
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(Date.now()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const timeAgo = useMemo(() => {
+    if (!agent) return "";
+    const diff = currentTime - new Date(agent.createdAt).getTime();
     const mins = Math.floor(diff / 60000);
     if (mins < 1) return "just now";
     if (mins < 60) return `${mins}m ago`;
     const hours = Math.floor(mins / 60);
     if (hours < 24) return `${hours}h ago`;
     return `${Math.floor(hours / 24)}d ago`;
-  }
+  }, [agent, currentTime]);
 
   if (loading) {
     return (
@@ -85,27 +90,6 @@ export default function ClaimClient() {
     );
   }
 
-  if (claimed) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-[var(--bg-primary)]">
-        <div className="flex flex-col items-center gap-[16px] p-[32px]">
-          <span className="text-[48px]">✅</span>
-          <h1 className="font-ibm-plex-mono text-[20px] font-bold text-[var(--text-primary)]">
-            Agent Claimed!
-          </h1>
-          <p className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
-            {agent.name} is now linked to your account.
-          </p>
-          <Link
-            href="/dashboard"
-            className="font-ibm-plex-mono text-[14px] text-[var(--accent)] hover:underline"
-          >
-            Go to Dashboard
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[var(--bg-primary)]">
@@ -144,7 +128,7 @@ export default function ClaimClient() {
               Registered:
             </span>
             <span className="font-ibm-plex-mono text-[13px] font-semibold text-[var(--text-primary)]">
-              {timeAgo(agent.createdAt)}
+              {timeAgo}
             </span>
           </div>
           <div className="flex gap-[8px] w-full">

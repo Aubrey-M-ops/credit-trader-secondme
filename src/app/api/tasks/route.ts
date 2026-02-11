@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getSessionUserId } from "@/lib/auth";
+import { verifyAgentApiKey } from "@/lib/agent-auth";
 
 // GET /api/tasks - List tasks for feed
-// Query params: status, limit, offset, role (publisher|worker - requires login)
+// Query params: status, limit, offset, role (publisher|worker - requires API Key)
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const status = searchParams.get("status");
@@ -16,16 +16,19 @@ export async function GET(request: NextRequest) {
     where.status = status;
   }
 
-  // Filter by current user's role
+  // Filter by current agent's role
   if (role === "publisher" || role === "worker") {
-    const userId = await getSessionUserId();
-    if (!userId) {
-      return NextResponse.json({ error: "未登录" }, { status: 401 });
+    const authHeader = request.headers.get("Authorization");
+    const agentId = await verifyAgentApiKey(authHeader);
+
+    if (!agentId) {
+      return NextResponse.json({ error: "Unauthorized - Invalid API Key" }, { status: 401 });
     }
+
     if (role === "publisher") {
-      where.publisherId = userId;
+      where.publisherAgentId = agentId;
     } else {
-      where.workerId = userId;
+      where.workerAgentId = agentId;
     }
   }
 
@@ -33,8 +36,23 @@ export async function GET(request: NextRequest) {
     prisma.task.findMany({
       where,
       include: {
-        publisher: { select: { id: true, name: true, avatarUrl: true } },
-        worker: { select: { id: true, name: true, avatarUrl: true } },
+        publisherAgent: {
+          select: {
+            id: true,
+            name: true,
+            reputation: true,
+            tasksPublished: true,
+            tasksCompleted: true
+          }
+        },
+        workerAgent: {
+          select: {
+            id: true,
+            name: true,
+            reputation: true,
+            tasksCompleted: true
+          }
+        },
       },
       orderBy: { createdAt: "desc" },
       take: limit,
@@ -46,40 +64,117 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({ tasks, total });
 }
 
-// POST /api/tasks - Create a new task
+// POST /api/tasks - Create a new task with credit locking
 export async function POST(request: NextRequest) {
-  const userId = await getSessionUserId();
-  if (!userId) {
-    return NextResponse.json({ error: "未登录" }, { status: 401 });
+  const authHeader = request.headers.get("Authorization");
+  const publisherAgentId = await verifyAgentApiKey(authHeader);
+
+  if (!publisherAgentId) {
+    return NextResponse.json({ error: "Unauthorized - Invalid API Key" }, { status: 401 });
   }
 
   const body = await request.json();
-  const { title, description, estimatedTokens } = body;
+  const { title, description, estimatedTokens, context, priority } = body;
 
   if (!title || !description || !estimatedTokens) {
     return NextResponse.json(
-      { error: "title, description, estimatedTokens 为必填参数" },
+      { error: "title, description, estimatedTokens are required" },
       { status: 400 }
     );
   }
 
-  // Calculate budget: ~¥0.05 per token
-  const budgetRmb = (estimatedTokens * 0.05).toFixed(2);
+  // Calculate credits to lock (1:1 ratio with tokens)
+  const creditsLocked = estimatedTokens;
 
-  const task = await prisma.task.create({
-    data: {
-      title,
-      description,
-      estimatedTokens,
-      budgetRmb,
-      status: "open",
-      publisherId: userId,
-      deadline: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24h deadline
-    },
-    include: {
-      publisher: { select: { id: true, name: true, avatarUrl: true } },
-    },
-  });
+  try {
+    // Use transaction to ensure atomicity
+    const result = await prisma.$transaction(async (tx) => {
+      // Check if agent has enough credits
+      const agent = await tx.agent.findUnique({
+        where: { id: publisherAgentId },
+        select: { credits: true, name: true },
+      });
 
-  return NextResponse.json(task, { status: 201 });
+      if (!agent) {
+        throw new Error("Agent not found");
+      }
+
+      if (agent.credits < creditsLocked) {
+        throw new Error(`Insufficient credits. Required: ${creditsLocked}, Available: ${agent.credits}`);
+      }
+
+      // Create task
+      const task = await tx.task.create({
+        data: {
+          title,
+          description,
+          context: context || null,
+          estimatedTokens,
+          estimatedCredits: creditsLocked,
+          priority: priority || "medium",
+          status: "pending",
+          publisherAgentId,
+        },
+        include: {
+          publisherAgent: {
+            select: {
+              id: true,
+              name: true,
+              reputation: true,
+            },
+          },
+        },
+      });
+
+      // Create credit transaction for locking
+      const agentAfterLock = await tx.agent.update({
+        where: { id: publisherAgentId },
+        data: {
+          credits: { decrement: creditsLocked },
+          tasksPublished: { increment: 1 },
+        },
+        select: { credits: true },
+      });
+
+      await tx.creditTransaction.create({
+        data: {
+          taskId: task.id,
+          agentId: publisherAgentId,
+          type: "spend",
+          credits: creditsLocked,
+          tokens: estimatedTokens,
+          balanceAfter: agentAfterLock.credits,
+          status: "completed",
+          description: `Locked credits for task: ${title}`,
+          completedAt: new Date(),
+        },
+      });
+
+      // Create activity feed entry
+      await tx.activityFeed.create({
+        data: {
+          eventType: "task_published",
+          agentId: publisherAgentId,
+          taskId: task.id,
+          title: `${agent.name} published a task`,
+          description: title,
+          metadata: {
+            estimatedTokens,
+            creditsLocked,
+            priority: priority || "medium",
+          },
+        },
+      });
+
+      return task;
+    });
+
+    return NextResponse.json(result, { status: 201 });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Failed to create task";
+    return NextResponse.json(
+      { error: errorMessage },
+      { status: 400 }
+    );
+  }
 }

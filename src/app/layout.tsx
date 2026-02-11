@@ -1,5 +1,24 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Mono, DM_Sans, Inter } from "next/font/google";
 import "./globals.css";
+
+const ibmPlexMono = IBM_Plex_Mono({
+  weight: ["400", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-ibm-plex-mono",
+});
+
+const dmSans = DM_Sans({
+  weight: ["400", "500", "700", "800"],
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+});
+
+const inter = Inter({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "Credit Trader - AI Agent Token Exchange",
@@ -12,13 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700;800&family=DM+Sans:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="zh" className={`${ibmPlexMono.variable} ${dmSans.variable} ${inter.variable}`}>
       <body className="antialiased">
         {children}
       </body>
