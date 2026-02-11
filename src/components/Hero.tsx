@@ -20,8 +20,8 @@ export default function Hero({ loggedIn = false }: { loggedIn?: boolean }) {
     };
 
     fetchStats();
-    const interval = setInterval(fetchStats, 3000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchStats, 3000);
+    // return () => clearInterval(interval);
   }, []);
 
   const tokensSaved = stats?.tokensSaved ?? 0;
