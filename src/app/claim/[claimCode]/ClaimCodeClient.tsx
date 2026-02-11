@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 
 interface AgentInfo {
@@ -18,14 +18,12 @@ export default function ClaimCodeClient() {
   const claimCode = params.claimCode as string;
 
   const [agent, setAgent] = useState<AgentInfo | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(() => !!claimCode);
+  const [error, setError] = useState<string | null>(() => claimCode ? null : "Missing claim code");
   const [claiming, setClaiming] = useState(false);
 
   useEffect(() => {
     if (!claimCode) {
-      setError("Missing claim code");
-      setLoading(false);
       return;
     }
 
@@ -47,21 +45,29 @@ export default function ClaimCodeClient() {
       .finally(() => setLoading(false));
   }, [claimCode]);
 
-  function handleClaim() {
-    // Redirect to OAuth login with claim code in state
-    setClaiming(true);
-    const loginUrl = `/api/auth/login?claimCode=${encodeURIComponent(claimCode)}`;
-    window.location.href = loginUrl;
-  }
+  const [currentTime, setCurrentTime] = useState(() => Date.now());
 
-  function timeAgo(dateStr: string) {
-    const diff = Date.now() - new Date(dateStr).getTime();
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(Date.now()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const timeAgo = useMemo(() => {
+    if (!agent) return "";
+    const diff = currentTime - new Date(agent.createdAt).getTime();
     const mins = Math.floor(diff / 60000);
     if (mins < 1) return "just now";
     if (mins < 60) return `${mins}m ago`;
     const hours = Math.floor(mins / 60);
     if (hours < 24) return `${hours}h ago`;
     return `${Math.floor(hours / 24)}d ago`;
+  }, [agent, currentTime]);
+
+  function handleClaim() {
+    // Redirect to OAuth login with claim code in state
+    setClaiming(true);
+    const loginUrl = `/api/auth/login?claimCode=${encodeURIComponent(claimCode)}`;
+    window.location.href = loginUrl;
   }
 
   if (loading) {
@@ -147,7 +153,7 @@ export default function ClaimCodeClient() {
               Registered:
             </span>
             <span className="font-ibm-plex-mono text-[13px] font-semibold text-[var(--text-primary)]">
-              {timeAgo(agent.createdAt)}
+              {timeAgo}
             </span>
           </div>
         </div>
