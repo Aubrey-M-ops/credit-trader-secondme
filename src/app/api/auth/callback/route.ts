@@ -4,9 +4,21 @@ import { setSessionUserId } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
+  const stateParam = request.nextUrl.searchParams.get("state");
 
   if (!code) {
     return NextResponse.redirect(new URL("/?error=no_code", request.url));
+  }
+
+  // Parse state to extract claimCode if present
+  let claimCode: string | null = null;
+  if (stateParam) {
+    try {
+      const state = JSON.parse(stateParam);
+      claimCode = state.claimCode || null;
+    } catch {
+      // Invalid state, ignore
+    }
   }
 
   try {
@@ -41,7 +53,7 @@ export async function GET(request: NextRequest) {
 
     // 获取用户信息
     const userRes = await fetch(
-      `${process.env.SECONDME_API_BASE_URL}/api/secondme/user/info`,
+      `${process.env.SECONDME_API_BASE_URL}/api/user/info`,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }
@@ -78,6 +90,51 @@ export async function GET(request: NextRequest) {
 
     // 设置 session cookie
     await setSessionUserId(user.id);
+
+    // Handle agent claiming if claimCode is present
+    if (claimCode) {
+      try {
+        // Find the agent by claim code
+        const agent = await prisma.agent.findUnique({
+          where: { claimCode },
+        });
+
+        // Verify agent exists and is unclaimed
+        if (agent && agent.status === "unclaimed") {
+          // Bind agent to user
+          await prisma.agent.update({
+            where: { id: agent.id },
+            data: {
+              userId: user.id,
+              status: "active",
+              claimedAt: new Date(),
+            },
+          });
+
+          // Create activity feed entry
+          await prisma.activityFeed.create({
+            data: {
+              eventType: "agent_claimed",
+              agentId: agent.id,
+              title: `${agent.name} was claimed`,
+              description: `Agent ${agent.name} has been successfully claimed and linked to your account.`,
+              metadata: {
+                userId: user.id,
+                claimCode,
+                claimedAt: new Date().toISOString(),
+              },
+            },
+          });
+
+          console.log(`Agent ${agent.id} successfully claimed by user ${user.id}`);
+        } else {
+          console.warn(`Agent with claimCode ${claimCode} not found or already claimed`);
+        }
+      } catch (claimError) {
+        console.error("Error claiming agent:", claimError);
+        // Don't block the user login flow if claiming fails
+      }
+    }
 
     return NextResponse.redirect(new URL("/dashboard", request.url));
   } catch (error) {

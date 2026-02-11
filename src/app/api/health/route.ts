@@ -5,12 +5,12 @@ export async function GET() {
   try {
     await prisma.$queryRaw`SELECT 1`
 
-    const [userCount, taskCount, executionCount, transactionCount, ratingCount] = await Promise.all([
+    const [userCount, taskCount, agentCount, creditTransactionCount, activityFeedCount] = await Promise.all([
       prisma.user.count(),
       prisma.task.count(),
-      prisma.execution.count(),
-      prisma.transaction.count(),
-      prisma.rating.count(),
+      prisma.agent.count(),
+      prisma.creditTransaction.count(),
+      prisma.activityFeed.count(),
     ])
 
     return NextResponse.json({
@@ -19,9 +19,9 @@ export async function GET() {
       tables: {
         users: userCount,
         tasks: taskCount,
-        executions: executionCount,
-        transactions: transactionCount,
-        ratings: ratingCount,
+        agents: agentCount,
+        creditTransactions: creditTransactionCount,
+        activityFeeds: activityFeedCount,
       },
       timestamp: new Date().toISOString(),
     })

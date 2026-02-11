@@ -1,103 +1,162 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getSessionUserId } from "@/lib/auth";
+import { verifyAgentApiKey } from "@/lib/agent-auth";
 
-// POST /api/tasks/[id]/complete - Complete a task
+// POST /api/tasks/[id]/complete - Complete a task with credit transfer
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const userId = await getSessionUserId();
-  if (!userId) {
-    return NextResponse.json({ error: "未登录" }, { status: 401 });
+  const authHeader = request.headers.get("Authorization");
+  const workerAgentId = await verifyAgentApiKey(authHeader);
+
+  if (!workerAgentId) {
+    return NextResponse.json({ error: "Unauthorized - Invalid API Key" }, { status: 401 });
   }
 
   const { id } = await params;
   const body = await request.json();
-  const { result, tokensUsed } = body;
+  const { result, actualTokens: bodyActualTokens } = body;
 
-  const task = await prisma.task.findUnique({ where: { id } });
-
-  if (!task) {
-    return NextResponse.json({ error: "任务不存在" }, { status: 404 });
-  }
-
-  if (task.workerId !== userId) {
-    return NextResponse.json({ error: "只有接单者可以完成任务" }, { status: 403 });
-  }
-
-  if (task.status !== "accepted" && task.status !== "executing") {
-    return NextResponse.json({ error: "任务状态不正确" }, { status: 400 });
-  }
-
-  const actualTokens = tokensUsed || task.estimatedTokens;
-  const amountRmb = (actualTokens * 0.05).toFixed(2);
-
-  // Use transaction to update task, execution, user stats, and create transaction record
-  const updated = await prisma.$transaction(async (tx) => {
-    // Update task
-    const updatedTask = await tx.task.update({
-      where: { id },
-      data: {
-        status: "completed",
-        result,
-        completedAt: new Date(),
-      },
-      include: {
-        publisher: { select: { id: true, name: true, avatarUrl: true } },
-        worker: { select: { id: true, name: true, avatarUrl: true } },
-      },
-    });
-
-    // Update execution record
-    const execution = await tx.execution.findFirst({
-      where: { taskId: id, workerId: userId },
-    });
-
-    if (execution) {
-      await tx.execution.update({
-        where: { id: execution.id },
-        data: {
-          status: "success",
-          tokensUsed: actualTokens,
-          result,
-          completedAt: new Date(),
+  try {
+    // Use transaction to ensure all operations are atomic
+    const updatedTask = await prisma.$transaction(async (tx) => {
+      const task = await tx.task.findUnique({
+        where: { id },
+        include: {
+          publisherAgent: { select: { id: true, name: true } },
+          workerAgent: { select: { id: true, name: true } },
         },
       });
 
-      // Create transaction record
-      await tx.transaction.create({
+      if (!task) {
+        throw new Error("Task not found");
+      }
+
+      if (task.workerAgentId !== workerAgentId) {
+        throw new Error("Only the worker can complete this task");
+      }
+
+      if (task.status !== "accepted" && task.status !== "executing") {
+        throw new Error(`Task status is ${task.status}, cannot complete`);
+      }
+
+      // Calculate actual credits used (use provided or estimated)
+      const actualTokens = bodyActualTokens || task.estimatedTokens;
+      const actualCredits = Math.min(actualTokens, task.estimatedCredits);
+      const refundCredits = task.estimatedCredits - actualCredits;
+
+      // Transfer credits to worker
+      const workerAfterEarn = await tx.agent.update({
+        where: { id: workerAgentId },
         data: {
-          executionId: execution.id,
-          fromAgentId: task.publisherId,
-          toAgentId: userId,
-          amountRmb,
-          tokensTransferred: actualTokens,
+          credits: { increment: actualCredits },
+          totalEarned: { increment: actualCredits },
+          tokensContributed: { increment: actualTokens },
+          tasksCompleted: { increment: 1 },
+        },
+        select: { credits: true, name: true },
+      });
+
+      // Create credit transaction for worker earning
+      await tx.creditTransaction.create({
+        data: {
+          taskId: id,
+          agentId: workerAgentId,
+          type: "earn",
+          credits: actualCredits,
+          tokens: actualTokens,
+          balanceAfter: workerAfterEarn.credits,
           status: "completed",
+          description: `Earned credits for completing task: ${task.title}`,
           completedAt: new Date(),
         },
       });
-    }
 
-    // Update worker stats (earned tokens/credits)
-    await tx.user.update({
-      where: { id: userId },
-      data: {
-        completedTasks: { increment: 1 },
-        totalEarned: { increment: parseFloat(amountRmb) },
-      },
+      // Refund remaining credits to publisher if any
+      if (refundCredits > 0) {
+        const publisherAfterRefund = await tx.agent.update({
+          where: { id: task.publisherAgentId },
+          data: {
+            credits: { increment: refundCredits },
+            tokensSaved: { increment: task.estimatedTokens - actualTokens },
+          },
+          select: { credits: true },
+        });
+
+        await tx.creditTransaction.create({
+          data: {
+            taskId: id,
+            agentId: task.publisherAgentId,
+            type: "earn",
+            credits: refundCredits,
+            tokens: task.estimatedTokens - actualTokens,
+            balanceAfter: publisherAfterRefund.credits,
+            status: "completed",
+            description: `Refund for task completion: ${task.title} (saved ${refundCredits} credits)`,
+            completedAt: new Date(),
+          },
+        });
+      }
+
+      // Update task
+      const completedTask = await tx.task.update({
+        where: { id },
+        data: {
+          status: "completed",
+          result,
+          actualTokens,
+          completedAt: new Date(),
+        },
+        include: {
+          publisherAgent: {
+            select: {
+              id: true,
+              name: true,
+              reputation: true,
+              credits: true,
+            },
+          },
+          workerAgent: {
+            select: {
+              id: true,
+              name: true,
+              reputation: true,
+              credits: true,
+              totalEarned: true,
+              tasksCompleted: true,
+            },
+          },
+        },
+      });
+
+      // Create activity feed entry
+      await tx.activityFeed.create({
+        data: {
+          eventType: "task_completed",
+          agentId: workerAgentId,
+          taskId: id,
+          title: `${workerAfterEarn.name} completed a task`,
+          description: task.title,
+          metadata: {
+            actualTokens,
+            actualCredits,
+            refundCredits,
+            publisherAgentId: task.publisherAgentId,
+            publisherName: task.publisherAgent.name,
+          },
+        },
+      });
+
+      return completedTask;
     });
 
-    // Update publisher stats (spent tokens/credits)
-    await tx.user.update({
-      where: { id: task.publisherId },
-      data: {
-        totalSpent: { increment: parseFloat(amountRmb) },
-      },
-    });
-
-    return updatedTask;
-  });
-
-  return NextResponse.json(updated);
+    return NextResponse.json(updatedTask);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Failed to complete task";
+    return NextResponse.json(
+      { error: errorMessage },
+      { status: 400 }
+    );
+  }
 }
