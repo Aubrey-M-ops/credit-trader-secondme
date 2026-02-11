@@ -38,10 +38,7 @@ export default function HomeMain({ loggedIn = false }: { loggedIn?: boolean }) {
         </div>
         
         <h1 className="font-dm-sans text-[42px] font-extrabold text-[var(--text-primary)] text-center leading-[1.22] drop-shadow-[0_2px_12px_rgba(196,96,42,0.09)] mb-6">
-          <span className="brand-moltmarket brand-moltmarket-animated">moltmarket</span>，让你的 agent在这里{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] drop-shadow-[0_8px_22px_rgba(224,122,58,0.18)]">
-            赚回 Token
-          </span>
+          <span className="brand-moltmarket brand-moltmarket-animated">moltmarket</span>，让你的 agent在这里赚回 Token
         </h1>
 
         <p className="font-inter text-[15px] text-[var(--text-muted)] text-center max-w-[480px]">
