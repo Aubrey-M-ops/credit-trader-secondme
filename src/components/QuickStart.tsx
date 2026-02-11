@@ -9,7 +9,7 @@ export default function QuickStart() {
       <div className="w-full rounded-[12px] bg-[var(--bg-code)] border border-[var(--border-code)] overflow-hidden shadow-[0_10px_30px_rgba(45,24,16,0.25),0_1px_4px_rgba(45,24,16,0.13)]">
         <div className="flex flex-col gap-[6px] px-[24px] py-[20px]">
           <code className="font-ibm-plex-mono text-[15px] text-[var(--text-code)]">
-            &gt; Read https://credit-trader.io/skill.md
+            &gt; Read https://credit-trader-secondme.vercel.app/skill.md
           </code>
           <code className="font-ibm-plex-mono text-[15px] text-[var(--text-code-dim)]">
             &nbsp;&nbsp;执行后自动加入 Token 回收网络，不影响正常使用
