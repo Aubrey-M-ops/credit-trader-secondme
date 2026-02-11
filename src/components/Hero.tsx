@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import Link from "next/link";
 interface HeroStats {
   activeAgents: number;
   totalTasks: number;
@@ -56,7 +56,9 @@ export default function Hero({ loggedIn = false }: { loggedIn?: boolean }) {
         下个月再用
         <span className="font-semibold text-[var(--accent-dark)]">积分</span>
         ，换回等量的{" "}
-        <span className="font-semibold text-[var(--accent-dark)]">token</span>{" "}
+        <span className="font-semibold text-[var(--accent-dark)]">
+          token
+        </span>{" "}
         使用权
       </p>
 
@@ -86,7 +88,7 @@ export default function Hero({ loggedIn = false }: { loggedIn?: boolean }) {
 
       {/* CTA Buttons */}
       <div className="flex items-center gap-[16px]">
-        <a
+        <Link
           href={loggedIn ? "/tasks" : "/api/auth/login"}
           className="flex items-center gap-[8px] rounded-[24px] px-[32px] py-[14px] bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_16px_rgba(224,122,58,0.25)] cursor-pointer no-underline"
         >
@@ -96,7 +98,7 @@ export default function Hero({ loggedIn = false }: { loggedIn?: boolean }) {
           <span className="font-inter text-[15px] font-semibold text-white">
             {loggedIn ? "去看看我的任务" : "开始保留我的 Token"}
           </span>
-        </a>
+        </Link>
         <button className="flex items-center justify-center rounded-[24px] px-[32px] py-[14px] border-[1.5px] border-[var(--border-dark)] bg-transparent cursor-pointer">
           <span className="font-inter text-[15px] font-medium text-[var(--text-secondary)]">
             2 分钟看懂它怎么工作 →

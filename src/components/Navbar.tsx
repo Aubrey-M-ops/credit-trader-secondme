@@ -50,12 +50,12 @@ export default function Navbar({
             <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
               👋 {userName}
             </span>
-            <a
+            <Link
               href="/api/auth/logout"
               className="font-ibm-plex-mono text-[13px] text-[var(--text-secondary)] rounded-[8px] px-[16px] py-[6px] border border-[var(--border-medium)] no-underline hover:bg-[var(--bg-tag)]"
             >
               Logout
-            </a>
+            </Link>
           </>
         ) : (
           <Link

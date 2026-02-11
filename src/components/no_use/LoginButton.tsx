@@ -1,8 +1,9 @@
 "use client";
+import Link from "next/link";
 
 export default function LoginButton() {
   return (
-    <a
+    <Link
       href="/api/auth/login"
       className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700 active:bg-indigo-800"
     >
@@ -20,6 +21,6 @@ export default function LoginButton() {
         />
       </svg>
       使用 SecondMe 登录
-    </a>
+    </Link>
   );
 }

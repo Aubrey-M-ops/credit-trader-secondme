@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import Link from "next/link";
+
 // ── Types ──────────────────────────────────────────────────────────────────
 
 interface TaskUser {
@@ -39,23 +41,35 @@ function timeAgo(dateStr: string) {
 
 function statusIcon(status: string) {
   switch (status) {
-    case "open": return "📝";
-    case "accepted": return "🤝";
-    case "executing": return "⚡";
-    case "completed": return "✅";
-    case "cancelled": return "❌";
-    default: return "📝";
+    case "open":
+      return "📝";
+    case "accepted":
+      return "🤝";
+    case "executing":
+      return "⚡";
+    case "completed":
+      return "✅";
+    case "cancelled":
+      return "❌";
+    default:
+      return "📝";
   }
 }
 
 function statusLabel(status: string) {
   switch (status) {
-    case "open": return "等待接单";
-    case "accepted": return "Accepted";
-    case "executing": return "In Progress";
-    case "completed": return "Done";
-    case "cancelled": return "Cancelled";
-    default: return status;
+    case "open":
+      return "等待接单";
+    case "accepted":
+      return "Accepted";
+    case "executing":
+      return "In Progress";
+    case "completed":
+      return "Done";
+    case "cancelled":
+      return "Cancelled";
+    default:
+      return status;
   }
 }
 
@@ -88,8 +102,8 @@ function TaskCard({ task, role }: { task: Task; role: TabKey }) {
     role === "accepted"
       ? `发布者: 🤖 ${task.publisher?.name || "Anonymous"} · ${timeAgo(task.createdAt)}`
       : task.worker
-      ? `接单者: 🤖 ${task.worker.name || "Anonymous"} · ${timeAgo(task.createdAt)}`
-      : `状态: 等待接单 · 发布于 ${timeAgo(task.createdAt)}`;
+        ? `接单者: 🤖 ${task.worker.name || "Anonymous"} · ${timeAgo(task.createdAt)}`
+        : `状态: 等待接单 · 发布于 ${timeAgo(task.createdAt)}`;
 
   const tokenText =
     task.status === "completed"
@@ -177,12 +191,24 @@ export default function TasksPage() {
   }, [router]);
 
   const tabs: { key: TabKey; label: string; icon: string; count: number }[] = [
-    { key: "accepted", label: "Accepted", icon: "🔽", count: acceptedTasks.length },
-    { key: "published", label: "Published", icon: "🔼", count: publishedTasks.length },
+    {
+      key: "accepted",
+      label: "Accepted",
+      icon: "🔽",
+      count: acceptedTasks.length,
+    },
+    {
+      key: "published",
+      label: "Published",
+      icon: "🔼",
+      count: publishedTasks.length,
+    },
   ];
 
-  const currentTasks = activeTab === "accepted" ? acceptedTasks : publishedTasks;
-  const isLoading = activeTab === "accepted" ? loadingAccepted : loadingPublished;
+  const currentTasks =
+    activeTab === "accepted" ? acceptedTasks : publishedTasks;
+  const isLoading =
+    activeTab === "accepted" ? loadingAccepted : loadingPublished;
 
   return (
     <div className="flex flex-col gap-[32px] w-full px-[48px] py-[32px]">
@@ -218,18 +244,18 @@ export default function TasksPage() {
           <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
             登录后即可查看您接单和发布的任务
           </span>
-          <a
+          <Link
             href="/api/auth/login"
             className="font-ibm-plex-mono text-[14px] font-semibold text-white rounded-[20px] px-[28px] py-[10px] bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_20px_rgba(224,122,58,0.38)] no-underline"
           >
             Login
-          </a>
+          </Link>
         </div>
       ) : null}
 
       {/* Task list — max 6 visible, scroll for more */}
-      {!needLogin && (
-        isLoading ? (
+      {!needLogin &&
+        (isLoading ? (
           <div className="flex items-center justify-center py-[48px]">
             <div className="animate-spin h-6 w-6 border-2 border-[var(--accent)] border-t-transparent rounded-full" />
           </div>
@@ -248,8 +274,7 @@ export default function TasksPage() {
               <TaskCard key={task.id} task={task} role={activeTab} />
             ))}
           </div>
-        )
-      )}
+        ))}
     </div>
   );
 }
