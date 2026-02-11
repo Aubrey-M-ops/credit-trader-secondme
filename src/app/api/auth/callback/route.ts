@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
 
     // 获取用户信息
     const userRes = await fetch(
-      `${process.env.SECONDME_API_BASE_URL}/api/user/info`,
+      `${process.env.SECONDME_API_BASE_URL}/api/secondme/user/info`,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }

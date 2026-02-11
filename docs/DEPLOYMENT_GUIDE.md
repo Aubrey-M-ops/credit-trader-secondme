@@ -84,30 +84,36 @@ npm run build
 ### 已实现的 API 端点 (25 个)
 
 **认证相关**:
+
 - `/api/auth/login` - 启动 OAuth 登录
 - `/api/auth/callback` - OAuth 回调处理
 - `/api/auth/logout` - 用户登出
 
 **用户相关**:
-- `/api/user/info` - 获取用户信息
+
+- `/api/secondme/user/info` - 获取用户信息
 - `/api/user/shades` - 获取用户兴趣标签
 - `/api/user/stats` - 获取用户统计数据
 
 **Agent 相关**:
+
 - `/api/agents/register` - Agent 注册
 - `/api/agents/claim` - Agent 认领
 - `/api/agents/me` - 获取当前 Agent 信息
 - `/api/agents/heartbeat` - Agent 心跳
 
 **任务相关**:
+
 - `/api/tasks` - 任务列表/创建
 - `/api/tasks/[id]/accept` - 接受任务
 - `/api/tasks/[id]/complete` - 完成任务
 
 **Claim 流程**:
+
 - `/api/claim/[claimCode]` - 认领页面 API
 
 **其他功能**:
+
 - `/api/chat` - 聊天功能
 - `/api/note` - 笔记功能
 - `/api/act` - AI 意图分类
@@ -117,6 +123,7 @@ npm run build
 - `/api/health` - 健康检查
 
 **前端页面**:
+
 - `/` - 首页
 - `/dashboard` - 用户仪表板
 - `/tasks` - 任务页面
@@ -132,16 +139,19 @@ npm run build
 **Framework Preset**: Next.js
 
 **Build Command**:
+
 ```bash
 npm run build
 ```
 
 **Output Directory**:
+
 ```
 .next
 ```
 
 **Install Command**:
+
 ```bash
 npm install
 ```
@@ -217,6 +227,7 @@ npx prisma generate
    - 添加生产回调 URL: `https://[YOUR-DOMAIN].vercel.app/api/auth/callback`
 
 3. 更新 Vercel 环境变量：
+
    ```bash
    SECONDME_REDIRECT_URI="https://[YOUR-DOMAIN].vercel.app/api/auth/callback"
    NEXT_PUBLIC_APP_URL="https://[YOUR-DOMAIN].vercel.app"
@@ -256,11 +267,13 @@ vercel --prod
    - 准备生产环境值
 
 2. **连接项目**
+
    ```bash
    vercel link
    ```
 
 3. **设置环境变量**
+
    ```bash
    # 通过 CLI 或 Dashboard 设置
    vercel env add DATABASE_URL production
@@ -269,6 +282,7 @@ vercel --prod
    ```
 
 4. **部署**
+
    ```bash
    vercel --prod
    ```
@@ -395,6 +409,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 #### 3. API Key 安全
 
 `.env` 文件中包含真实的密钥，确保：
+
 - `.gitignore` 已正确配置 `.env*`
 - 不要将密钥提交到 Git
 
@@ -459,6 +474,7 @@ vercel env add [name] production
 ✅ **准备就绪，可以部署**
 
 关键步骤：
+
 1. 配置 Vercel 环境变量
 2. 连接 GitHub 或使用 CLI 部署
 3. 部署后更新 SecondMe OAuth 回调 URL
