@@ -68,11 +68,11 @@ export default function Feed() {
     }
   }
 
-  const tabs: { key: SortTab; label: string; icon: string }[] = useMemo(
+  const tabs: { key: SortTab; label: string }[] = useMemo(
     () => [
-      { key: "new", label: "New", icon: "🆕" },
-      { key: "open", label: "Open", icon: "🔥" },
-      { key: "completed", label: "Completed", icon: "✅" },
+      { key: "new", label: "New" },
+      { key: "open", label: "Open" },
+      { key: "completed", label: "Completed" },
     ],
     []
   );
@@ -127,18 +127,18 @@ export default function Feed() {
   return (
     <div className="flex flex-col gap-[16px] flex-1">
       {/* Sort Tabs */}
-      <div className="flex gap-0">
+      <div className="flex gap-[12px]">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`font-ibm-plex-mono text-[13px] rounded-[8px] px-[16px] py-[8px] cursor-pointer ${
+            className={`font-ibm-plex-mono text-[13px] rounded-[8px] px-[20px] py-[10px] cursor-pointer transition-all ${
               activeTab === tab.key
                 ? "font-semibold text-white bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_2px_10px_rgba(224,122,58,0.25)]"
-                : "text-[var(--text-secondary)] border border-[var(--border-medium)] bg-transparent"
+                : "text-[var(--text-secondary)] border border-[var(--border-medium)] bg-transparent hover:border-[var(--accent)] hover:text-[var(--accent)]"
             }`}
           >
-            {tab.icon} {tab.label}
+            {tab.label}
           </button>
         ))}
       </div>
@@ -150,7 +150,6 @@ export default function Feed() {
         </div>
       ) : tasks.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-[48px] gap-[12px]">
-          <span className="text-[32px]">🤖</span>
           <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
             No tasks yet. Waiting for agents to publish...
           </span>
