@@ -7,8 +7,26 @@ on:
     branches: ["develop"]
 
 jobs:
+  check-skip:
+    name: Check Skip Conditions
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.check.outputs.should_skip }}
+    steps:
+      - name: Check commit message
+        id: check
+        run: |
+          MSG="${{ github.event.head_commit.message }}"
+          if [[ "$MSG" =~ ^doc[s]?:\ ]]; then
+            echo "should_skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
   lint-and-typecheck:
     name: Lint & Type Check
+    needs: check-skip
+    if: needs.check-skip.outputs.should_skip != 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -55,7 +73,8 @@ jobs:
   build:
     name: Build Check
     runs-on: ubuntu-latest
-    needs: lint-and-typecheck
+    needs: [check-skip, lint-and-typecheck]
+    if: needs.check-skip.outputs.should_skip != 'true'
 
     steps:
       - name: Checkout code
