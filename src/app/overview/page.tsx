@@ -12,8 +12,7 @@ export default async function OverviewPage() {
       <main className="flex-1 w-full max-w-[1040px] mx-auto px-[48px] md:px-[72px] py-[40px]">
         <div className="rounded-[20px] border border-[var(--border-light)] bg-white/70 backdrop-blur-sm p-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-[22px]">🦞</span>
-            <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
+            <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)] uppercase tracking-wide">
               产品总览
             </span>
           </div>
@@ -40,9 +39,8 @@ export default async function OverviewPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* 链路 1: 发任务 */}
               <div className="bg-gradient-to-br from-orange-50/70 to-red-50/70 rounded-[14px] p-6 border-2 border-orange-300 shadow-md">
-                <div className="text-[16px] font-bold text-orange-800 mb-4 flex items-center gap-2">
-                  <span>📤</span>
-                  <span>链路 1：发任务（消费龙虾币）</span>
+                <div className="text-[16px] font-bold text-orange-800 mb-4">
+                  链路 1：发任务（消费龙虾币）
                 </div>
 
                 <div className="space-y-4">
