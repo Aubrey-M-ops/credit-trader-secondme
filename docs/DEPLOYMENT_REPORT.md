@@ -11,6 +11,7 @@
 Credit Trader (Agent 劳动力市场) 项目已完成所有开发工作，代码通过构建验证，数据库 Schema 已部署，可以开始生产环境部署。
 
 **关键指标**:
+
 - 构建状态: ✅ 通过
 - TypeScript: ✅ 无错误
 - API 端点: 25 个已实现
@@ -23,24 +24,24 @@ Credit Trader (Agent 劳动力市场) 项目已完成所有开发工作，代码
 
 ### ✅ 已配置的变量
 
-| 变量名 | 状态 | 说明 |
-|--------|------|------|
-| DATABASE_URL | ✅ 已配置 | Supabase PostgreSQL 连接字符串 |
-| NEXT_PUBLIC_SUPABASE_URL | ✅ 已配置 | Supabase API URL |
-| NEXT_PUBLIC_SUPABASE_ANON_KEY | ✅ 已配置 | Supabase 匿名密钥 |
-| SUPABASE_SERVICE_ROLE_KEY | ✅ 已配置 | Supabase 服务角色密钥 |
-| SECONDME_CLIENT_ID | ✅ 已配置 | SecondMe OAuth Client ID |
-| SECONDME_CLIENT_SECRET | ✅ 已配置 | SecondMe OAuth Secret |
-| SECONDME_API_BASE_URL | ✅ 已配置 | SecondMe API 基础 URL |
-| SECONDME_OAUTH_URL | ✅ 已配置 | SecondMe OAuth 授权 URL |
-| SECONDME_TOKEN_ENDPOINT | ✅ 已配置 | SecondMe Token 端点 |
+| 变量名                        | 状态      | 说明                           |
+| ----------------------------- | --------- | ------------------------------ |
+| DATABASE_URL                  | ✅ 已配置 | Supabase PostgreSQL 连接字符串 |
+| NEXT_PUBLIC_SUPABASE_URL      | ✅ 已配置 | Supabase API URL               |
+| NEXT_PUBLIC_SUPABASE_ANON_KEY | ✅ 已配置 | Supabase 匿名密钥              |
+| SUPABASE_SERVICE_ROLE_KEY     | ✅ 已配置 | Supabase 服务角色密钥          |
+| SECONDME_CLIENT_ID            | ✅ 已配置 | SecondMe OAuth Client ID       |
+| SECONDME_CLIENT_SECRET        | ✅ 已配置 | SecondMe OAuth Secret          |
+| SECONDME_API_BASE_URL         | ✅ 已配置 | SecondMe API 基础 URL          |
+| SECONDME_OAUTH_URL            | ✅ 已配置 | SecondMe OAuth 授权 URL        |
+| SECONDME_TOKEN_ENDPOINT       | ✅ 已配置 | SecondMe Token 端点            |
 
 ### ⚠️ 需要更新的变量 (部署后)
 
-| 变量名 | 当前值 | 需要更新为 |
-|--------|--------|-----------|
+| 变量名                | 当前值                                    | 需要更新为                                  |
+| --------------------- | ----------------------------------------- | ------------------------------------------- |
 | SECONDME_REDIRECT_URI | `http://localhost:3000/api/auth/callback` | `https://[vercel-domain]/api/auth/callback` |
-| NEXT_PUBLIC_APP_URL | `http://localhost:3000` | `https://[vercel-domain]` |
+| NEXT_PUBLIC_APP_URL   | `http://localhost:3000`                   | `https://[vercel-domain]`                   |
 
 ### ⚠️ 配置问题
 
@@ -67,6 +68,7 @@ $ npm run build
 ```
 
 **构建产物**:
+
 - 25 个路由
 - 3 个静态页面
 - 22 个动态 API 端点
@@ -88,65 +90,65 @@ $ npx tsc --noEmit
 
 ### 认证相关 (3 个)
 
-| 端点 | 方法 | 说明 | 状态 |
-|------|------|------|------|
-| `/api/auth/login` | GET | 启动 SecondMe OAuth 登录 | ✅ |
-| `/api/auth/callback` | GET | OAuth 回调处理 | ✅ |
-| `/api/auth/logout` | POST | 用户登出 | ✅ |
+| 端点                 | 方法 | 说明                     | 状态 |
+| -------------------- | ---- | ------------------------ | ---- |
+| `/api/auth/login`    | GET  | 启动 SecondMe OAuth 登录 | ✅   |
+| `/api/auth/callback` | GET  | OAuth 回调处理           | ✅   |
+| `/api/auth/logout`   | POST | 用户登出                 | ✅   |
 
 ### 用户相关 (3 个)
 
-| 端点 | 方法 | 说明 | 状态 |
-|------|------|------|------|
-| `/api/user/info` | GET | 获取 SecondMe 用户信息 | ✅ |
-| `/api/user/shades` | GET | 获取用户兴趣标签 | ✅ |
-| `/api/user/stats` | GET | 获取用户统计数据 | ✅ |
+| 端点                      | 方法 | 说明                   | 状态 |
+| ------------------------- | ---- | ---------------------- | ---- |
+| `/api/secondme/user/info` | GET  | 获取 SecondMe 用户信息 | ✅   |
+| `/api/user/shades`        | GET  | 获取用户兴趣标签       | ✅   |
+| `/api/user/stats`         | GET  | 获取用户统计数据       | ✅   |
 
 ### Agent 相关 (4 个)
 
-| 端点 | 方法 | 说明 | 状态 |
-|------|------|------|------|
-| `/api/agents/register` | POST | OpenClaw Agent 注册 | ✅ |
-| `/api/agents/claim` | POST | Agent 认领（绑定用户） | ✅ |
-| `/api/agents/me` | GET | 获取当前 Agent 信息 | ✅ |
-| `/api/agents/heartbeat` | POST | Agent 心跳上报 | ✅ |
+| 端点                    | 方法 | 说明                   | 状态 |
+| ----------------------- | ---- | ---------------------- | ---- |
+| `/api/agents/register`  | POST | OpenClaw Agent 注册    | ✅   |
+| `/api/agents/claim`     | POST | Agent 认领（绑定用户） | ✅   |
+| `/api/agents/me`        | GET  | 获取当前 Agent 信息    | ✅   |
+| `/api/agents/heartbeat` | POST | Agent 心跳上报         | ✅   |
 
 ### 任务相关 (4 个)
 
-| 端点 | 方法 | 说明 | 状态 |
-|------|------|------|------|
-| `/api/tasks` | GET | 获取任务列表 | ✅ |
-| `/api/tasks` | POST | 创建新任务 | ✅ |
-| `/api/tasks/[id]/accept` | POST | 接受任务 | ✅ |
-| `/api/tasks/[id]/complete` | POST | 完成任务 | ✅ |
+| 端点                       | 方法 | 说明         | 状态 |
+| -------------------------- | ---- | ------------ | ---- |
+| `/api/tasks`               | GET  | 获取任务列表 | ✅   |
+| `/api/tasks`               | POST | 创建新任务   | ✅   |
+| `/api/tasks/[id]/accept`   | POST | 接受任务     | ✅   |
+| `/api/tasks/[id]/complete` | POST | 完成任务     | ✅   |
 
 ### Claim 流程 (1 个)
 
-| 端点 | 方法 | 说明 | 状态 |
-|------|------|------|------|
-| `/api/claim/[claimCode]` | GET/POST | Agent 认领页面 API | ✅ |
+| 端点                     | 方法     | 说明               | 状态 |
+| ------------------------ | -------- | ------------------ | ---- |
+| `/api/claim/[claimCode]` | GET/POST | Agent 认领页面 API | ✅   |
 
 ### 其他功能 (6 个)
 
-| 端点 | 方法 | 说明 | 状态 |
-|------|------|------|------|
-| `/api/chat` | GET/POST | 聊天功能 | ✅ |
-| `/api/note` | POST | 添加笔记到 SecondMe | ✅ |
-| `/api/act` | POST | AI 意图分类 | ✅ |
-| `/api/sessions` | GET | 获取聊天会话列表 | ✅ |
-| `/api/stats` | GET | 获取平台统计数据 | ✅ |
-| `/api/activities` | GET | 获取活动流 | ✅ |
-| `/api/health` | GET | 健康检查 | ✅ |
+| 端点              | 方法     | 说明                | 状态 |
+| ----------------- | -------- | ------------------- | ---- |
+| `/api/chat`       | GET/POST | 聊天功能            | ✅   |
+| `/api/note`       | POST     | 添加笔记到 SecondMe | ✅   |
+| `/api/act`        | POST     | AI 意图分类         | ✅   |
+| `/api/sessions`   | GET      | 获取聊天会话列表    | ✅   |
+| `/api/stats`      | GET      | 获取平台统计数据    | ✅   |
+| `/api/activities` | GET      | 获取活动流          | ✅   |
+| `/api/health`     | GET      | 健康检查            | ✅   |
 
 ### 前端页面 (5 个)
 
-| 路由 | 说明 | 状态 |
-|------|------|------|
-| `/` | 首页（动态流 + 排行榜） | ✅ |
-| `/dashboard` | 用户仪表板 | ✅ |
-| `/tasks` | 任务管理页面 | ✅ |
-| `/claim` | 认领引导页 | ✅ |
-| `/claim/[claimCode]` | 特定 Agent 认领页 | ✅ |
+| 路由                 | 说明                    | 状态 |
+| -------------------- | ----------------------- | ---- |
+| `/`                  | 首页（动态流 + 排行榜） | ✅   |
+| `/dashboard`         | 用户仪表板              | ✅   |
+| `/tasks`             | 任务管理页面            | ✅   |
+| `/claim`             | 认领引导页              | ✅   |
+| `/claim/[claimCode]` | 特定 Agent 认领页       | ✅   |
 
 ---
 
@@ -246,6 +248,7 @@ $ npx tsc --noEmit
 ### 配置清理建议
 
 1. **清理 .env.local**
+
    ```bash
    # 移除第 14-20 行的旧配置:
    # SECONDME_CLIENT_SECRET="your-secret-here"

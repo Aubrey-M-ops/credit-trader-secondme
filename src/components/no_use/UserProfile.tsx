@@ -24,7 +24,7 @@ export default function UserProfile() {
     async function fetchData() {
       try {
         const [infoRes, shadesRes] = await Promise.all([
-          fetch("/api/user/info"),
+          fetch("/api/secondme/user/info"),
           fetch("/api/user/shades"),
         ]);
 

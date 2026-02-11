@@ -1,6 +1,7 @@
 # OAuth Claim Flow Testing Report
 
 ## Test Information
+
 - **Test Date**: 2026-02-11
 - **Tester**: manual-tester (testing-team)
 - **Test Claim Code**: 809A6242
@@ -82,6 +83,7 @@ const userRes = await fetch(
 ```
 
 **Current .env configuration:**
+
 ```bash
 SECONDME_CLIENT_ID="52db82cf-****-****-****-62eb62570026"
 SECONDME_CLIENT_SECRET="your-secret-here"
@@ -89,6 +91,7 @@ SECONDME_REDIRECT_URI="http://localhost:3000/api/auth/callback"
 ```
 
 **Missing variables (based on state.json):**
+
 ```bash
 SECONDME_OAUTH_URL="https://go.second.me/oauth/authorize"
 SECONDME_TOKEN_ENDPOINT="https://go.second.me/oauth/token"
@@ -97,7 +100,7 @@ SECONDME_API_BASE_URL="https://app.mindos.com/gate/lab"
 
 #### 🟡 Medium: API Endpoint Mismatch
 
-- state.json shows user info endpoint: `/api/user/info`
+- state.json shows user info endpoint: `/api/secondme/user/info`
 - Code calls: `/api/secondme/user/info`
 - This may cause 404 errors when fetching user information
 
@@ -111,12 +114,14 @@ SECONDME_API_BASE_URL="https://app.mindos.com/gate/lab"
 #### 🟢 Minor: Duplicate API Endpoints
 
 Two endpoints for claim validation:
+
 - `/api/claim/[claimCode]` - Used by the claim page (correct)
 - `/api/agents/claim?code=XXXXX` - Alternative endpoint, may be redundant
 
 #### 🟢 Minor: Error Message Inconsistency
 
 The claim page expects specific error messages but the API returns different formats:
+
 - API returns: `{ error: "Agent has already been claimed" }` with status 400
 - Client checks: `res.status === 400` → "Agent has already been claimed"
 - This works but could be more consistent
@@ -126,12 +131,14 @@ The claim page expects specific error messages but the API returns different for
 ### ✅ Successful Tests
 
 1. **Agent Registration**: ✅ PASS
+
    ```bash
    curl -X POST http://localhost:3000/api/agents/register
    # Returns proper claimCode and claimUrl
    ```
 
 2. **Claim API Validation**: ✅ PASS
+
    ```bash
    curl http://localhost:3000/api/claim/809A6242
    # Returns agent info with truncated API key
@@ -144,6 +151,7 @@ The claim page expects specific error messages but the API returns different for
 ### ⏸️ Blocked Tests
 
 Cannot complete full OAuth flow due to:
+
 1. Missing environment variables for SecondMe endpoints
 2. Potential API endpoint mismatch in user info call
 
@@ -152,6 +160,7 @@ Cannot complete full OAuth flow due to:
 ### Immediate Actions (Critical)
 
 1. **Add missing environment variables to .env:**
+
    ```bash
    SECONDME_OAUTH_URL="https://go.second.me/oauth/authorize"
    SECONDME_TOKEN_ENDPOINT="https://go.second.me/oauth/token"
@@ -160,29 +169,31 @@ Cannot complete full OAuth flow due to:
 
 2. **Verify user info endpoint:**
    - Check SecondMe API documentation
-   - Confirm: `/api/user/info` vs `/api/secondme/user/info`
+   - Confirm: `/api/secondme/user/info` vs `/api/secondme/user/info`
    - Update code or state.json accordingly
 
 ### Short-term Improvements
 
 3. **Update state.json redirect_uri:**
+
    ```json
    "redirect_uri": "http://localhost:3000/api/auth/callback"
    ```
 
 4. **Add environment variable validation:**
+
    ```typescript
    // At top of auth files
    const requiredEnvVars = [
-     'SECONDME_CLIENT_ID',
-     'SECONDME_CLIENT_SECRET',
-     'SECONDME_OAUTH_URL',
-     'SECONDME_TOKEN_ENDPOINT',
-     'SECONDME_API_BASE_URL',
-     'SECONDME_REDIRECT_URI'
+     "SECONDME_CLIENT_ID",
+     "SECONDME_CLIENT_SECRET",
+     "SECONDME_OAUTH_URL",
+     "SECONDME_TOKEN_ENDPOINT",
+     "SECONDME_API_BASE_URL",
+     "SECONDME_REDIRECT_URI",
    ];
 
-   requiredEnvVars.forEach(varName => {
+   requiredEnvVars.forEach((varName) => {
      if (!process.env[varName]) {
        throw new Error(`Missing required environment variable: ${varName}`);
      }
@@ -236,6 +247,7 @@ The OAuth claim flow implementation is **well-structured and secure**, but is cu
 ---
 
 **Next Steps for Testing Team**:
+
 1. Work with DevOps to add missing environment variables
 2. Verify SecondMe API endpoints with documentation
 3. Restart the development server
