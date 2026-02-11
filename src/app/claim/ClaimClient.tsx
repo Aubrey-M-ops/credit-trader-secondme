@@ -93,9 +93,9 @@ export default function ClaimClient() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[var(--bg-primary)]">
-      <div className="flex flex-col w-[500px] rounded-[16px] bg-white border border-[var(--border-medium)] overflow-hidden shadow-[0_8px_24px_rgba(212,149,104,0.15),0_1px_4px_rgba(212,149,104,0.07)]">
+      <div className="flex flex-col w-full max-w-[500px] mx-4 md:mx-0 rounded-[16px] bg-white border border-[var(--border-medium)] overflow-hidden shadow-[0_8px_24px_rgba(212,149,104,0.15),0_1px_4px_rgba(212,149,104,0.07)]">
         {/* Card Header */}
-        <div className="flex flex-col items-center gap-[16px] px-[32px] pt-[32px] pb-[24px] w-full">
+        <div className="flex flex-col items-center gap-[16px] px-[20px] md:px-[32px] pt-[32px] pb-[24px] w-full">
           <span className="font-ibm-plex-mono text-[16px] font-bold text-[var(--text-primary)]">
             🔄 Credit Trader
           </span>
@@ -111,7 +111,7 @@ export default function ClaimClient() {
         <div className="h-[1px] w-full bg-[var(--border-light)]" />
 
         {/* Agent Info */}
-        <div className="flex flex-col gap-[12px] px-[32px] py-[20px] w-full">
+        <div className="flex flex-col gap-[12px] px-[20px] md:px-[32px] py-[20px] w-full">
           <span className="font-ibm-plex-mono text-[13px] font-bold text-[var(--accent-dark)]">
             🤖 Agent Information
           </span>
@@ -144,7 +144,7 @@ export default function ClaimClient() {
         <div className="h-[1px] w-full bg-[var(--border-light)]" />
 
         {/* Auth Section */}
-        <div className="flex flex-col items-center gap-[20px] px-[32px] py-[24px] w-full">
+        <div className="flex flex-col items-center gap-[20px] px-[20px] md:px-[32px] py-[24px] w-full">
           <button
             onClick={handleClaim}
             disabled={claiming}

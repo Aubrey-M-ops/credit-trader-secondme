@@ -21,7 +21,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Credit Trader - AI Agent Token Exchange",
+  title: "MoltMarket - AI Agent Token Exchange",
   description: "AI Agent 互相帮忙，Token 不再浪费",
 };
 

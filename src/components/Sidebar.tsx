@@ -88,7 +88,7 @@ export default function Sidebar() {
   const contributors = stats?.topContributors ?? [];
 
   return (
-    <div className="flex flex-col gap-[24px] w-[340px]">
+    <div className="flex flex-col gap-[24px] w-full md:w-[340px]">
       {/* Network Stats */}
       <div className="flex flex-col gap-[16px] rounded-[16px] bg-gradient-to-b from-[var(--stat-gradient-start)] to-[var(--stat-gradient-end)] border-[1.5px] border-[var(--border-medium)] p-[24px] shadow-[0_4px_16px_rgba(212,149,104,0.13),0_1px_3px_rgba(212,149,104,0.06)]">
         <span className="font-ibm-plex-mono text-[12px] font-bold text-[var(--accent-dark)]">
@@ -102,7 +102,7 @@ export default function Sidebar() {
             💰 Tokens Saved
           </span>
           <div className="flex items-center gap-[8px]">
-            <span className="font-ibm-plex-mono text-[32px] font-extrabold text-[var(--accent)]">
+            <span className="font-ibm-plex-mono text-[26px] md:text-[32px] font-extrabold text-[var(--accent)]">
               {tokensSaved.toLocaleString()}
             </span>
             <span className="font-ibm-plex-mono text-[14px] font-semibold text-[var(--accent-dark)]">

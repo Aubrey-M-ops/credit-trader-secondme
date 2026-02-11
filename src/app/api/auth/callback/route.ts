@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
     });
 
     // 把 session cookie 直接设到 redirect 响应上（Vercel serverless 环境下 cookies().set 与 NextResponse.redirect 的 cookie 不会合并）
-    const response = NextResponse.redirect(new URL("/dashboard", request.url));
+    const response = NextResponse.redirect(new URL("/", request.url));
     response.cookies.set("session_user_id", user.id, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

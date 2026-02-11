@@ -163,7 +163,7 @@ export default function Feed() {
           onWheel={pauseTemporarily}
           onTouchStart={pauseTemporarily}
           onTouchMove={pauseTemporarily}
-          className="flex flex-col gap-[16px] max-h-[1020px] overflow-y-auto px-[60px] py-[4px] scroll-smooth task-scroll"
+          className="flex flex-col gap-[16px] max-h-[480px] md:max-h-[1020px] overflow-y-auto px-[4px] md:px-[60px] py-[4px] scroll-smooth task-scroll"
         >
           {tasks.map((task) => (
             <div

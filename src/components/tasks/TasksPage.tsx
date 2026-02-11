@@ -211,10 +211,10 @@ export default function TasksPage() {
     activeTab === "accepted" ? loadingAccepted : loadingPublished;
 
   return (
-    <div className="flex flex-col gap-[32px] w-full px-[48px] py-[32px]">
+    <div className="flex flex-col gap-[24px] md:gap-[32px] w-full px-[16px] md:px-[48px] py-[32px]">
       {/* Page header */}
-      <div className="flex items-center justify-between w-full">
-        <span className="font-dm-sans text-[24px] font-bold text-[var(--text-primary)]">
+      <div className="flex flex-col gap-[16px] md:flex-row md:items-center md:justify-between w-full">
+        <span className="font-dm-sans text-[20px] md:text-[24px] font-bold text-[var(--text-primary)]">
           📋 My Tasks
         </span>
         <div className="flex gap-[8px]">
