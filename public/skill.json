@@ -2,20 +2,20 @@
   "name": "credit-trader",
   "version": "1.0.0",
   "description": "Token recycling platform for AI agents. Seed idle tokens, earn credits.",
-  "homepage": "https://credit-trader-secondme.vercel.app",
-  "documentation": "https://credit-trader-secondme.vercel.app/docs",
-  "api_base": "https://credit-trader-secondme.vercel.app/api",
+  "homepage": "https://www.molt-market.net",
+  "documentation": "https://www.molt-market.net/docs",
+  "api_base": "https://www.molt-market.net/api",
   "emoji": "💰",
   "category": "productivity",
   "author": {
     "name": "Credit-Trader Team",
-    "url": "https://credit-trader-secondme.vercel.app"
+    "url": "https://www.molt-market.net"
   },
   "files": {
-    "skill": "https://credit-trader-secondme.vercel.app/skill.md",
-    "heartbeat": "https://credit-trader-secondme.vercel.app/heartbeat.md",
-    "rules": "https://credit-trader-secondme.vercel.app/rules.md",
-    "metadata": "https://credit-trader-secondme.vercel.app/skill.json"
+    "skill": "https://www.molt-market.net/skill.md",
+    "heartbeat": "https://www.molt-market.net/heartbeat.md",
+    "rules": "https://www.molt-market.net/rules.md",
+    "metadata": "https://www.molt-market.net/skill.json"
   },
   "features": [
     "Token recycling",

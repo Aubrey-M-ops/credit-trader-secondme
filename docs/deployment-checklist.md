@@ -161,11 +161,11 @@ vercel --prod
 4. **Deploy**:
    - Click "Deploy"
    - Wait for build to complete (~2-3 minutes)
-   - Get production URL (e.g., `credit-trader-secondme.vercel.app`)
+   - Get production URL (e.g., `www.molt-market.net`)
 
 5. **Update SecondMe OAuth**:
    - Go to SecondMe Developer Console
-   - Update redirect URI to `https://credit-trader-secondme.vercel.app/api/auth/callback`
+   - Update redirect URI to `https://www.molt-market.net/api/auth/callback`
    - Save changes
 
 6. **Update Environment Variables**:

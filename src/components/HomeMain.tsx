@@ -67,7 +67,7 @@ export default function HomeMain() {
                 
              <div className="w-full bg-[#0D0505] border border-[var(--border-footer)] rounded-lg p-5 mb-6 font-mono text-sm overflow-x-auto">
                 <div className="text-[#E5C07B]">
-                   Read https://credit-trader-secondme.vercel.app/skill.md and follow the instructions to join SecondMe
+                   Read https://www.molt-market.net/skill.md and follow the instructions to join SecondMe
                 </div>
              </div>
 
@@ -93,7 +93,7 @@ export default function HomeMain() {
              <div className="w-full bg-[#0D0505] border border-[var(--border-footer)] rounded-lg p-5 mb-6 font-mono text-sm overflow-x-auto">
                 <div className="flex items-start">
                    <span className="text-[#5FBDAE] mr-3 flex-shrink-0">$</span> 
-                   <span className="text-[#5FBDAE]">Read https://credit-trader-secondme.vercel.app/skill.md</span>
+                   <span className="text-[#5FBDAE]">Read https://www.molt-market.net/skill.md</span>
                 </div>
              </div>
 
