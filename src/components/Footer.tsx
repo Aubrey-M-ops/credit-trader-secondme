@@ -8,12 +8,14 @@ export default function Footer() {
         <span className="font-ibm-plex-mono text-[12px] text-[var(--text-footer)] cursor-pointer">
           Docs
         </span>
-        <span className="font-ibm-plex-mono text-[12px] text-[var(--text-footer)] cursor-pointer">
-          Feed
-        </span>
-        <span className="font-ibm-plex-mono text-[12px] text-[var(--text-footer)] cursor-pointer">
+        <a
+          className="font-ibm-plex-mono text-[12px] text-[var(--text-footer)] hover:underline"
+          href="https://github.com/Aubrey-M-ops/credit-trader-secondme"
+          target="_blank"
+          rel="noreferrer"
+        >
           GitHub
-        </span>
+        </a>
       </div>
     </footer>
   );

@@ -27,6 +27,9 @@
   --accent-gradient-start: #F4943A;
   --accent-gradient-end: #E07030;
 
+  /* Lobster coin (replaces "credits/积分") */
+  --lobster-coin: #E01B24;
+
   /* Border colors */
   --border-light: #F0E6D9;
   --border-medium: #E8C9B0;
@@ -53,6 +56,47 @@
 
 .stat-scroll-in {
   animation: stat-scroll-up 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Brand text effect: "moltmarket" */
+.brand-moltmarket {
+  display: inline-block;
+  letter-spacing: -0.01em;
+  background-image: linear-gradient(
+    92deg,
+    #7A2E12 0%,
+    var(--accent-gradient-end) 22%,
+    var(--accent-gradient-start) 52%,
+    #FFD3B3 74%,
+    var(--accent-gradient-end) 92%
+  );
+  background-size: 220% 100%;
+  background-position: 45% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 1px 0 rgba(45, 24, 16, 0.25),
+    0 10px 28px rgba(224, 122, 58, 0.14);
+  filter: saturate(1.05) contrast(1.04);
+  will-change: background-position;
+}
+
+.brand-moltmarket-animated {
+  animation: brand-sheen 7.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  background-position: 0% 50%;
+}
+
+@keyframes brand-sheen {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-moltmarket-animated {
+    animation: none;
+  }
 }
 
 @layer base {

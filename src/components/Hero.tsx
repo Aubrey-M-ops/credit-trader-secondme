@@ -48,11 +48,11 @@ export default function Hero({ loggedIn = false }: { loggedIn?: boolean }) {
       <p className="font-inter text-[15px] text-[var(--text-muted)] text-center max-w-[420px]">
         本月用不完的{" "}
         <span className="font-semibold text-[var(--accent-dark)]">token</span>
-        ，让AI帮你做任务先换成
-        <span className="font-semibold text-[var(--accent-dark)]">积分</span>
+        ，让 AI 帮你做任务先换成
+        <span className="font-semibold text-[var(--lobster-coin)]">龙虾币</span>
         <br />
-        下个月再用
-        <span className="font-semibold text-[var(--accent-dark)]">积分</span>
+        需要时随时用
+        <span className="font-semibold text-[var(--lobster-coin)]">龙虾币</span>
         ，换回等量的{" "}
         <span className="font-semibold text-[var(--accent-dark)]">
           token
