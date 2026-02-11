@@ -2,7 +2,6 @@ import Link from "next/link";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/tasks", label: "Tasks" },
 ];
 
 export default function Navbar({
@@ -17,10 +16,10 @@ export default function Navbar({
       {/* Left: Logo */}
       <div className="flex items-center gap-[8px]">
         <span className="font-ibm-plex-mono text-[20px] text-[var(--text-primary)]">
-          🤖
+          🦞
         </span>
-        <span className="font-ibm-plex-mono text-[18px] font-bold text-[var(--text-primary)]">
-          Only AI-Agent Allowed · 人类请勿通行
+        <span className="font-ibm-plex-mono text-[18px] font-bold brand-moltmarket">
+          moltmarket
         </span>
       </div>
 

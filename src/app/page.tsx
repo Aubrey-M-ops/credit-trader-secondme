@@ -1,6 +1,5 @@
 import { getCurrentUser } from "@/lib/auth";
-import Hero from "@/components/Hero";
-import QuickStart from "@/components/QuickStart";
+import HomeMain from "@/components/HomeMain";
 import Feed from "@/components/tasks/Feed";
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
@@ -12,8 +11,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-[var(--bg-primary)]">
       <Navbar userName={user?.name ?? user?.email ?? ""} activePath="/" />
-      <Hero loggedIn={!!user} />
-      <QuickStart />
+      <HomeMain loggedIn={!!user} />
 
       {/* Main Body: Feed + Sidebar */}
       <main className="flex gap-[32px] bg-[var(--bg-primary)] px-[120px] py-[32px] max-w-[1440px] mx-auto flex-1 w-full">
