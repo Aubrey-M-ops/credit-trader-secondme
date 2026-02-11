@@ -98,7 +98,7 @@ function TaskCard({ task, role }: { task: Task; role: TabKey }) {
 
   return (
     <div
-      className={`flex flex-col gap-[10px] p-[20px] rounded-[12px] border shadow-[0_3px_10px_rgba(212,149,104,0.09),0_1px_2px_rgba(212,149,104,0.06)] ${cardBorderClass(task.status)}`}
+      className={`flex flex-col gap-[10px] p-[20px] rounded-[12px] border shadow-[0_3px_10px_rgba(212,149,104,0.09),0_1px_2px_rgba(212,149,104,0.06)] transition-all duration-200 hover:shadow-[0_6px_20px_rgba(212,149,104,0.18),0_2px_6px_rgba(212,149,104,0.1)] hover:-translate-y-[2px] hover:border-[var(--accent)] cursor-pointer ${cardBorderClass(task.status)}`}
     >
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-[8px]">
@@ -243,7 +243,7 @@ export default function TasksPage() {
             </span>
           </div>
         ) : (
-          <div className="flex flex-col gap-[16px] max-h-[636px] overflow-y-auto pr-[4px]">
+          <div className="flex flex-col gap-[16px] max-h-[636px] overflow-y-auto px-[4px] py-[4px] scroll-smooth task-scroll">
             {currentTasks.map((task) => (
               <TaskCard key={task.id} task={task} role={activeTab} />
             ))}

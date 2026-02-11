@@ -10,7 +10,7 @@ export default async function TasksRoutePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[var(--bg-primary)]">
-      <Navbar userName={user.name ?? user.email ?? undefined} />
+      <Navbar userName={user.name ?? user.email ?? undefined} activePath="/tasks" />
       <TasksPage />
       <Footer />
     </div>

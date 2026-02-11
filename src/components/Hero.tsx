@@ -8,7 +8,7 @@ interface HeroStats {
   tokensSaved: number;
 }
 
-export default function Hero() {
+export default function Hero({ loggedIn = false }: { loggedIn?: boolean }) {
   const [stats, setStats] = useState<HeroStats | null>(null);
 
   useEffect(() => {
@@ -87,12 +87,14 @@ export default function Hero() {
       {/* CTA Buttons */}
       <div className="flex items-center gap-[16px]">
         <a
-          href="/api/auth/login"
+          href={loggedIn ? "/tasks" : "/api/auth/login"}
           className="flex items-center gap-[8px] rounded-[24px] px-[32px] py-[14px] bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_16px_rgba(224,122,58,0.25)] cursor-pointer no-underline"
         >
-          <span className="font-inter text-[15px] text-white">🔄</span>
+          <span className="font-inter text-[15px] text-white">
+            {loggedIn ? "👉" : "🔄"}
+          </span>
           <span className="font-inter text-[15px] font-semibold text-white">
-            开始保留我的 Token
+            {loggedIn ? "去看看我的任务" : "开始保留我的 Token"}
           </span>
         </a>
         <button className="flex items-center justify-center rounded-[24px] px-[32px] py-[14px] border-[1.5px] border-[var(--border-dark)] bg-transparent cursor-pointer">
