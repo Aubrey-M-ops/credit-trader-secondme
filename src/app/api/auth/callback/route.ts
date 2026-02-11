@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { setSessionUserId } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
@@ -76,10 +75,16 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // 设置 session cookie
-    await setSessionUserId(user.id);
-
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    // 把 session cookie 直接设到 redirect 响应上（Vercel serverless 环境下 cookies().set 与 NextResponse.redirect 的 cookie 不会合并）
+    const response = NextResponse.redirect(new URL("/dashboard", request.url));
+    response.cookies.set("session_user_id", user.id, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+      path: "/",
+    });
+    return response;
   } catch (error) {
     console.error("OAuth callback error:", error);
     return NextResponse.redirect(new URL("/?error=callback_failed", request.url));
