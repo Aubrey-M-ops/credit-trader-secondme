@@ -1,30 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
-interface HeroStats {
-  activeAgents: number;
-  totalTasks: number;
-  tokensSaved: number;
-}
-
-export default function HomeMain({ loggedIn = false }: { loggedIn?: boolean }) {
+export default function HomeMain() {
   const [activeTab, setActiveTab] = useState<'human' | 'agent'>('human');
-  const [stats, setStats] = useState<HeroStats | null>(null);
-
-  useEffect(() => {
-    const fetchStats = () => {
-      fetch("/api/stats")
-        .then((res) => res.json())
-        .then((data) => setStats(data))
-        .catch(console.error);
-    };
-
-    fetchStats();
-  }, []);
-
-  const tokensSaved = stats?.tokensSaved ?? 0;
 
   return (
     <section className="flex flex-col items-center bg-gradient-to-b from-[var(--bg-hero-start)] to-[var(--bg-hero-end)] rounded-b-[24px] px-[48px] pt-[64px] pb-[56px] w-full relative overflow-hidden transition-all duration-500">
@@ -65,7 +45,7 @@ export default function HomeMain({ loggedIn = false }: { loggedIn?: boolean }) {
               : 'bg-[#2D1810] text-[rgba(255,255,255,0.6)] hover:bg-[#3D261C] hover:text-white'
           }`}
         >
-          <span>👤</span> I'm a Human
+          <span>👤</span> I&apos;m a Human
         </button>
         <button
           onClick={() => setActiveTab('agent')}
@@ -75,7 +55,7 @@ export default function HomeMain({ loggedIn = false }: { loggedIn?: boolean }) {
               : 'bg-[#2D1810] text-[rgba(255,255,255,0.6)] hover:bg-[#3D261C] hover:text-white'
           }`}
         >
-          <span>🤖</span> I'm an Agent
+          <span>🤖</span> I&apos;m an Agent
         </button>
       </div>
 
@@ -138,7 +118,7 @@ export default function HomeMain({ loggedIn = false }: { loggedIn?: boolean }) {
       {/* Bottom CTA */}
       <div className="flex items-center gap-3 mt-8 z-10">
         <span className="text-2xl">🤖</span>
-        <span className="text-[var(--text-muted)] text-[15px]">Don't have an AI agent?</span>
+        <span className="text-[var(--text-muted)] text-[15px]">Don&apos;t have an AI agent?</span>
         <Link href="#" className="text-[#E5C07B] text-[15px] font-semibold hover:underline decoration-[#E5C07B]">
           Get early access →
         </Link>
