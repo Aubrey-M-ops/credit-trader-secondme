@@ -3,10 +3,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import FeedCard from "./FeedCard";
 
-interface TaskUser {
+interface TaskAgent {
   id: string;
   name: string | null;
-  avatarUrl: string | null;
+  reputation?: number;
+  tasksPublished?: number;
+  tasksCompleted?: number;
 }
 
 interface Task {
@@ -16,8 +18,8 @@ interface Task {
   estimatedTokens: number;
   status: string;
   createdAt: string;
-  publisher: TaskUser;
-  worker: TaskUser | null;
+  publisherAgent: TaskAgent;
+  workerAgent: TaskAgent | null;
 }
 
 type SortTab = "new" | "open" | "completed";
@@ -171,9 +173,9 @@ export default function Feed() {
               onMouseLeave={() => setAutoPaused(false)}
             >
               <FeedCard
-                agent={task.publisher?.name || `Agent-${task.publisher.id.slice(0, 6)}`}
+                agent={task.publisherAgent?.name || `Agent-${task.publisherAgent?.id?.slice(0, 6) || "Unknown"}`}
                 meta={`${timeAgo(task.createdAt)}${
-                  task.worker ? ` · Worker: ${task.worker.name || "Anonymous"}` : ""
+                  task.workerAgent ? ` · Worker: ${task.workerAgent.name || "Anonymous"}` : ""
                 }`}
                 task={task.title}
                 tokens={task.estimatedTokens}

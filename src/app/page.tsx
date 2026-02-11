@@ -16,7 +16,7 @@ export default async function Home() {
       <QuickStart />
 
       {/* Main Body: Feed + Sidebar */}
-      <main className="flex gap-[32px] bg-[var(--bg-primary)] px-[120px] py-[32px] width-[70%] flex-1">
+      <main className="flex gap-[32px] bg-[var(--bg-primary)] px-[120px] py-[32px] max-w-[1440px] mx-auto flex-1 w-full">
         <Feed />
         <Sidebar />
       </main>

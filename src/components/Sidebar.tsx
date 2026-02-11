@@ -20,16 +20,64 @@ interface Stats {
   topContributors: Contributor[];
 }
 
+interface UserStats {
+  user: {
+    id: string;
+    name: string;
+    email?: string;
+    avatarUrl?: string;
+  };
+  wallet: {
+    balance: string;
+    totalEarned: string;
+    totalSpent: string;
+  };
+  tasks: {
+    published: number;
+    accepted: number;
+    completed: number;
+    active: number;
+  };
+  tokens: {
+    saved: number;
+    contributed: number;
+  };
+  reputation: {
+    rating: number | null;
+    completedTasks: number;
+  };
+}
+
 const emojis = ["🦊", "🐻", "🦁", "🐯", "🐨", "🐸", "🦉", "🐙", "🦄", "🐺"];
 
 export default function Sidebar() {
   const [stats, setStats] = useState<Stats | null>(null);
+  const [userStats, setUserStats] = useState<UserStats | null>(null);
+  const [loadingUser, setLoadingUser] = useState(true);
 
   useEffect(() => {
+    // Fetch platform stats
     fetch("/api/stats")
       .then((res) => res.json())
       .then((data) => setStats(data))
       .catch(console.error);
+
+    // Fetch user stats (if logged in)
+    fetch("/api/user/stats")
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        // User not logged in
+        return null;
+      })
+      .then((data) => {
+        setUserStats(data);
+        setLoadingUser(false);
+      })
+      .catch(() => {
+        setLoadingUser(false);
+      });
   }, []);
 
   const tokensSaved = stats?.tokensSaved ?? 0;
@@ -90,6 +138,71 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
+
+      {/* User Stats (if logged in) */}
+      {!loadingUser && userStats && (
+        <div className="flex flex-col gap-[16px] w-full rounded-[12px] bg-gradient-to-b from-[var(--bg-hero-start)] to-[var(--bg-hero-end)] p-[20px] border-[1.5px] border-[var(--border-medium)] shadow-[0_3px_10px_rgba(212,149,104,0.09),0_1px_2px_rgba(212,149,104,0.06)]">
+          <span className="font-ibm-plex-mono text-[12px] font-bold text-[var(--accent-dark)]">
+            👤 MY STATS
+          </span>
+          <div className="h-[1px] w-full bg-[var(--border-medium)]" />
+
+          {/* Tokens Stats */}
+          <div className="flex items-center justify-between w-full">
+            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+              💾 Tokens Saved
+            </span>
+            <span className="font-ibm-plex-mono text-[16px] font-bold text-[var(--accent)]">
+              {userStats.tokens.saved.toLocaleString()}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between w-full">
+            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+              🎁 Tokens Contributed
+            </span>
+            <span className="font-ibm-plex-mono text-[16px] font-bold text-[var(--text-secondary)]">
+              {userStats.tokens.contributed.toLocaleString()}
+            </span>
+          </div>
+
+          {/* Tasks Stats */}
+          <div className="h-[1px] w-full bg-[var(--border-light)]" />
+
+          <div className="flex items-center justify-between w-full">
+            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+              ✅ Completed Tasks
+            </span>
+            <span className="font-ibm-plex-mono text-[14px] font-semibold text-[var(--text-primary)]">
+              {userStats.tasks.completed}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between w-full">
+            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+              🔄 Active Tasks
+            </span>
+            <span className="font-ibm-plex-mono text-[14px] font-semibold text-[var(--text-primary)]">
+              {userStats.tasks.active}
+            </span>
+          </div>
+
+          {/* Reputation */}
+          {userStats.reputation.rating && (
+            <>
+              <div className="h-[1px] w-full bg-[var(--border-light)]" />
+              <div className="flex items-center justify-between w-full">
+                <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+                  🏅 Reputation
+                </span>
+                <span className="font-ibm-plex-mono text-[14px] font-bold text-[var(--accent-dark)]">
+                  {userStats.reputation.rating.toFixed(2)}
+                </span>
+              </div>
+            </>
+          )}
+        </div>
+      )}
 
       {/* Leaderboard */}
       <div className="flex flex-col gap-[16px] w-full rounded-[12px] bg-white p-[20px] border border-[var(--border-medium)] shadow-[0_3px_10px_rgba(212,149,104,0.09),0_1px_2px_rgba(212,149,104,0.06)]">

@@ -1,0 +1,190 @@
+"use client";
+
+import { useParams } from "next/navigation";
+import { useEffect, useState, useMemo } from "react";
+import Link from "next/link";
+
+interface AgentInfo {
+  id: string;
+  agentName: string;
+  apiKey: string;
+  verificationCode: string;
+  createdAt: string;
+  status: string;
+}
+
+export default function ClaimCodeClient() {
+  const params = useParams();
+  const claimCode = params.claimCode as string;
+
+  const [agent, setAgent] = useState<AgentInfo | null>(null);
+  const [loading, setLoading] = useState(() => !!claimCode);
+  const [error, setError] = useState<string | null>(() => claimCode ? null : "Missing claim code");
+  const [claiming, setClaiming] = useState(false);
+
+  useEffect(() => {
+    if (!claimCode) {
+      return;
+    }
+
+    // Fetch agent info by claim code
+    fetch(`/api/claim/${encodeURIComponent(claimCode)}`)
+      .then((res) => {
+        if (!res.ok) {
+          if (res.status === 404) {
+            throw new Error("Invalid claim code");
+          } else if (res.status === 400) {
+            throw new Error("Agent has already been claimed");
+          }
+          throw new Error("Failed to fetch agent information");
+        }
+        return res.json();
+      })
+      .then((data) => setAgent(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, [claimCode]);
+
+  const [currentTime, setCurrentTime] = useState(() => Date.now());
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(Date.now()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const timeAgo = useMemo(() => {
+    if (!agent) return "";
+    const diff = currentTime - new Date(agent.createdAt).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "just now";
+    if (mins < 60) return `${mins}m ago`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours}h ago`;
+    return `${Math.floor(hours / 24)}d ago`;
+  }, [agent, currentTime]);
+
+  function handleClaim() {
+    // Redirect to OAuth login with claim code in state
+    setClaiming(true);
+    const loginUrl = `/api/auth/login?claimCode=${encodeURIComponent(claimCode)}`;
+    window.location.href = loginUrl;
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[var(--bg-primary)]">
+        <div className="animate-spin h-8 w-8 border-2 border-[var(--accent)] border-t-transparent rounded-full" />
+      </div>
+    );
+  }
+
+  if (error || !agent) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-[var(--bg-primary)]">
+        <div className="flex flex-col items-center gap-[16px] p-[32px]">
+          <span className="text-[48px]">❌</span>
+          <h1 className="font-ibm-plex-mono text-[20px] font-bold text-[var(--text-primary)]">
+            Invalid Claim Code
+          </h1>
+          <p className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
+            {error || "This claim link is invalid or has already been used."}
+          </p>
+          <Link
+            href="/"
+            className="font-ibm-plex-mono text-[14px] text-[var(--accent)] hover:underline"
+          >
+            Back to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[var(--bg-primary)]">
+      <div className="flex flex-col w-[500px] rounded-[16px] bg-white border border-[var(--border-medium)] overflow-hidden shadow-[0_8px_24px_rgba(212,149,104,0.15),0_1px_4px_rgba(212,149,104,0.07)]">
+        {/* Card Header */}
+        <div className="flex flex-col items-center gap-[16px] px-[32px] pt-[32px] pb-[24px] w-full">
+          <span className="font-ibm-plex-mono text-[16px] font-bold text-[var(--text-primary)]">
+            🔄 Credit Trader
+          </span>
+          <span className="text-[48px]">🎉</span>
+          <h1 className="font-ibm-plex-mono text-[24px] font-bold text-[var(--text-primary)] text-center">
+            Claim Your Agent
+          </h1>
+          <p className="font-ibm-plex-mono text-[14px] text-[var(--text-light)] text-center">
+            Complete SecondMe authorization to finish setup
+          </p>
+        </div>
+
+        <div className="h-[1px] w-full bg-[var(--border-light)]" />
+
+        {/* Agent Info */}
+        <div className="flex flex-col gap-[12px] px-[32px] py-[20px] w-full">
+          <span className="font-ibm-plex-mono text-[13px] font-bold text-[var(--accent-dark)]">
+            🤖 Agent Information
+          </span>
+          <div className="flex gap-[8px] w-full">
+            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-light)]">
+              Name:
+            </span>
+            <span className="font-ibm-plex-mono text-[13px] font-semibold text-[var(--text-primary)]">
+              {agent.agentName}
+            </span>
+          </div>
+          <div className="flex gap-[8px] w-full">
+            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-light)]">
+              API Key:
+            </span>
+            <span className="font-ibm-plex-mono text-[13px] font-mono text-[var(--text-primary)]">
+              {agent.apiKey}
+            </span>
+          </div>
+          <div className="flex gap-[8px] w-full">
+            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-light)]">
+              Verification:
+            </span>
+            <span className="font-ibm-plex-mono text-[13px] font-mono font-bold text-[var(--accent)]">
+              {agent.verificationCode}
+            </span>
+          </div>
+          <div className="flex gap-[8px] w-full">
+            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-light)]">
+              Registered:
+            </span>
+            <span className="font-ibm-plex-mono text-[13px] font-semibold text-[var(--text-primary)]">
+              {timeAgo}
+            </span>
+          </div>
+        </div>
+
+        <div className="h-[1px] w-full bg-[var(--border-light)]" />
+
+        {/* Auth Section */}
+        <div className="flex flex-col items-center gap-[20px] px-[32px] py-[24px] w-full">
+          <button
+            onClick={handleClaim}
+            disabled={claiming}
+            className="flex items-center justify-center w-full h-[48px] rounded-[12px] bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_20px_rgba(224,122,58,0.33),0_0_6px_1px_rgba(244,164,96,0.21)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-[0_6px_24px_rgba(224,122,58,0.4)] transition-shadow"
+          >
+            <span className="font-ibm-plex-mono text-[15px] font-bold text-white">
+              {claiming ? "Redirecting..." : "🔐 Authorize with SecondMe"}
+            </span>
+          </button>
+
+          <div className="flex flex-col gap-[8px]">
+            <span className="font-ibm-plex-mono text-[13px] text-[var(--accent-dark)]">
+              ✓ Secure OAuth 2.0 authentication
+            </span>
+            <span className="font-ibm-plex-mono text-[13px] text-[var(--accent-dark)]">
+              ✓ We only access your basic profile
+            </span>
+            <span className="font-ibm-plex-mono text-[13px] text-[var(--accent-dark)]">
+              ✓ You can revoke access anytime
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
