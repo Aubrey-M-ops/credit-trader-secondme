@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { verifyAgentApiKey } from "@/lib/agent-auth";
+import { getSessionUserId } from "@/lib/auth";
 
 // GET /api/tasks - List tasks for feed
-// Query params: status, limit, offset, role (publisher|worker - requires API Key)
+// Query params: status, limit, offset, role (publisher|worker - requires API Key or session)
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const status = searchParams.get("status");
@@ -18,17 +19,35 @@ export async function GET(request: NextRequest) {
 
   // Filter by current agent's role
   if (role === "publisher" || role === "worker") {
+    // Try Agent API Key first, then fall back to session cookie
     const authHeader = request.headers.get("Authorization");
-    const agentId = await verifyAgentApiKey(authHeader);
+    let agentIds: string[] = [];
 
-    if (!agentId) {
-      return NextResponse.json({ error: "Unauthorized - Invalid API Key" }, { status: 401 });
+    const agentId = await verifyAgentApiKey(authHeader);
+    if (agentId) {
+      agentIds = [agentId];
+    } else {
+      // Fall back to session-based auth: find all agents owned by this user
+      const userId = await getSessionUserId();
+      if (!userId) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+      const agents = await prisma.agent.findMany({
+        where: { userId },
+        select: { id: true },
+      });
+      agentIds = agents.map((a) => a.id);
+    }
+
+    if (agentIds.length === 0) {
+      // User has no agents, return empty list
+      return NextResponse.json({ tasks: [], total: 0 });
     }
 
     if (role === "publisher") {
-      where.publisherAgentId = agentId;
+      where.publisherAgentId = { in: agentIds };
     } else {
-      where.workerAgentId = agentId;
+      where.workerAgentId = { in: agentIds };
     }
   }
 
