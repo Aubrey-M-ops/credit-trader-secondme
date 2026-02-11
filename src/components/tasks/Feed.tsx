@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import FeedCard from "./FeedCard";
 
 interface TaskUser {
@@ -37,8 +37,14 @@ export default function Feed() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<SortTab>("new");
 
+  // --- auto scroll refs/state
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const rafIdRef = useRef<number | null>(null);
+  const [autoPaused, setAutoPaused] = useState(false);
+
   useEffect(() => {
     fetchTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
   async function fetchTasks() {
@@ -60,11 +66,61 @@ export default function Feed() {
     }
   }
 
-  const tabs: { key: SortTab; label: string; icon: string }[] = [
-    { key: "new", label: "New", icon: "🆕" },
-    { key: "open", label: "Open", icon: "🔥" },
-    { key: "completed", label: "Completed", icon: "✅" },
-  ];
+  const tabs: { key: SortTab; label: string; icon: string }[] = useMemo(
+    () => [
+      { key: "new", label: "New", icon: "🆕" },
+      { key: "open", label: "Open", icon: "🔥" },
+      { key: "completed", label: "Completed", icon: "✅" },
+    ],
+    []
+  );
+
+  // When list changes (tab switch / fetch), reset scroll to top
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTop = 0;
+  }, [activeTab, tasks.length]);
+
+  // Auto-scroll loop
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    // small lists shouldn't auto-scroll
+    const canScroll = el.scrollHeight > el.clientHeight + 2;
+    if (!canScroll) return;
+
+    const speedPxPerFrame = 0.35; // adjust speed here
+
+    const tick = () => {
+      const node = scrollRef.current;
+      if (node && !autoPaused) {
+        node.scrollTop += speedPxPerFrame;
+
+        // when reach bottom, jump back to top
+        if (node.scrollTop + node.clientHeight >= node.scrollHeight - 1) {
+          node.scrollTop = 0;
+        }
+      }
+      rafIdRef.current = requestAnimationFrame(tick);
+    };
+
+    rafIdRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    };
+  }, [autoPaused, tasks.length, loading]);
+
+  // Pause on wheel / touch (user is interacting)
+  const pauseTemporarily = () => {
+    setAutoPaused(true);
+    // resume a bit later
+    window.clearTimeout((pauseTemporarily as any)._t);
+    (pauseTemporarily as any)._t = window.setTimeout(() => setAutoPaused(false), 1200);
+  };
 
   return (
     <div className="flex flex-col gap-[16px] flex-1">
@@ -98,16 +154,32 @@ export default function Feed() {
           </span>
         </div>
       ) : (
-        <div className="flex flex-col gap-[16px] max-h-[1020px] overflow-y-auto pr-[4px]">
+        <div
+          ref={scrollRef}
+          onMouseEnter={() => setAutoPaused(true)}
+          onMouseLeave={() => setAutoPaused(false)}
+          onWheel={pauseTemporarily}
+          onTouchStart={pauseTemporarily}
+          onTouchMove={pauseTemporarily}
+          className="flex flex-col gap-[16px] max-h-[1020px] overflow-y-auto px-[60px] py-[4px] scroll-smooth task-scroll"
+        >
           {tasks.map((task) => (
-            <FeedCard
+            <div
               key={task.id}
-              agent={task.publisher?.name || `Agent-${task.publisher.id.slice(0, 6)}`}
-              meta={`${timeAgo(task.createdAt)}${task.worker ? ` · Worker: ${task.worker.name || "Anonymous"}` : ""}`}
-              task={task.title}
-              tokens={task.estimatedTokens}
-              status={task.status}
-            />
+              className="rounded-[12px] transition-all duration-200 hover:translate-x-[2px] hover:bg-white/5 hover:ring-1 hover:ring-[rgba(224,122,58,0.35)]"
+              onMouseEnter={() => setAutoPaused(true)}
+              onMouseLeave={() => setAutoPaused(false)}
+            >
+              <FeedCard
+                agent={task.publisher?.name || `Agent-${task.publisher.id.slice(0, 6)}`}
+                meta={`${timeAgo(task.createdAt)}${
+                  task.worker ? ` · Worker: ${task.worker.name || "Anonymous"}` : ""
+                }`}
+                task={task.title}
+                tokens={task.estimatedTokens}
+                status={task.status}
+              />
+            </div>
           ))}
         </div>
       )}

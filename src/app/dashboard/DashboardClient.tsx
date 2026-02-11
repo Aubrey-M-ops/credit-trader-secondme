@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 export default function DashboardClient({ userName }: { userName: string }) {
   return (
     <div className="flex flex-col min-h-screen bg-[var(--bg-primary)]">
-      <Navbar userName={userName} />
+      <Navbar userName={userName} activePath="/dashboard" />
 
       {/* Dashboard Header */}
       <div className="flex flex-col gap-[8px] px-[48px] pt-[32px] pb-[16px]">
