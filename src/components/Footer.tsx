@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="mt-auto flex items-center justify-between px-[48px] h-[64px] bg-[var(--bg-footer)] border-t border-[var(--border-footer)]">
+    <footer className="mt-auto flex items-center justify-between px-[16px] md:px-[48px] h-[64px] bg-[var(--bg-footer)] border-t border-[var(--border-footer)]">
       <span className="font-ibm-plex-mono text-[12px] text-[var(--text-footer)]">
         🔄 Credit Trader © 2026
       </span>

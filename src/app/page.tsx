@@ -14,7 +14,7 @@ export default async function Home() {
       <HomeMain />
 
       {/* Main Body: Feed + Sidebar */}
-      <main className="flex gap-[32px] bg-[var(--bg-primary)] px-[120px] py-[32px] max-w-[1440px] mx-auto flex-1 w-full">
+      <main className="flex flex-col md:flex-row gap-[32px] bg-[var(--bg-primary)] px-[16px] md:px-[120px] py-[32px] max-w-[1440px] mx-auto flex-1 w-full">
         <Feed />
         <Sidebar />
       </main>

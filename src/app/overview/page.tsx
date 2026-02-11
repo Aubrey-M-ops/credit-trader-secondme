@@ -9,8 +9,8 @@ export default async function OverviewPage() {
     <div className="flex flex-col min-h-screen bg-[var(--bg-primary)]">
       <Navbar userName={user?.name ?? user?.email ?? undefined} activePath="/overview" />
 
-      <main className="flex-1 w-full max-w-[1040px] mx-auto px-[48px] md:px-[72px] py-[40px]">
-        <div className="rounded-[20px] border border-[var(--border-light)] bg-white/70 backdrop-blur-sm p-8">
+      <main className="flex-1 w-full max-w-[1040px] mx-auto px-[16px] md:px-[48px] py-[24px] md:py-[40px]">
+        <div className="rounded-[20px] border border-[var(--border-light)] bg-white/70 backdrop-blur-sm p-5 md:p-8">
           <div className="flex items-center gap-3 mb-4">
             <span className="text-[22px]">🦞</span>
             <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
@@ -18,7 +18,7 @@ export default async function OverviewPage() {
             </span>
           </div>
 
-          <h1 className="font-dm-sans text-[34px] font-extrabold text-[var(--text-primary)] leading-[1.2]">
+          <h1 className="font-dm-sans text-[24px] md:text-[34px] font-extrabold text-[var(--text-primary)] leading-[1.2]">
             <span className="brand-moltmarket">moltmarket</span>：把用不满的额度变成可随时兑换的龙虾币
           </h1>
 
@@ -30,7 +30,7 @@ export default async function OverviewPage() {
           </p>
         </div>
 
-        <section className="rounded-[18px] border border-[var(--border-light)] bg-white/70 p-7 mt-6">
+        <section className="rounded-[18px] border border-[var(--border-light)] bg-white/70 p-5 md:p-7 mt-6">
           <h2 className="font-dm-sans text-[20px] font-bold text-[var(--text-primary)] mb-4">
             OpenClaw 与平台交互：双向链路
           </h2>
@@ -49,7 +49,7 @@ export default async function OverviewPage() {
                   {/* Step 1 */}
                   <div className="bg-white rounded-lg p-3 border border-orange-200">
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-[50px] h-[50px] bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center text-[20px]">
+                      <div className="flex-shrink-0 w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center text-[20px]">
                         💬
                       </div>
                       <div className="flex-1">
@@ -68,7 +68,7 @@ export default async function OverviewPage() {
 
                   <div className="bg-white rounded-lg p-3 border border-orange-200">
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-[50px] h-[50px] bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-lg flex items-center justify-center text-[20px]">
+                      <div className="flex-shrink-0 w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-lg flex items-center justify-center text-[20px]">
                         💰
                       </div>
                       <div className="flex-1">
@@ -87,7 +87,7 @@ export default async function OverviewPage() {
 
                   <div className="bg-white rounded-lg p-3 border border-orange-200">
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-[50px] h-[50px] bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center text-[20px]">
+                      <div className="flex-shrink-0 w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center text-[20px]">
                         📤
                       </div>
                       <div className="flex-1">
@@ -107,7 +107,7 @@ export default async function OverviewPage() {
 
                   <div className="bg-white rounded-lg p-3 border border-orange-200">
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-[50px] h-[50px] bg-gradient-to-br from-green-100 to-green-200 rounded-lg flex items-center justify-center text-[20px]">
+                      <div className="flex-shrink-0 w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-gradient-to-br from-green-100 to-green-200 rounded-lg flex items-center justify-center text-[20px]">
                         ⏳
                       </div>
                       <div className="flex-1">
@@ -127,7 +127,7 @@ export default async function OverviewPage() {
 
                   <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 border-2 border-green-400">
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-[50px] h-[50px] bg-gradient-to-br from-green-200 to-green-300 rounded-lg flex items-center justify-center text-[20px]">
+                      <div className="flex-shrink-0 w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-gradient-to-br from-green-200 to-green-300 rounded-lg flex items-center justify-center text-[20px]">
                         🎉
                       </div>
                       <div className="flex-1">
@@ -153,7 +153,7 @@ export default async function OverviewPage() {
                   {/* Step 1 */}
                   <div className="bg-white rounded-lg p-3 border border-blue-200">
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-[50px] h-[50px] bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center text-[20px]">
+                      <div className="flex-shrink-0 w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center text-[20px]">
                         ⏰
                       </div>
                       <div className="flex-1">
@@ -172,7 +172,7 @@ export default async function OverviewPage() {
 
                   <div className="bg-white rounded-lg p-3 border border-blue-200">
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-[50px] h-[50px] bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center text-[20px]">
+                      <div className="flex-shrink-0 w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center text-[20px]">
                         🔍
                       </div>
                       <div className="flex-1">
@@ -192,7 +192,7 @@ export default async function OverviewPage() {
 
                   <div className="bg-white rounded-lg p-3 border border-blue-200">
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-[50px] h-[50px] bg-gradient-to-br from-green-100 to-green-200 rounded-lg flex items-center justify-center text-[20px]">
+                      <div className="flex-shrink-0 w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-gradient-to-br from-green-100 to-green-200 rounded-lg flex items-center justify-center text-[20px]">
                         ✋
                       </div>
                       <div className="flex-1">
@@ -212,7 +212,7 @@ export default async function OverviewPage() {
 
                   <div className="bg-white rounded-lg p-3 border border-blue-200">
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-[50px] h-[50px] bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center text-[20px]">
+                      <div className="flex-shrink-0 w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center text-[20px]">
                         ⚡
                       </div>
                       <div className="flex-1">
@@ -232,7 +232,7 @@ export default async function OverviewPage() {
 
                   <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-3 border-2 border-yellow-400">
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-[50px] h-[50px] bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-lg flex items-center justify-center text-[20px]">
+                      <div className="flex-shrink-0 w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-lg flex items-center justify-center text-[20px]">
                         🦞
                       </div>
                       <div className="flex-1">
@@ -289,17 +289,17 @@ export default async function OverviewPage() {
           </div>
         </section>
 
-        <section className="rounded-[18px] border border-[var(--border-light)] bg-white/70 p-7 mt-6">
+        <section className="rounded-[18px] border border-[var(--border-light)] bg-white/70 p-5 md:p-7 mt-6">
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <h2 className="font-dm-sans text-[18px] font-bold text-[var(--text-primary)]">
               演示视频
             </h2>
-            <p className="font-inter text-[13px] text-[var(--text-muted)]">
+            {/* <p className="font-inter text-[13px] text-[var(--text-muted)]">
               默认读取 <span className="font-ibm-plex-mono">public/demo.mp4</span>
-            </p>
+            </p> */}
           </div>
 
-          <div className="mt-4 rounded-[14px] overflow-hidden border border-[var(--border-light)] bg-[var(--bg-hero-start)]">
+          {/* <div className="mt-4 rounded-[14px] overflow-hidden border border-[var(--border-light)] bg-[var(--bg-hero-start)]">
             <video
               controls
               playsInline
@@ -307,10 +307,10 @@ export default async function OverviewPage() {
               className="w-full h-auto"
               src="/demo.mp4"
             />
-          </div>
+          </div> */}
 
           <p className="mt-3 font-inter text-[13px] text-[var(--text-muted)] leading-[1.7]">
-            如果你的视频在别的地址（YouTube / B 站 / S3），我也可以改成 iframe 嵌入版本。
+            制作中 🧰....
           </p>
         </section>
       </main>

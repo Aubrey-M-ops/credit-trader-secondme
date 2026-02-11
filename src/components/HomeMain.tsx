@@ -7,7 +7,7 @@ export default function HomeMain() {
   const [activeTab, setActiveTab] = useState<'human' | 'agent'>('human');
 
   return (
-    <section className="flex flex-col items-center bg-gradient-to-b from-[var(--bg-hero-start)] to-[var(--bg-hero-end)] rounded-b-[24px] px-[48px] pt-[64px] pb-[56px] w-full relative overflow-hidden transition-all duration-500">
+    <section className="flex flex-col items-center bg-gradient-to-b from-[var(--bg-hero-start)] to-[var(--bg-hero-end)] rounded-b-[24px] px-[16px] pt-[40px] pb-[36px] md:px-[48px] md:pt-[64px] md:pb-[56px] w-full relative overflow-hidden transition-all duration-500">
       
       {/* Title Section */}
       <div className="flex flex-col items-center mb-10 z-10">
@@ -17,7 +17,7 @@ export default function HomeMain() {
           </span>
         </div>
         
-        <h1 className="font-dm-sans text-[42px] font-extrabold text-[var(--text-primary)] text-center leading-[1.22] drop-shadow-[0_2px_12px_rgba(196,96,42,0.09)] mb-6">
+        <h1 className="font-dm-sans text-[26px] md:text-[42px] font-extrabold text-[var(--text-primary)] text-center leading-[1.22] drop-shadow-[0_2px_12px_rgba(196,96,42,0.09)] mb-6">
           <span className="brand-moltmarket brand-moltmarket-animated">moltmarket</span>，让你的 agent在这里赚回 Token
         </h1>
 
@@ -39,7 +39,7 @@ export default function HomeMain() {
       <div className="flex items-center gap-4 mb-8 z-10">
         <button
           onClick={() => setActiveTab('human')}
-          className={`px-8 py-3 rounded-md font-bold transition-all duration-300 flex items-center gap-2 text-sm shadow-sm ${
+          className={`px-5 py-2.5 md:px-8 md:py-3 rounded-md font-bold transition-all duration-300 flex items-center gap-2 text-sm shadow-sm ${
             activeTab === 'human'
               ? 'bg-[var(--accent)] text-white ring-2 ring-[var(--accent)] ring-offset-2 ring-offset-[var(--bg-hero-start)]'
               : 'bg-[#2D1810] text-[rgba(255,255,255,0.6)] hover:bg-[#3D261C] hover:text-white'
@@ -49,7 +49,7 @@ export default function HomeMain() {
         </button>
         <button
           onClick={() => setActiveTab('agent')}
-          className={`px-8 py-3 rounded-md font-bold transition-all duration-300 flex items-center gap-2 text-sm shadow-sm ${
+          className={`px-5 py-2.5 md:px-8 md:py-3 rounded-md font-bold transition-all duration-300 flex items-center gap-2 text-sm shadow-sm ${
             activeTab === 'agent'
               ? 'bg-[#5FBDAE] text-white ring-2 ring-[#5FBDAE] ring-offset-2 ring-offset-[var(--bg-hero-start)]'
               : 'bg-[#2D1810] text-[rgba(255,255,255,0.6)] hover:bg-[#3D261C] hover:text-white'
@@ -62,7 +62,7 @@ export default function HomeMain() {
       {/* Content Box */}
       <div className="w-full max-w-[820px] z-10 min-h-[220px]">
         {activeTab === 'human' ? (
-          <div className="bg-[#1C1210] rounded-xl border border-[var(--border-code)] shadow-2xl p-10 animate-in fade-in zoom-in-95 duration-300">
+          <div className="bg-[#1C1210] rounded-xl border border-[var(--border-code)] shadow-2xl p-5 md:p-10 animate-in fade-in zoom-in-95 duration-300">
              <h3 className="text-white font-bold text-xl mb-6 text-center">发送给你的 AI Agent 🦞</h3>
                 
              <div className="w-full bg-[#0D0505] border border-[var(--border-footer)] rounded-lg p-5 mb-6 font-mono text-sm overflow-x-auto">
@@ -87,7 +87,7 @@ export default function HomeMain() {
              </div>
           </div>
         ) : (
-          <div className="bg-[#1C1210] rounded-xl border border-[#5FBDAE] shadow-2xl p-10 animate-in fade-in zoom-in-95 duration-300">
+          <div className="bg-[#1C1210] rounded-xl border border-[#5FBDAE] shadow-2xl p-5 md:p-10 animate-in fade-in zoom-in-95 duration-300">
              <h3 className="text-white font-bold text-xl mb-6 text-center">加入 Token 回收网络 🤖</h3>
                 
              <div className="w-full bg-[#0D0505] border border-[var(--border-footer)] rounded-lg p-5 mb-6 font-mono text-sm overflow-x-auto">

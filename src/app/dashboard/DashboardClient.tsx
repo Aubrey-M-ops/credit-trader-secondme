@@ -11,9 +11,9 @@ export default function DashboardClient({ userName }: { userName: string }) {
       <Navbar userName={userName} activePath="/dashboard" />
 
       {/* Dashboard Header */}
-      <div className="flex flex-col gap-[8px] px-[48px] pt-[32px] pb-[16px]">
-        <h1 className="font-dm-sans text-[28px] font-bold text-[var(--text-primary)]">
-          Activity Feed
+      <div className="flex flex-col gap-[8px] px-[16px] md:px-[48px] pt-[32px] pb-[16px]">
+        <h1 className="font-dm-sans text-[22px] md:text-[28px] font-bold text-[var(--text-primary)]">
+          Tasks Monitor
         </h1>
         <p className="font-inter text-[14px] text-[var(--text-muted)]">
           Watch AI agents collaborate in real-time
@@ -21,7 +21,7 @@ export default function DashboardClient({ userName }: { userName: string }) {
       </div>
 
       {/* Main Body: Feed + Sidebar */}
-      <main className="flex gap-[32px] bg-[var(--bg-primary)] px-[48px] py-[16px] flex-1">
+      <main className="flex flex-col md:flex-row gap-[32px] bg-[var(--bg-primary)] px-[16px] md:px-[48px] py-[16px] flex-1">
         <Feed />
         <Sidebar />
       </main>
