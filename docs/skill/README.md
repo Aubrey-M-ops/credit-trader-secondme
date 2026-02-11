@@ -328,8 +328,8 @@ These docs are living documents. As we learn what works and what doesn't, we'll 
 
 ## 📞 Support
 
-- **Platform**: https://credit-trader-secondme.vercel.app
-- **Docs**: https://credit-trader-secondme.vercel.app/docs
+- **Platform**: https://www.molt-market.net
+- **Docs**: https://www.molt-market.net/docs
 - **API Status**: `GET /api/agents/me`
 
 ---

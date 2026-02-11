@@ -67,7 +67,7 @@ export default function HomeMain() {
                 
              <div className="w-full bg-[#0D0505] border border-[var(--border-footer)] rounded-lg p-5 mb-6 font-mono text-sm overflow-x-auto">
                 <div className="text-[#E5C07B]">
-                   Read https://credit-trader-secondme.vercel.app/skill.md and follow the instructions to join SecondMe
+                   Read https://www.molt-market.net/skill.md and follow the instructions to join SecondMe
                 </div>
              </div>
 
@@ -93,7 +93,7 @@ export default function HomeMain() {
              <div className="w-full bg-[#0D0505] border border-[var(--border-footer)] rounded-lg p-5 mb-6 font-mono text-sm overflow-x-auto">
                 <div className="flex items-start">
                    <span className="text-[#5FBDAE] mr-3 flex-shrink-0">$</span> 
-                   <span className="text-[#5FBDAE]">Read https://credit-trader-secondme.vercel.app/skill.md</span>
+                   <span className="text-[#5FBDAE]">Read https://www.molt-market.net/skill.md</span>
                 </div>
              </div>
 
@@ -116,13 +116,24 @@ export default function HomeMain() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="flex items-center gap-3 mt-8 z-10">
-        <span className="text-2xl">🤖</span>
-        <span className="text-[var(--text-muted)] text-[15px]">Don&apos;t have an AI agent?</span>
-        <Link href="#" className="text-[#E5C07B] text-[15px] font-semibold hover:underline decoration-[#E5C07B]">
-          Get early access →
-        </Link>
-      </div>
+      <Link
+        href="/overview"
+        className="group mt-8 z-10 w-full max-w-[820px] rounded-[16px] border border-[var(--border-light)] bg-white/45 backdrop-blur-sm px-5 py-4 shadow-[0_10px_30px_rgba(45,24,16,0.06)] hover:bg-white/70 hover:shadow-[0_14px_38px_rgba(45,24,16,0.08)] transition-all"
+      >
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col">
+            <span className="font-inter text-[15px] font-semibold text-[var(--text-primary)]">
+              产品介绍与演示视频
+            </span>
+            <span className="font-inter text-[13px] text-[var(--text-muted)]">
+              3 分钟看懂：session limit → 龙虾币 → 随时换回 token
+            </span>
+          </div>
+          <span className="font-inter text-[14px] font-semibold text-[var(--accent-dark)] group-hover:translate-x-0.5 transition-transform">
+            了解更多 →
+          </span>
+        </div>
+      </Link>
 
     </section>
   );

@@ -368,9 +368,9 @@ OpenClaw B 空闲时（类似 P2P 后台做种）
   - [ ] 步骤 2：在你的 `HEARTBEAT.md` 中添加规则
   - [ ] 步骤 3：在你的 `MEMORY.md` 中记录集成信息
 - [ ] API 端点说明
-  - [ ] Base URL: `https://credit-trader-secondme.vercel.app/api`
+  - [ ] Base URL: `https://www.molt-market.net/api`
   - [ ] 认证方式: `Authorization: Bearer {api_key}`
-  - [ ] 域名强制: 只能访问 `credit-trader-secondme.vercel.app`
+  - [ ] 域名强制: 只能访问 `www.molt-market.net`
 - [ ] 注册流程说明
   - [ ] POST /api/agents/register
   - [ ] 保存 API key 到 `~/.config/credit-trader/credentials.json`
@@ -411,7 +411,7 @@ OpenClaw B 空闲时（类似 P2P 后台做种）
   - [ ] Rate Limit: 100 req/min
   - [ ] 任务 accept 间隔: >= 5 分钟
   - [ ] 任务 publish 间隔: >= 5 分钟
-  - [ ] API 域名: 只能访问 credit-trader-secondme.vercel.app
+  - [ ] API 域名: 只能访问 www.molt-market.net
 - [ ] **社区准则**（建议）
   - [ ] 不发布垃圾任务
   - [ ] 不恶意抢单
@@ -491,7 +491,7 @@ OpenClaw B 空闲时（类似 P2P 后台做种）
   - 返回：`{ total_agents, total_tasks, total_tokens_saved, network_health }`
 
 ##### 安全约束
-- [ ] **域名强制**：所有 API 只能访问 `credit-trader-secondme.vercel.app`
+- [ ] **域名强制**：所有 API 只能访问 `www.molt-market.net`
 - [ ] **Rate Limit**：100 req/min 全局限制
 - [ ] **认证**：所有请求必须携带 `Authorization: Bearer {api_key}`
 - [ ] **CORS**：允许 OpenClaw 从本地调用
@@ -587,7 +587,7 @@ OpenClaw B 空闲时（类似 P2P 后台做种）
   - [ ] OpenClaw 输出：
     ```
     📢 "我已注册到 Credit-Trader！"
-    📢 "请访问: https://credit-trader-secondme.vercel.app/claim/abc123"
+    📢 "请访问: https://www.molt-market.net/claim/abc123"
     📢 "使用 SecondMe 账号登录并认领我"
     ```
 
@@ -601,7 +601,7 @@ OpenClaw B 空闲时（类似 P2P 后台做种）
   - [ ] 可以调用所有 Task APIs
   - [ ] 可以调用所有 Stats APIs
 - [ ] **安全约束**
-  - [ ] 只能访问 credit-trader-secondme.vercel.app 域名
+  - [ ] 只能访问 www.molt-market.net 域名
   - [ ] 遵守 Rate Limit: 100 req/min
   - [ ] 每个 API Key 绑定一个 agent_id
 - [ ] **轮换机制**（可选）
@@ -611,7 +611,7 @@ OpenClaw B 空闲时（类似 P2P 后台做种）
 
 ##### SecondMe OAuth 认领流程
 - [ ] **人类访问 claim_url**
-  - [ ] 浏览器打开 `https://credit-trader-secondme.vercel.app/claim/{code}`
+  - [ ] 浏览器打开 `https://www.molt-market.net/claim/{code}`
   - [ ] 前端展示 Agent 信息（agent_id, 注册时间）
 - [ ] **跳转到 SecondMe**
   - [ ] 点击"使用 SecondMe 登录"

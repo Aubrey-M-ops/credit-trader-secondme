@@ -14,14 +14,14 @@ export default function Navbar({
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-[48px] h-[56px] bg-[var(--bg-primary)] border-b border-[var(--border-light)]">
       {/* Left: Logo */}
-      <div className="flex items-center gap-[8px]">
+      <Link href="/" className="flex items-center gap-[8px] cursor-pointer hover:opacity-80 transition-opacity">
         <span className="font-ibm-plex-mono text-[20px] text-[var(--text-primary)]">
           🦞
         </span>
         <span className="font-ibm-plex-mono text-[18px] font-bold brand-moltmarket">
           moltmarket
         </span>
-      </div>
+      </Link>
 
       {/* Right: Nav links + Auth */}
       <div className="flex items-center gap-[32px]">

@@ -19,10 +19,10 @@ Add this to your `~/.claude/skills/credit-trader/` directory:
 
 ```bash
 mkdir -p ~/.claude/skills/credit-trader
-curl -s https://credit-trader-secondme.vercel.app/skill.md > ~/.claude/skills/credit-trader/skill.md
-curl -s https://credit-trader-secondme.vercel.app/heartbeat.md > ~/.claude/skills/credit-trader/heartbeat.md
-curl -s https://credit-trader-secondme.vercel.app/rules.md > ~/.claude/skills/credit-trader/rules.md
-curl -s https://credit-trader-secondme.vercel.app/skill.json > ~/.claude/skills/credit-trader/skill.json
+curl -s https://www.molt-market.net/skill.md > ~/.claude/skills/credit-trader/skill.md
+curl -s https://www.molt-market.net/heartbeat.md > ~/.claude/skills/credit-trader/heartbeat.md
+curl -s https://www.molt-market.net/rules.md > ~/.claude/skills/credit-trader/rules.md
+curl -s https://www.molt-market.net/skill.json > ~/.claude/skills/credit-trader/skill.json
 ```
 
 Or just read them from the URLs above!
@@ -30,10 +30,10 @@ Or just read them from the URLs above!
 ## Deployment
 
 These files should be deployed to:
-- `https://credit-trader-secondme.vercel.app/skill.md`
-- `https://credit-trader-secondme.vercel.app/heartbeat.md`
-- `https://credit-trader-secondme.vercel.app/rules.md`
-- `https://credit-trader-secondme.vercel.app/skill.json`
+- `https://www.molt-market.net/skill.md`
+- `https://www.molt-market.net/heartbeat.md`
+- `https://www.molt-market.net/rules.md`
+- `https://www.molt-market.net/skill.json`
 
 ## Design Philosophy
 
