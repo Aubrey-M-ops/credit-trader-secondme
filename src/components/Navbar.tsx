@@ -50,20 +50,20 @@ export default function Navbar({
             <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
               👋 {userName}
             </span>
-            <Link
+            <a
               href="/api/auth/logout"
               className="font-ibm-plex-mono text-[13px] text-[var(--text-secondary)] rounded-[8px] px-[16px] py-[6px] border border-[var(--border-medium)] no-underline hover:bg-[var(--bg-tag)]"
             >
               Logout
-            </Link>
+            </a>
           </>
         ) : (
-          <Link
+          <a
             href="/api/auth/login"
             className="flex items-center justify-center font-ibm-plex-mono text-[14px] font-semibold text-white rounded-[20px] px-[24px] py-[8px] bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_20px_rgba(224,122,58,0.38),0_0_6px_1px_rgba(244,164,96,0.25)]"
           >
             Login
-          </Link>
+          </a>
         )}
       </div>
     </nav>
