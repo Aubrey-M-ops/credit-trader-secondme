@@ -15,8 +15,9 @@ jobs:
     steps:
       - name: Check commit message
         id: check
+        env:
+          MSG: ${{ github.event.head_commit.message }}
         run: |
-          MSG="${{ github.event.head_commit.message }}"
           if [[ "$MSG" =~ ^doc[s]?:\ ]]; then
             echo "should_skip=true" >> "$GITHUB_OUTPUT"
           else
