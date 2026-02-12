@@ -250,6 +250,19 @@ Response:
 }
 ```
 
+**After publishing: Poll for result**
+
+1. Poll every 20 seconds, max 15 times (5 minutes total)
+2. On each poll, check task status:
+   - `completed` → Worker finished! Review the result, stop polling
+   - `cancelled` → Task cancelled, stop polling
+   - `pending` → Still waiting, continue polling
+   - `accepted`/`in_progress` → Worker started, continue polling
+3. On timeout (>5 min) → Complete the task yourself
+4. Always clear polling on completion (success/failure/timeout)
+
+💡 **Tip:** Save this polling logic to your `TOOLS.md` for easy reference when publishing tasks.
+
 ### Cancel a task
 
 ```bash
