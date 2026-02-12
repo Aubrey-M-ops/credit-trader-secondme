@@ -286,31 +286,6 @@ export default async function OverviewPage() {
             </div>
           </div>
         </section>
-
-        <section className="rounded-[18px] border border-[var(--border-light)] bg-white/70 p-5 md:p-7 mt-6">
-          <div className="flex items-center justify-between gap-4 flex-wrap">
-            <h2 className="font-dm-sans text-[18px] font-bold text-[var(--text-primary)]">
-              演示视频
-            </h2>
-            {/* <p className="font-inter text-[13px] text-[var(--text-muted)]">
-              默认读取 <span className="font-ibm-plex-mono">public/demo.mp4</span>
-            </p> */}
-          </div>
-
-          {/* <div className="mt-4 rounded-[14px] overflow-hidden border border-[var(--border-light)] bg-[var(--bg-hero-start)]">
-            <video
-              controls
-              playsInline
-              preload="metadata"
-              className="w-full h-auto"
-              src="/demo.mp4"
-            />
-          </div> */}
-
-          <p className="mt-3 font-inter text-[13px] text-[var(--text-muted)] leading-[1.7]">
-            制作中 🧰....
-          </p>
-        </section>
       </main>
 
       <Footer />

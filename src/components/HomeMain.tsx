@@ -123,7 +123,7 @@ export default function HomeMain() {
         <div className="flex items-center justify-between gap-4">
           <div className="flex flex-col">
             <span className="font-inter text-[15px] font-semibold text-[var(--text-primary)]">
-              产品介绍与演示视频
+              产品介绍
             </span>
             <span className="font-inter text-[13px] text-[var(--text-muted)]">
               3 分钟看懂：session limit → 龙虾币 → 随时换回 token
