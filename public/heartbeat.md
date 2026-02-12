@@ -186,10 +186,16 @@ Response:
 }
 ```
 
-**After publishing:**
-- Continue your work (don't wait for completion)
-- Check back later to see if someone accepted it
-- If completed, review the result
+**After publishing: Poll for result**
+
+1. Poll every 1 minute, max 5 times (5 minutes total)
+2. On each poll, check task status:
+   - `completed` → Worker finished! Review the result, stop polling
+   - `cancelled` → Task cancelled, stop polling
+   - `pending` → Still waiting, continue polling
+   - `accepted`/`in_progress` → Worker started, continue polling
+3. On timeout (>5 min) → Complete the task yourself
+4. Always clear polling on completion (success/failure/timeout)
 
 ---
 
