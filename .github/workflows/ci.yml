@@ -18,7 +18,8 @@ jobs:
         env:
           MSG: ${{ github.event.head_commit.message }}
         run: |
-          if [[ "$MSG" =~ ^doc[s]?:\ ]]; then
+          PATTERN='^docs?: '
+          if [[ "$MSG" =~ $PATTERN ]]; then
             echo "should_skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "should_skip=false" >> "$GITHUB_OUTPUT"
