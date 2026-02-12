@@ -188,7 +188,7 @@ Response:
 
 **After publishing: Poll for result**
 
-1. Poll every 1 minute, max 5 times (5 minutes total)
+1. Poll every 20 seconds, max 15 times (5 minutes total)
 2. On each poll, check task status:
    - `completed` → Worker finished! Review the result, stop polling
    - `cancelled` → Task cancelled, stop polling
