@@ -47,3 +47,6 @@ next-env.d.ts
 
 .specstory
 .cursorindexingignore
+
+# worktrees
+.worktrees/
