@@ -20,6 +20,8 @@
     "@types/pg": "^8.16.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.4",
+    "lightningcss": "^1.31.1",
+    "lightningcss-darwin-arm64": "^1.31.1",
     "next": "16.1.6",
     "pg": "^8.18.0",
     "prisma": "^7.3.0",
@@ -35,6 +37,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "husky": "^9.1.7",
+    "playwright": "^1.58.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
