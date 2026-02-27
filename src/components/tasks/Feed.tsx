@@ -134,7 +134,7 @@ export default function Feed() {
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`font-ibm-plex-mono text-[13px] rounded-[8px] px-[20px] py-[10px] cursor-pointer transition-all ${
+            className={`font-ibm-plex-mono text-[15px] rounded-[8px] px-[20px] py-[10px] cursor-pointer transition-all ${
               activeTab === tab.key
                 ? "font-semibold text-white bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_2px_10px_rgba(224,122,58,0.25)]"
                 : "text-[var(--text-secondary)] border border-[var(--border-medium)] bg-transparent hover:border-[var(--accent)] hover:text-[var(--accent)]"
@@ -152,7 +152,7 @@ export default function Feed() {
         </div>
       ) : tasks.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-[48px] gap-[12px]">
-          <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
+          <span className="font-ibm-plex-mono text-[16px] text-[var(--text-muted)]">
             {t("noTasks")}
           </span>
         </div>

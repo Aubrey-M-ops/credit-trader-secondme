@@ -111,23 +111,23 @@ function TaskCard({ task, role, t }: { task: Task; role: TabKey; t: ReturnType<t
     >
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-[8px]">
-          <span className="text-[14px]">{statusIcon(task.status)}</span>
-          <span className="font-ibm-plex-mono text-[14px] font-bold text-[var(--text-primary)]">
+          <span className="text-[16px]">{statusIcon(task.status)}</span>
+          <span className="font-ibm-plex-mono text-[16px] font-bold text-[var(--text-primary)]">
             {task.title}
           </span>
         </div>
         <span
-          className={`font-ibm-plex-mono text-[11px] font-semibold px-[10px] py-[3px] rounded-[6px] border ${statusBadgeClass(task.status)}`}
+          className={`font-ibm-plex-mono text-[13px] font-semibold px-[10px] py-[3px] rounded-[6px] border ${statusBadgeClass(task.status)}`}
         >
           {getStatusLabel(task.status)}
         </span>
       </div>
-      <span className="font-ibm-plex-mono text-[12px] text-[var(--text-muted)]">
+      <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
         {meta}
       </span>
       <div className="flex items-center justify-between w-full">
         <span
-          className={`font-ibm-plex-mono text-[12px] font-semibold ${
+          className={`font-ibm-plex-mono text-[14px] font-semibold ${
             task.status === "completed"
               ? "text-[#388E3C]"
               : "text-[var(--accent-dark)]"
@@ -209,7 +209,7 @@ export default function TasksPage() {
     <div className="flex flex-col gap-[24px] md:gap-[32px] w-full px-[16px] md:px-[48px] py-[32px]">
       {/* Page header */}
       <div className="flex flex-col gap-[16px] md:flex-row md:items-center md:justify-between w-full">
-        <span className="font-dm-sans text-[20px] md:text-[24px] font-bold text-[var(--text-primary)]">
+        <span className="font-dm-sans text-[22px] md:text-[26px] font-bold text-[var(--text-primary)]">
           {t("pageTitle")}
         </span>
         <div className="flex gap-[8px]">
@@ -217,7 +217,7 @@ export default function TasksPage() {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`font-ibm-plex-mono text-[13px] rounded-[8px] px-[16px] py-[8px] cursor-pointer ${
+              className={`font-ibm-plex-mono text-[15px] rounded-[8px] px-[16px] py-[8px] cursor-pointer ${
                 activeTab === tab.key
                   ? "font-semibold text-white bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_2px_10px_rgba(224,122,58,0.25)]"
                   : "text-[var(--text-secondary)] border border-[var(--border-medium)] bg-transparent"
@@ -232,16 +232,16 @@ export default function TasksPage() {
       {/* Not logged in */}
       {needLogin ? (
         <div className="flex flex-col items-center justify-center py-[64px] gap-[16px]">
-          <span className="text-[36px]">🔒</span>
-          <span className="font-ibm-plex-mono text-[16px] text-[var(--text-primary)] font-semibold">
+          <span className="text-[38px]">🔒</span>
+          <span className="font-ibm-plex-mono text-[18px] text-[var(--text-primary)] font-semibold">
             {t("loginRequired")}
           </span>
-          <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+          <span className="font-ibm-plex-mono text-[15px] text-[var(--text-muted)]">
             {t("loginDescription")}
           </span>
           <Link
             href="/api/auth/login"
-            className="font-ibm-plex-mono text-[14px] font-semibold text-white rounded-[20px] px-[28px] py-[10px] bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_20px_rgba(224,122,58,0.38)] no-underline"
+            className="font-ibm-plex-mono text-[16px] font-semibold text-white rounded-[20px] px-[28px] py-[10px] bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_20px_rgba(224,122,58,0.38)] no-underline"
           >
             {t("login")}
           </Link>
@@ -256,8 +256,8 @@ export default function TasksPage() {
           </div>
         ) : currentTasks.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-[48px] gap-[12px]">
-            <span className="text-[32px]">🤖</span>
-            <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
+            <span className="text-[34px]">🤖</span>
+            <span className="font-ibm-plex-mono text-[16px] text-[var(--text-muted)]">
               {activeTab === "accepted"
                 ? t("noAccepted")
                 : t("noPublished")}

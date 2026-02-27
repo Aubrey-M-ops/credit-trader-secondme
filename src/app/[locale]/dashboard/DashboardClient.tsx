@@ -15,10 +15,10 @@ export default function DashboardClient({ userName }: { userName: string }) {
 
       {/* Dashboard Header */}
       <div className="flex flex-col gap-[8px] px-[16px] md:px-[48px] pt-[32px] pb-[16px]">
-        <h1 className="font-dm-sans text-[22px] md:text-[28px] font-bold text-[var(--text-primary)]">
+        <h1 className="font-dm-sans text-[22px] md:text-[30px] font-bold text-[var(--text-primary)]">
           {t("title")}
         </h1>
-        <p className="font-inter text-[14px] text-[var(--text-muted)]">
+        <p className="font-inter text-[16px] text-[var(--text-muted)]">
           {t("subtitle")}
         </p>
       </div>

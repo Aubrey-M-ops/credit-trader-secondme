@@ -18,11 +18,11 @@ export default function HomeMain() {
       {/* Social Proof Bar */}
       <div className="flex items-center gap-2 rounded-full bg-white/60 backdrop-blur-sm border border-[var(--border-light)] px-4 py-2 mb-6 z-10">
         <div className="flex -space-x-2">
-          <span className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-[10px] border-2 border-white">🤖</span>
-          <span className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-[10px] border-2 border-white">🦞</span>
-          <span className="w-6 h-6 rounded-full bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center text-[10px] border-2 border-white">⚡</span>
+          <span className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-[12px] border-2 border-white">🤖</span>
+          <span className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-[12px] border-2 border-white">🦞</span>
+          <span className="w-6 h-6 rounded-full bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center text-[12px] border-2 border-white">⚡</span>
         </div>
-        <span className="font-inter text-[13px] text-[var(--text-secondary)]">
+        <span className="font-inter text-[15px] text-[var(--text-secondary)]">
           <strong className="text-[var(--accent-dark)]">1,200+</strong> {t("socialProof")}
         </span>
       </div>
@@ -31,19 +31,19 @@ export default function HomeMain() {
       <div className="flex flex-col items-center mb-8 z-10">
         {/* Pain Point Tag */}
         <div className="flex items-center justify-center rounded-[20px] bg-[var(--bg-tag)] border border-[var(--border-light)] px-[16px] py-[6px] mb-5">
-          <span className="font-inter text-[13px] font-medium text-[var(--accent-dark)]">
+          <span className="font-inter text-[15px] font-medium text-[var(--accent-dark)]">
             {t("painPoint")}
           </span>
         </div>
 
         {/* Main Headline - Clear Value Proposition */}
-        <h1 className="font-dm-sans text-[28px] md:text-[44px] font-extrabold text-[var(--text-primary)] text-center leading-[1.15] mb-4 max-w-[600px]">
+        <h1 className="font-dm-sans text-[30px] md:text-[46px] font-extrabold text-[var(--text-primary)] text-center leading-[1.15] mb-4 max-w-[600px]">
           {t("headline")}
           <span className="text-[var(--accent)]">{t("headlineHighlight")}</span>
         </h1>
 
         {/* Subheadline - Specific Benefit */}
-        <p className="font-inter text-[16px] md:text-[17px] text-[var(--text-muted)] text-center max-w-[520px] leading-relaxed">
+        <p className="font-inter text-[18px] md:text-[19px] text-[var(--text-muted)] text-center max-w-[540px] leading-relaxed">
           {t("subheadline")}
           <span className="font-semibold text-[var(--lobster-coin)]">{t("lobsterCoin")}</span>
           <br className="hidden md:block" />
@@ -56,14 +56,14 @@ export default function HomeMain() {
         {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a
           href="/api/auth/login"
-          className="flex items-center gap-2 rounded-[24px] px-8 py-4 bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_20px_rgba(224,122,58,0.35)] hover:shadow-[0_6px_28px_rgba(224,122,58,0.45)] hover:scale-[1.02] transition-all cursor-pointer no-underline font-inter text-[16px] font-semibold text-white"
+          className="flex items-center gap-2 rounded-[24px] px-8 py-4 bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_20px_rgba(224,122,58,0.35)] hover:shadow-[0_6px_28px_rgba(224,122,58,0.45)] hover:scale-[1.02] transition-all cursor-pointer no-underline font-inter text-[18px] font-semibold text-white"
         >
           <span>🚀</span>
           {t("ctaPrimary")}
         </a>
         <Link
           href="/overview"
-          className="flex items-center gap-2 rounded-[24px] px-6 py-4 border-[1.5px] border-[var(--border-dark)] bg-white/50 hover:bg-white/80 transition-all cursor-pointer no-underline font-inter text-[15px] font-medium text-[var(--text-secondary)]"
+          className="flex items-center gap-2 rounded-[24px] px-6 py-4 border-[1.5px] border-[var(--border-dark)] bg-white/50 hover:bg-white/80 transition-all cursor-pointer no-underline font-inter text-[17px] font-medium text-[var(--text-secondary)]"
         >
           {t("ctaSecondary")}
           <span>→</span>
@@ -71,7 +71,7 @@ export default function HomeMain() {
       </div>
 
       {/* Trust Indicators */}
-      <div className="flex items-center gap-6 mb-10 z-10 text-[12px] text-[var(--text-muted)]">
+      <div className="flex items-center gap-6 mb-10 z-10 text-[14px] text-[var(--text-muted)]">
         <span className="flex items-center gap-1.5">
           <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />

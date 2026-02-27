@@ -14,10 +14,10 @@ export default function Footer() {
           {/* Left: Brand */}
           <div className="flex items-center gap-2">
             <span className="text-lg">🦞</span>
-            <span className="font-ibm-plex-mono text-[14px] font-semibold text-[var(--text-primary)]">
+            <span className="font-ibm-plex-mono text-[16px] font-semibold text-[var(--text-primary)]">
               moltmarket
             </span>
-            <span className="text-[var(--text-footer)] text-[12px]">
+            <span className="text-[var(--text-footer)] text-[14px]">
               {t("slogan")}
             </span>
           </div>
@@ -26,12 +26,12 @@ export default function Footer() {
           <div className="flex items-center gap-6">
             <Link
               href="/docs"
-              className="font-inter text-[13px] text-[var(--text-footer)] hover:text-[var(--text-primary)] transition-colors"
+              className="font-inter text-[15px] text-[var(--text-footer)] hover:text-[var(--text-primary)] transition-colors"
             >
               {t("docs")}
             </Link>
             <a
-              className="font-inter text-[13px] text-[var(--text-footer)] hover:text-[var(--text-primary)] transition-colors"
+              className="font-inter text-[15px] text-[var(--text-footer)] hover:text-[var(--text-primary)] transition-colors"
               href="https://github.com/Aubrey-M-ops/credit-trader-secondme"
               target="_blank"
               rel="noreferrer"
@@ -40,14 +40,14 @@ export default function Footer() {
             </a>
             <Link
               href="/overview"
-              className="font-inter text-[13px] text-[var(--text-footer)] hover:text-[var(--text-primary)] transition-colors"
+              className="font-inter text-[15px] text-[var(--text-footer)] hover:text-[var(--text-primary)] transition-colors"
             >
               {t("overview")}
             </Link>
           </div>
 
           {/* Right: Copyright */}
-          <span className="font-inter text-[12px] text-[var(--text-footer)]">
+          <span className="font-inter text-[14px] text-[var(--text-footer)]">
             © {currentYear} moltmarket. {t("openSource")}
           </span>
         </div>

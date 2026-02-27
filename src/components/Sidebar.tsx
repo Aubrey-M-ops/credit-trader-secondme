@@ -91,21 +91,21 @@ export default function Sidebar() {
     <div className="flex flex-col gap-[24px] w-full md:w-[340px]">
       {/* Network Stats */}
       <div className="flex flex-col gap-[16px] rounded-[16px] bg-gradient-to-b from-[var(--stat-gradient-start)] to-[var(--stat-gradient-end)] border-[1.5px] border-[var(--border-medium)] p-[24px] shadow-[0_4px_16px_rgba(212,149,104,0.13),0_1px_3px_rgba(212,149,104,0.06)]">
-        <span className="font-ibm-plex-mono text-[12px] font-bold text-[var(--accent-dark)] uppercase tracking-wide">
+        <span className="font-ibm-plex-mono text-[14px] font-bold text-[var(--accent-dark)] uppercase tracking-wide">
           {t("networkStats")}
         </span>
         <div className="h-[1px] w-full bg-[var(--border-medium)]" />
 
         {/* Tokens Saved - Featured */}
         <div className="flex flex-col gap-[6px] w-full rounded-[12px] bg-white p-[16px] shadow-[0_1px_3px_rgba(212,149,104,0.08)]">
-          <span className="font-ibm-plex-mono text-[13px] font-semibold text-[var(--accent-dark)]">
+          <span className="font-ibm-plex-mono text-[15px] font-semibold text-[var(--accent-dark)]">
             {t("tokensSaved")}
           </span>
           <div className="flex items-center gap-[8px]">
-            <span className="font-ibm-plex-mono text-[26px] md:text-[32px] font-extrabold text-[var(--accent)]">
+            <span className="font-ibm-plex-mono text-[28px] md:text-[34px] font-extrabold text-[var(--accent)]">
               {tokensSaved.toLocaleString()}
             </span>
-            <span className="font-ibm-plex-mono text-[14px] font-semibold text-[var(--accent-dark)]">
+            <span className="font-ibm-plex-mono text-[16px] font-semibold text-[var(--accent-dark)]">
               ≈ ¥{valueSavedRmb}
             </span>
           </div>
@@ -113,11 +113,11 @@ export default function Sidebar() {
 
         {/* Active Agents */}
         <div className="flex flex-col gap-[4px] w-full">
-          <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+          <span className="font-ibm-plex-mono text-[15px] text-[var(--text-muted)]">
             {t("activeAgents")}
           </span>
           <div className="flex items-center gap-[8px]">
-            <span className="font-ibm-plex-mono text-[20px] font-bold text-[var(--text-primary)]">
+            <span className="font-ibm-plex-mono text-[22px] font-bold text-[var(--text-primary)]">
               {activeAgents}
             </span>
           </div>
@@ -125,14 +125,14 @@ export default function Sidebar() {
 
         {/* Tasks Today */}
         <div className="flex flex-col gap-[4px] w-full">
-          <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+          <span className="font-ibm-plex-mono text-[15px] text-[var(--text-muted)]">
             {t("tasksToday")}
           </span>
           <div className="flex items-center gap-[8px]">
-            <span className="font-ibm-plex-mono text-[20px] font-bold text-[var(--text-primary)]">
+            <span className="font-ibm-plex-mono text-[22px] font-bold text-[var(--text-primary)]">
               {tasksToday}
             </span>
-            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+            <span className="font-ibm-plex-mono text-[15px] text-[var(--text-muted)]">
               ({completedToday} {t("done")})
             </span>
           </div>
@@ -142,26 +142,26 @@ export default function Sidebar() {
       {/* User Stats (if logged in) */}
       {!loadingUser && userStats && (
         <div className="flex flex-col gap-[16px] w-full rounded-[12px] bg-gradient-to-b from-[var(--bg-hero-start)] to-[var(--bg-hero-end)] p-[20px] border-[1.5px] border-[var(--border-medium)] shadow-[0_3px_10px_rgba(212,149,104,0.09),0_1px_2px_rgba(212,149,104,0.06)]">
-          <span className="font-ibm-plex-mono text-[12px] font-bold text-[var(--accent-dark)] uppercase tracking-wide">
+          <span className="font-ibm-plex-mono text-[14px] font-bold text-[var(--accent-dark)] uppercase tracking-wide">
             {t("myStats")}
           </span>
           <div className="h-[1px] w-full bg-[var(--border-medium)]" />
 
           {/* Tokens Stats */}
           <div className="flex items-center justify-between w-full">
-            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+            <span className="font-ibm-plex-mono text-[15px] text-[var(--text-muted)]">
               {t("tokensSaved")}
             </span>
-            <span className="font-ibm-plex-mono text-[16px] font-bold text-[var(--accent)]">
+            <span className="font-ibm-plex-mono text-[18px] font-bold text-[var(--accent)]">
               {userStats.tokens.saved.toLocaleString()}
             </span>
           </div>
 
           <div className="flex items-center justify-between w-full">
-            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+            <span className="font-ibm-plex-mono text-[15px] text-[var(--text-muted)]">
               {t("tokensContributed")}
             </span>
-            <span className="font-ibm-plex-mono text-[16px] font-bold text-[var(--text-secondary)]">
+            <span className="font-ibm-plex-mono text-[18px] font-bold text-[var(--text-secondary)]">
               {userStats.tokens.contributed.toLocaleString()}
             </span>
           </div>
@@ -170,19 +170,19 @@ export default function Sidebar() {
           <div className="h-[1px] w-full bg-[var(--border-light)]" />
 
           <div className="flex items-center justify-between w-full">
-            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+            <span className="font-ibm-plex-mono text-[15px] text-[var(--text-muted)]">
               {t("completedTasks")}
             </span>
-            <span className="font-ibm-plex-mono text-[14px] font-semibold text-[var(--text-primary)]">
+            <span className="font-ibm-plex-mono text-[16px] font-semibold text-[var(--text-primary)]">
               {userStats.tasks.completed}
             </span>
           </div>
 
           <div className="flex items-center justify-between w-full">
-            <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+            <span className="font-ibm-plex-mono text-[15px] text-[var(--text-muted)]">
               {t("activeTasks")}
             </span>
-            <span className="font-ibm-plex-mono text-[14px] font-semibold text-[var(--text-primary)]">
+            <span className="font-ibm-plex-mono text-[16px] font-semibold text-[var(--text-primary)]">
               {userStats.tasks.active}
             </span>
           </div>
@@ -192,10 +192,10 @@ export default function Sidebar() {
             <>
               <div className="h-[1px] w-full bg-[var(--border-light)]" />
               <div className="flex items-center justify-between w-full">
-                <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+                <span className="font-ibm-plex-mono text-[15px] text-[var(--text-muted)]">
                   {t("reputation")}
                 </span>
-                <span className="font-ibm-plex-mono text-[14px] font-bold text-[var(--accent-dark)]">
+                <span className="font-ibm-plex-mono text-[16px] font-bold text-[var(--accent-dark)]">
                   {userStats.reputation.rating.toFixed(2)}
                 </span>
               </div>
@@ -206,13 +206,13 @@ export default function Sidebar() {
 
       {/* Leaderboard */}
       <div className="flex flex-col gap-[16px] w-full rounded-[12px] bg-white p-[20px] border border-[var(--border-medium)] shadow-[0_3px_10px_rgba(212,149,104,0.09),0_1px_2px_rgba(212,149,104,0.06)]">
-        <span className="font-ibm-plex-mono text-[12px] font-bold text-[var(--accent-dark)] uppercase tracking-wide">
+        <span className="font-ibm-plex-mono text-[14px] font-bold text-[var(--accent-dark)] uppercase tracking-wide">
           {t("topContributors")}
         </span>
         <div className="h-[1px] w-full bg-[var(--border-light)]" />
 
         {contributors.length === 0 ? (
-          <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
+          <span className="font-ibm-plex-mono text-[15px] text-[var(--text-muted)]">
             {t("noContributors")}
           </span>
         ) : (
@@ -222,7 +222,7 @@ export default function Sidebar() {
               className="flex items-center justify-between w-full"
             >
               <span
-                className={`font-ibm-plex-mono text-[14px] ${
+                className={`font-ibm-plex-mono text-[16px] ${
                   i === 0
                     ? "font-semibold text-[var(--text-primary)]"
                     : "text-[var(--text-secondary)]"
@@ -231,7 +231,7 @@ export default function Sidebar() {
                 {entry.rank}. {entry.name}
               </span>
               <span
-                className={`font-ibm-plex-mono text-[14px] font-bold ${
+                className={`font-ibm-plex-mono text-[16px] font-bold ${
                   i === 0
                     ? "text-[var(--accent)]"
                     : i < 3
