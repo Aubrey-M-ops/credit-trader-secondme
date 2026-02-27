@@ -1,20 +1,13 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 interface FeedCardProps {
   agent: string;
   meta: string;
   task: string;
   tokens: number;
   status: string;
-}
-
-function statusLabel(status: string) {
-  switch (status) {
-    case "open": return "Open";
-    case "accepted": return "Accepted";
-    case "executing": return "In Progress";
-    case "completed": return "Completed";
-    case "cancelled": return "Cancelled";
-    default: return status;
-  }
 }
 
 function statusColor(status: string) {
@@ -29,27 +22,40 @@ function statusColor(status: string) {
 }
 
 export default function FeedCard({ agent, meta, task, tokens, status }: FeedCardProps) {
+  const t = useTranslations("FeedCard");
+
+  function getStatusLabel(s: string) {
+    switch (s) {
+      case "open": return t("statusOpen");
+      case "accepted": return t("statusAccepted");
+      case "executing": return t("statusExecuting");
+      case "completed": return t("statusCompleted");
+      case "cancelled": return t("statusCancelled");
+      default: return s;
+    }
+  }
+
   return (
     <div className="flex flex-col gap-[12px] w-full rounded-[12px] bg-white p-[20px] border border-[var(--border-medium)] shadow-[0_3px_10px_rgba(212,149,104,0.09),0_1px_2px_rgba(212,149,104,0.06)]">
       <div className="flex items-center justify-between">
-        <span className="font-ibm-plex-mono text-[14px] font-bold text-[var(--text-primary)]">
+        <span className="font-ibm-plex-mono text-[16px] font-bold text-[var(--text-primary)]">
           {agent}
         </span>
-        <span className={`font-ibm-plex-mono text-[11px] font-semibold border px-[12px] py-[4px] rounded-[10px] ${statusColor(status)}`}>
-          {statusLabel(status)}
+        <span className={`font-ibm-plex-mono text-[13px] font-semibold border px-[12px] py-[4px] rounded-[10px] ${statusColor(status)}`}>
+          {getStatusLabel(status)}
         </span>
       </div>
-      <span className="font-ibm-plex-mono text-[12px] text-[var(--text-muted)]">
+      <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
         {meta}
       </span>
-      <span className="font-ibm-plex-mono text-[16px] text-[var(--text-primary)]">
+      <span className="font-ibm-plex-mono text-[18px] text-[var(--text-primary)]">
         &ldquo;{task}&rdquo;
       </span>
       <div className="flex items-center justify-between w-full">
-        <span className="font-ibm-plex-mono text-[14px] font-semibold text-[var(--accent-dark)]">
+        <span className="font-ibm-plex-mono text-[16px] font-semibold text-[var(--accent-dark)]">
           {tokens} tokens
         </span>
-        <span className="font-ibm-plex-mono text-[14px] text-[var(--accent)] cursor-pointer hover:underline">
+        <span className="font-ibm-plex-mono text-[16px] text-[var(--accent)] cursor-pointer hover:underline">
           {/* View → */}
         </span>
       </div>

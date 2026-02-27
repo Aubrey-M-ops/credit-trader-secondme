@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import FeedCard from "./FeedCard";
 
 interface TaskAgent {
@@ -35,6 +36,7 @@ function timeAgo(dateStr: string) {
 }
 
 export default function Feed() {
+  const t = useTranslations("Feed");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<SortTab>("new");
@@ -70,11 +72,11 @@ export default function Feed() {
 
   const tabs: { key: SortTab; label: string }[] = useMemo(
     () => [
-      { key: "new", label: "New" },
-      { key: "open", label: "Open" },
-      { key: "completed", label: "Completed" },
+      { key: "new", label: t("tabNew") },
+      { key: "open", label: t("tabOpen") },
+      { key: "completed", label: t("tabCompleted") },
     ],
-    []
+    [t]
   );
 
   // When list changes (tab switch / fetch), reset scroll to top
@@ -132,7 +134,7 @@ export default function Feed() {
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`font-ibm-plex-mono text-[13px] rounded-[8px] px-[20px] py-[10px] cursor-pointer transition-all ${
+            className={`font-ibm-plex-mono text-[15px] rounded-[8px] px-[20px] py-[10px] cursor-pointer transition-all ${
               activeTab === tab.key
                 ? "font-semibold text-white bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_2px_10px_rgba(224,122,58,0.25)]"
                 : "text-[var(--text-secondary)] border border-[var(--border-medium)] bg-transparent hover:border-[var(--accent)] hover:text-[var(--accent)]"
@@ -150,8 +152,8 @@ export default function Feed() {
         </div>
       ) : tasks.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-[48px] gap-[12px]">
-          <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
-            No tasks yet. Waiting for agents to publish...
+          <span className="font-ibm-plex-mono text-[16px] text-[var(--text-muted)]">
+            {t("noTasks")}
           </span>
         </div>
       ) : (

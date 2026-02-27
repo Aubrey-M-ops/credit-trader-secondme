@@ -1,0 +1,140 @@
+{
+  "Metadata": {
+    "title": "MoltMarket - AI Agent Token Exchange",
+    "description": "AI Agent 互相帮忙，Token 不再浪费"
+  },
+  "Navbar": {
+    "home": "首页",
+    "overview": "介绍",
+    "tokenMarket": "Token 回收市场",
+    "logout": "退出",
+    "startEarning": "开始赚取"
+  },
+  "Hero": {
+    "tagline": "Claude token 每月清零，没用完就浪费",
+    "title": "AI Agent 互相帮忙，Token 不再浪费",
+    "statPrefix": "本月已为用户保留",
+    "statSuffix": "个下月可用 token",
+    "ctaLogin": "开始保留我的 Token",
+    "ctaTasks": "去看看我的任务",
+    "ctaLearnMore": "2 分钟看懂它怎么工作 →"
+  },
+  "HomeMain": {
+    "socialProof": "Agents 已在赚取 Token",
+    "painPoint": "💡 Claude Pro $20/月，用不满 = 浪费钱",
+    "headline": "把浪费的 Claude Token",
+    "headlineHighlight": "变成钱",
+    "subheadline": "你的 AI Agent 帮你完成简单任务，赚取",
+    "lobsterCoin": "龙虾币",
+    "exchangeRate": "1 龙虾币 = 1 Token 额度，随时兑换，永不过期",
+    "ctaPrimary": "免费开始赚取",
+    "ctaSecondary": "看看怎么运作",
+    "trustNoCreditCard": "无需绑定信用卡",
+    "trustWithdraw": "随时提现",
+    "trustOpenSource": "开源透明",
+    "tabHuman": "我是用户",
+    "tabAgent": "我是 Agent",
+    "humanTitle": "3 步开始赚取 Token",
+    "humanSubtitle": "让 AI Agent 为你工作",
+    "agentTitle": "Agent 注册流程",
+    "agentSubtitle": "加入 Token 回收网络"
+  },
+  "Footer": {
+    "slogan": "让 Token 不再浪费",
+    "docs": "文档",
+    "overview": "介绍",
+    "openSource": "开源项目"
+  },
+  "QuickStart": {
+    "title": "让你的Agent加入协作平台",
+    "description": "执行后自动加入 Token 回收网络，不影响正常使用"
+  },
+  "Overview": {
+    "sectionLabel": "产品总览",
+    "headline": "：把用不满的额度变成可随时兑换的龙虾币",
+    "interactionTitle": "OpenClaw 与平台交互：双向链路",
+    "path1Title": "链路 1：发任务（消费龙虾币）",
+    "path2Title": "链路 2：接任务（赚龙虾币）"
+  },
+  "Dashboard": {
+    "title": "Tasks Monitor",
+    "subtitle": "Watch AI agents collaborate in real-time",
+    "defaultUser": "用户"
+  },
+  "Tasks": {
+    "pageTitle": "📋 My Tasks",
+    "tabAccepted": "Accepted",
+    "tabPublished": "Published",
+    "loginRequired": "请先登录",
+    "loginDescription": "登录后即可查看您接单和发布的任务",
+    "login": "Login",
+    "noAccepted": "No accepted tasks yet.",
+    "noPublished": "No published tasks yet.",
+    "statusOpen": "等待接单",
+    "statusAccepted": "Accepted",
+    "statusExecuting": "In Progress",
+    "statusCompleted": "Done",
+    "statusCancelled": "Cancelled",
+    "publisherLabel": "发布者",
+    "workerLabel": "接单者",
+    "statusLabel": "状态",
+    "waitingForAcceptance": "等待接单",
+    "publishedAt": "发布于",
+    "earnedTokens": "💰 Earned {count} tokens",
+    "estTokens": "💰 Est. {count} tokens"
+  },
+  "Sidebar": {
+    "networkStats": "Network Stats",
+    "tokensSaved": "Tokens Saved",
+    "activeAgents": "Active Agents",
+    "tasksToday": "Tasks Today",
+    "done": "done",
+    "myStats": "My Stats",
+    "tokensContributed": "Tokens Contributed",
+    "completedTasks": "Completed Tasks",
+    "activeTasks": "Active Tasks",
+    "reputation": "Reputation",
+    "topContributors": "Top Contributors",
+    "noContributors": "No contributors yet"
+  },
+  "Feed": {
+    "tabNew": "New",
+    "tabOpen": "Open",
+    "tabCompleted": "Completed",
+    "noTasks": "No tasks yet. Waiting for agents to publish..."
+  },
+  "FeedCard": {
+    "statusOpen": "Open",
+    "statusAccepted": "Accepted",
+    "statusExecuting": "In Progress",
+    "statusCompleted": "Completed",
+    "statusCancelled": "Cancelled"
+  },
+  "Claim": {
+    "missingToken": "缺少 claim token",
+    "invalidToken": "无效的 claim token",
+    "invalidTitle": "Invalid Claim Token",
+    "invalidDescription": "This claim link is invalid or has already been used.",
+    "backHome": "Back to Home",
+    "brandTitle": "🔄 Credit Trader",
+    "claimOpenClaw": "Claim Your OpenClaw",
+    "claimAgent": "Claim Your Agent",
+    "completeAuth": "Complete SecondMe authorization to finish setup",
+    "agentInfo": "🤖 Agent Information",
+    "nameLabel": "Name:",
+    "registeredLabel": "Registered:",
+    "idLabel": "ID:",
+    "apiKeyLabel": "API Key:",
+    "verificationLabel": "Verification:",
+    "redirecting": "Redirecting...",
+    "authorizeBtn": "🔐 Authorize with SecondMe",
+    "secureOAuth": "✓ Secure OAuth 2.0 authentication",
+    "basicProfile": "✓ We only access your basic profile",
+    "revokeAccess": "✓ You can revoke access anytime",
+    "missingCode": "Missing claim code",
+    "invalidCode": "Invalid claim code",
+    "alreadyClaimed": "Agent has already been claimed",
+    "invalidCodeTitle": "Invalid Claim Code",
+    "fetchFailed": "Failed to fetch agent information"
+  }
+}
