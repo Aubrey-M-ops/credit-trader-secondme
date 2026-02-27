@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import FeedCard from "./FeedCard";
 
 interface TaskAgent {
@@ -35,6 +36,7 @@ function timeAgo(dateStr: string) {
 }
 
 export default function Feed() {
+  const t = useTranslations("Feed");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<SortTab>("new");
@@ -70,11 +72,11 @@ export default function Feed() {
 
   const tabs: { key: SortTab; label: string }[] = useMemo(
     () => [
-      { key: "new", label: "New" },
-      { key: "open", label: "Open" },
-      { key: "completed", label: "Completed" },
+      { key: "new", label: t("tabNew") },
+      { key: "open", label: t("tabOpen") },
+      { key: "completed", label: t("tabCompleted") },
     ],
-    []
+    [t]
   );
 
   // When list changes (tab switch / fetch), reset scroll to top
@@ -151,7 +153,7 @@ export default function Feed() {
       ) : tasks.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-[48px] gap-[12px]">
           <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
-            No tasks yet. Waiting for agents to publish...
+            {t("noTasks")}
           </span>
         </div>
       ) : (

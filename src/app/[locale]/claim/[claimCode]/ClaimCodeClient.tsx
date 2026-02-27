@@ -2,7 +2,8 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState, useMemo } from "react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 interface AgentInfo {
   id: string;
@@ -14,12 +15,13 @@ interface AgentInfo {
 }
 
 export default function ClaimCodeClient() {
+  const t = useTranslations("Claim");
   const params = useParams();
   const claimCode = params.claimCode as string;
 
   const [agent, setAgent] = useState<AgentInfo | null>(null);
   const [loading, setLoading] = useState(() => !!claimCode);
-  const [error, setError] = useState<string | null>(() => claimCode ? null : "Missing claim code");
+  const [error, setError] = useState<string | null>(() => claimCode ? null : t("missingCode"));
   const [claiming, setClaiming] = useState(false);
 
   useEffect(() => {
@@ -32,18 +34,18 @@ export default function ClaimCodeClient() {
       .then((res) => {
         if (!res.ok) {
           if (res.status === 404) {
-            throw new Error("Invalid claim code");
+            throw new Error(t("invalidCode"));
           } else if (res.status === 400) {
-            throw new Error("Agent has already been claimed");
+            throw new Error(t("alreadyClaimed"));
           }
-          throw new Error("Failed to fetch agent information");
+          throw new Error(t("fetchFailed"));
         }
         return res.json();
       })
       .then((data) => setAgent(data))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [claimCode]);
+  }, [claimCode, t]);
 
   const [currentTime, setCurrentTime] = useState(() => Date.now());
 
@@ -84,16 +86,16 @@ export default function ClaimCodeClient() {
         <div className="flex flex-col items-center gap-[16px] p-[32px]">
           <span className="text-[48px]">❌</span>
           <h1 className="font-ibm-plex-mono text-[20px] font-bold text-[var(--text-primary)]">
-            Invalid Claim Code
+            {t("invalidCodeTitle")}
           </h1>
           <p className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
-            {error || "This claim link is invalid or has already been used."}
+            {error || t("invalidDescription")}
           </p>
           <Link
             href="/"
             className="font-ibm-plex-mono text-[14px] text-[var(--accent)] hover:underline"
           >
-            Back to Home
+            {t("backHome")}
           </Link>
         </div>
       </div>
@@ -106,14 +108,14 @@ export default function ClaimCodeClient() {
         {/* Card Header */}
         <div className="flex flex-col items-center gap-[16px] px-[32px] pt-[32px] pb-[24px] w-full">
           <span className="font-ibm-plex-mono text-[16px] font-bold text-[var(--text-primary)]">
-            🔄 Credit Trader
+            {t("brandTitle")}
           </span>
           <span className="text-[48px]">🎉</span>
           <h1 className="font-ibm-plex-mono text-[24px] font-bold text-[var(--text-primary)] text-center">
-            Claim Your Agent
+            {t("claimAgent")}
           </h1>
           <p className="font-ibm-plex-mono text-[14px] text-[var(--text-light)] text-center">
-            Complete SecondMe authorization to finish setup
+            {t("completeAuth")}
           </p>
         </div>
 
@@ -122,11 +124,11 @@ export default function ClaimCodeClient() {
         {/* Agent Info */}
         <div className="flex flex-col gap-[12px] px-[32px] py-[20px] w-full">
           <span className="font-ibm-plex-mono text-[13px] font-bold text-[var(--accent-dark)]">
-            🤖 Agent Information
+            {t("agentInfo")}
           </span>
           <div className="flex gap-[8px] w-full">
             <span className="font-ibm-plex-mono text-[13px] text-[var(--text-light)]">
-              Name:
+              {t("nameLabel")}
             </span>
             <span className="font-ibm-plex-mono text-[13px] font-semibold text-[var(--text-primary)]">
               {agent.agentName}
@@ -134,7 +136,7 @@ export default function ClaimCodeClient() {
           </div>
           <div className="flex gap-[8px] w-full">
             <span className="font-ibm-plex-mono text-[13px] text-[var(--text-light)]">
-              API Key:
+              {t("apiKeyLabel")}
             </span>
             <span className="font-ibm-plex-mono text-[13px] font-mono text-[var(--text-primary)]">
               {agent.apiKey}
@@ -142,7 +144,7 @@ export default function ClaimCodeClient() {
           </div>
           <div className="flex gap-[8px] w-full">
             <span className="font-ibm-plex-mono text-[13px] text-[var(--text-light)]">
-              Verification:
+              {t("verificationLabel")}
             </span>
             <span className="font-ibm-plex-mono text-[13px] font-mono font-bold text-[var(--accent)]">
               {agent.verificationCode}
@@ -150,7 +152,7 @@ export default function ClaimCodeClient() {
           </div>
           <div className="flex gap-[8px] w-full">
             <span className="font-ibm-plex-mono text-[13px] text-[var(--text-light)]">
-              Registered:
+              {t("registeredLabel")}
             </span>
             <span className="font-ibm-plex-mono text-[13px] font-semibold text-[var(--text-primary)]">
               {timeAgo}
@@ -168,19 +170,19 @@ export default function ClaimCodeClient() {
             className="flex items-center justify-center w-full h-[48px] rounded-[12px] bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_20px_rgba(224,122,58,0.33),0_0_6px_1px_rgba(244,164,96,0.21)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-[0_6px_24px_rgba(224,122,58,0.4)] transition-shadow"
           >
             <span className="font-ibm-plex-mono text-[15px] font-bold text-white">
-              {claiming ? "Redirecting..." : "🔐 Authorize with SecondMe"}
+              {claiming ? t("redirecting") : t("authorizeBtn")}
             </span>
           </button>
 
           <div className="flex flex-col gap-[8px]">
             <span className="font-ibm-plex-mono text-[13px] text-[var(--accent-dark)]">
-              ✓ Secure OAuth 2.0 authentication
+              {t("secureOAuth")}
             </span>
             <span className="font-ibm-plex-mono text-[13px] text-[var(--accent-dark)]">
-              ✓ We only access your basic profile
+              {t("basicProfile")}
             </span>
             <span className="font-ibm-plex-mono text-[13px] text-[var(--accent-dark)]">
-              ✓ You can revoke access anytime
+              {t("revokeAccess")}
             </span>
           </div>
         </div>

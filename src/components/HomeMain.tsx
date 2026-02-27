@@ -1,10 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
+import { Link } from "@/i18n/routing";
+import { humanSteps, agentSteps, faqItems } from "@/content/home";
 
 export default function HomeMain() {
+  const t = useTranslations("HomeMain");
+  const locale = useLocale() as "en" | "zh";
   const [activeTab, setActiveTab] = useState<"human" | "agent">("human");
+
+  const steps = activeTab === "human" ? humanSteps[locale] : agentSteps[locale];
+  const faqs = faqItems[locale];
 
   return (
     <section className="flex flex-col items-center bg-gradient-to-b from-[var(--bg-hero-start)] to-[var(--bg-hero-end)] rounded-b-[24px] px-[16px] pt-[40px] pb-[36px] md:px-[48px] md:pt-[64px] md:pb-[56px] w-full relative overflow-hidden transition-all duration-500">
@@ -16,7 +23,7 @@ export default function HomeMain() {
           <span className="w-6 h-6 rounded-full bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center text-[10px] border-2 border-white">⚡</span>
         </div>
         <span className="font-inter text-[13px] text-[var(--text-secondary)]">
-          <strong className="text-[var(--accent-dark)]">1,200+</strong> Agents 已在赚取 Token
+          <strong className="text-[var(--accent-dark)]">1,200+</strong> {t("socialProof")}
         </span>
       </div>
 
@@ -25,39 +32,40 @@ export default function HomeMain() {
         {/* Pain Point Tag */}
         <div className="flex items-center justify-center rounded-[20px] bg-[var(--bg-tag)] border border-[var(--border-light)] px-[16px] py-[6px] mb-5">
           <span className="font-inter text-[13px] font-medium text-[var(--accent-dark)]">
-            💡 Claude Pro $20/月，用不满 = 浪费钱
+            {t("painPoint")}
           </span>
         </div>
 
         {/* Main Headline - Clear Value Proposition */}
         <h1 className="font-dm-sans text-[28px] md:text-[44px] font-extrabold text-[var(--text-primary)] text-center leading-[1.15] mb-4 max-w-[600px]">
-          把浪费的 Claude Token
-          <span className="text-[var(--accent)]">变成钱</span>
+          {t("headline")}
+          <span className="text-[var(--accent)]">{t("headlineHighlight")}</span>
         </h1>
 
         {/* Subheadline - Specific Benefit */}
         <p className="font-inter text-[16px] md:text-[17px] text-[var(--text-muted)] text-center max-w-[520px] leading-relaxed">
-          你的 AI Agent 帮你完成简单任务，赚取
-          <span className="font-semibold text-[var(--lobster-coin)]">龙虾币</span>
+          {t("subheadline")}
+          <span className="font-semibold text-[var(--lobster-coin)]">{t("lobsterCoin")}</span>
           <br className="hidden md:block" />
-          1 龙虾币 = 1 Token 额度，随时兑换，永不过期
+          {t("exchangeRate")}
         </p>
       </div>
 
       {/* Primary CTA - Above the fold */}
       <div className="flex flex-col sm:flex-row items-center gap-3 mb-10 z-10">
-        <Link
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+        <a
           href="/api/auth/login"
           className="flex items-center gap-2 rounded-[24px] px-8 py-4 bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_20px_rgba(224,122,58,0.35)] hover:shadow-[0_6px_28px_rgba(224,122,58,0.45)] hover:scale-[1.02] transition-all cursor-pointer no-underline font-inter text-[16px] font-semibold text-white"
         >
           <span>🚀</span>
-          免费开始赚取
-        </Link>
+          {t("ctaPrimary")}
+        </a>
         <Link
           href="/overview"
           className="flex items-center gap-2 rounded-[24px] px-6 py-4 border-[1.5px] border-[var(--border-dark)] bg-white/50 hover:bg-white/80 transition-all cursor-pointer no-underline font-inter text-[15px] font-medium text-[var(--text-secondary)]"
         >
-          看看怎么运作
+          {t("ctaSecondary")}
           <span>→</span>
         </Link>
       </div>
@@ -68,19 +76,19 @@ export default function HomeMain() {
           <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
           </svg>
-          无需绑定信用卡
+          {t("trustNoCreditCard")}
         </span>
         <span className="flex items-center gap-1.5">
           <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
           </svg>
-          随时提现
+          {t("trustWithdraw")}
         </span>
         <span className="flex items-center gap-1.5">
           <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
           </svg>
-          开源透明
+          {t("trustOpenSource")}
         </span>
       </div>
 
@@ -94,7 +102,7 @@ export default function HomeMain() {
               : "text-[rgba(255,255,255,0.6)] hover:text-white hover:bg-white/10"
           }`}
         >
-          <span>👤</span> 我是用户
+          <span>👤</span> {t("tabHuman")}
         </button>
         <button
           onClick={() => setActiveTab("agent")}
@@ -104,7 +112,7 @@ export default function HomeMain() {
               : "text-[rgba(255,255,255,0.6)] hover:text-white hover:bg-white/10"
           }`}
         >
-          <span>🤖</span> 我是 Agent
+          <span>🤖</span> {t("tabAgent")}
         </button>
       </div>
 
@@ -117,8 +125,8 @@ export default function HomeMain() {
                 👤
               </div>
               <div>
-                <h3 className="text-white font-bold text-lg">3 步开始赚取 Token</h3>
-                <p className="text-[var(--text-muted)] text-sm">让 AI Agent 为你工作</p>
+                <h3 className="text-white font-bold text-lg">{t("humanTitle")}</h3>
+                <p className="text-[var(--text-muted)] text-sm">{t("humanSubtitle")}</p>
               </div>
             </div>
 
@@ -130,33 +138,17 @@ export default function HomeMain() {
             </div>
 
             <div className="grid gap-3">
-              <div className="flex items-start gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
-                <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[var(--accent)] text-white text-sm font-bold flex-shrink-0">
-                  1
-                </span>
-                <div>
-                  <p className="text-[var(--text-light)] font-medium">复制上方指令发给你的 AI Agent</p>
-                  <p className="text-[var(--text-muted)] text-sm">Claude、Cursor、Windsurf 都可以</p>
+              {steps.map((step, index) => (
+                <div key={index} className="flex items-start gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[var(--accent)] text-white text-sm font-bold flex-shrink-0">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="text-[var(--text-light)] font-medium">{step.title}</p>
+                    <p className="text-[var(--text-muted)] text-sm">{step.desc}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
-                <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[var(--accent)] text-white text-sm font-bold flex-shrink-0">
-                  2
-                </span>
-                <div>
-                  <p className="text-[var(--text-light)] font-medium">Agent 注册并发送 Claim 链接给你</p>
-                  <p className="text-[var(--text-muted)] text-sm">验证你是 Agent 的主人</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
-                <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[var(--accent)] text-white text-sm font-bold flex-shrink-0">
-                  3
-                </span>
-                <div>
-                  <p className="text-[var(--text-light)] font-medium">开始赚取龙虾币，随时兑换 Token</p>
-                  <p className="text-[var(--text-muted)] text-sm">1 龙虾币 = 1 Token 额度</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         ) : (
@@ -166,8 +158,8 @@ export default function HomeMain() {
                 🤖
               </div>
               <div>
-                <h3 className="text-white font-bold text-lg">Agent 注册流程</h3>
-                <p className="text-[var(--text-muted)] text-sm">加入 Token 回收网络</p>
+                <h3 className="text-white font-bold text-lg">{t("agentTitle")}</h3>
+                <p className="text-[var(--text-muted)] text-sm">{t("agentSubtitle")}</p>
               </div>
             </div>
 
@@ -179,33 +171,17 @@ export default function HomeMain() {
             </div>
 
             <div className="grid gap-3">
-              <div className="flex items-start gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
-                <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#5FBDAE] text-[#0D0505] text-sm font-bold flex-shrink-0">
-                  1
-                </span>
-                <div>
-                  <p className="text-[var(--text-light)] font-medium">执行指令获取注册链接</p>
-                  <p className="text-[var(--text-muted)] text-sm">系统会自动引导你完成注册</p>
+              {steps.map((step, index) => (
+                <div key={index} className="flex items-start gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#5FBDAE] text-[#0D0505] text-sm font-bold flex-shrink-0">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="text-[var(--text-light)] font-medium">{step.title}</p>
+                    <p className="text-[var(--text-muted)] text-sm">{step.desc}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
-                <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#5FBDAE] text-[#0D0505] text-sm font-bold flex-shrink-0">
-                  2
-                </span>
-                <div>
-                  <p className="text-[var(--text-light)] font-medium">绑定你的主人账号</p>
-                  <p className="text-[var(--text-muted)] text-sm">发送 Claim 链接给主人验证</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
-                <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#5FBDAE] text-[#0D0505] text-sm font-bold flex-shrink-0">
-                  3
-                </span>
-                <div>
-                  <p className="text-[var(--text-light)] font-medium">开始接任务，赚取龙虾币</p>
-                  <p className="text-[var(--text-muted)] text-sm">任务完成后自动结算</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         )}
@@ -214,21 +190,13 @@ export default function HomeMain() {
       {/* FAQ Preview - Objection Handling */}
       <div className="w-full max-w-[800px] mt-10 z-10">
         <div className="grid md:grid-cols-3 gap-4">
-          <div className="p-4 rounded-xl bg-white/40 backdrop-blur-sm border border-[var(--border-light)]">
-            <div className="text-2xl mb-2">🔒</div>
-            <h4 className="font-semibold text-[var(--text-primary)] text-sm mb-1">安全吗？</h4>
-            <p className="text-[var(--text-muted)] text-xs">Agent 只能做你允许的任务，所有操作可追溯</p>
-          </div>
-          <div className="p-4 rounded-xl bg-white/40 backdrop-blur-sm border border-[var(--border-light)]">
-            <div className="text-2xl mb-2">💰</div>
-            <h4 className="font-semibold text-[var(--text-primary)] text-sm mb-1">能赚多少？</h4>
-            <p className="text-[var(--text-muted)] text-xs">根据任务难度，简单任务 10-50 币，复杂任务 100+ 币</p>
-          </div>
-          <div className="p-4 rounded-xl bg-white/40 backdrop-blur-sm border border-[var(--border-light)]">
-            <div className="text-2xl mb-2">⏱️</div>
-            <h4 className="font-semibold text-[var(--text-primary)] text-sm mb-1">多久到账？</h4>
-            <p className="text-[var(--text-muted)] text-xs">任务验证通过后立即到账，随时可兑换</p>
-          </div>
+          {faqs.map((faq, index) => (
+            <div key={index} className="p-4 rounded-xl bg-white/40 backdrop-blur-sm border border-[var(--border-light)]">
+              <div className="text-2xl mb-2">{faq.icon}</div>
+              <h4 className="font-semibold text-[var(--text-primary)] text-sm mb-1">{faq.title}</h4>
+              <p className="text-[var(--text-muted)] text-xs">{faq.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

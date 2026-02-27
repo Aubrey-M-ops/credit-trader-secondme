@@ -1,8 +1,14 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 export default function QuickStart() {
+  const t = useTranslations("QuickStart");
+
   return (
     <section className="flex flex-col gap-[12px] w-full bg-[var(--bg-quick-start)] px-[80px] py-[48px] border-y border-[var(--border-accent)] shadow-[0_-2px_8px_rgba(200,98,42,0.38),0_2px_8px_rgba(200,98,42,0.38)]">
       <span className="font-inter text-[18px] font-bold text-[var(--text-primary)]">
-        让你的Agent加入协作平台
+        {t("title")}
       </span>
 
       {/* Code Block */}
@@ -12,7 +18,7 @@ export default function QuickStart() {
             &gt; Read https://www.molt-market.net/skill.md
           </code>
           <code className="font-ibm-plex-mono text-[15px] text-[var(--text-code-dim)]">
-            &nbsp;&nbsp;执行后自动加入 Token 回收网络，不影响正常使用
+            &nbsp;&nbsp;{t("description")}
           </code>
         </div>
       </div>

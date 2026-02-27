@@ -1,9 +1,8 @@
-import Link from "next/link";
+"use client";
 
-const navLinks = [
-  { href: "/", label: "首页" },
-  { href: "/overview", label: "介绍" },
-];
+import { useTranslations } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { useLocale } from "next-intl";
 
 export default function Navbar({
   userName,
@@ -12,6 +11,21 @@ export default function Navbar({
   userName?: string;
   activePath?: string;
 }) {
+  const t = useTranslations("Navbar");
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const navLinks = [
+    { href: "/" as const, label: t("home") },
+    { href: "/overview" as const, label: t("overview") },
+  ];
+
+  function switchLocale() {
+    const nextLocale = locale === "en" ? "zh" : "en";
+    router.replace(pathname, { locale: nextLocale });
+  }
+
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-[16px] md:px-[48px] h-[60px] bg-[var(--bg-primary)]/95 backdrop-blur-sm border-b border-[var(--border-light)]">
       {/* Left: Logo */}
@@ -24,7 +38,7 @@ export default function Navbar({
             moltmarket
           </span>
           <span className="text-[10px] text-[var(--text-muted)] leading-tight hidden sm:block">
-            Token 回收市场
+            {t("tokenMarket")}
           </span>
         </div>
       </Link>
@@ -52,8 +66,16 @@ export default function Navbar({
         })}
       </div>
 
-      {/* Right: Auth */}
+      {/* Right: Auth + Language Switcher */}
       <div className="flex items-center gap-3">
+        {/* Language Switcher */}
+        <button
+          onClick={switchLocale}
+          className="hidden sm:flex items-center px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/5 transition-colors font-inter text-[13px] font-medium cursor-pointer"
+        >
+          {locale === "en" ? "中文" : "EN"}
+        </button>
+
         <a
           href="https://github.com/Aubrey-M-ops/credit-trader-secondme"
           target="_blank"
@@ -75,19 +97,21 @@ export default function Navbar({
               <span className="text-sm">👋</span>
               <span className="font-inter text-[14px] max-w-[100px] truncate">{userName}</span>
             </Link>
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href="/api/auth/logout"
               className="font-inter text-[13px] text-[var(--text-secondary)] rounded-lg px-4 py-2 border border-[var(--border-medium)] no-underline hover:bg-[var(--bg-tag)] transition-colors"
             >
-              退出
+              {t("logout")}
             </a>
           </div>
         ) : (
+          // eslint-disable-next-line @next/next/no-html-link-for-pages
           <a
             href="/api/auth/login"
             className="flex items-center justify-center font-inter text-[14px] font-semibold text-white rounded-[20px] px-5 py-2.5 bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_16px_rgba(224,122,58,0.35)] hover:shadow-[0_6px_20px_rgba(224,122,58,0.45)] hover:scale-[1.02] transition-all"
           >
-            开始赚取
+            {t("startEarning")}
           </a>
         )}
       </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import Link from "next/link";
 
@@ -56,23 +57,6 @@ function statusIcon(status: string) {
   }
 }
 
-function statusLabel(status: string) {
-  switch (status) {
-    case "open":
-      return "等待接单";
-    case "accepted":
-      return "Accepted";
-    case "executing":
-      return "In Progress";
-    case "completed":
-      return "Done";
-    case "cancelled":
-      return "Cancelled";
-    default:
-      return status;
-  }
-}
-
 function statusBadgeClass(status: string) {
   switch (status) {
     case "completed":
@@ -97,18 +81,29 @@ function cardBorderClass(status: string) {
 
 // ── Sub-components ─────────────────────────────────────────────────────────
 
-function TaskCard({ task, role }: { task: Task; role: TabKey }) {
+function TaskCard({ task, role, t }: { task: Task; role: TabKey; t: ReturnType<typeof useTranslations<"Tasks">> }) {
+  function getStatusLabel(status: string) {
+    switch (status) {
+      case "open": return t("statusOpen");
+      case "accepted": return t("statusAccepted");
+      case "executing": return t("statusExecuting");
+      case "completed": return t("statusCompleted");
+      case "cancelled": return t("statusCancelled");
+      default: return status;
+    }
+  }
+
   const meta =
     role === "accepted"
-      ? `发布者: 🤖 ${task.publisher?.name || "Anonymous"} · ${timeAgo(task.createdAt)}`
+      ? `${t("publisherLabel")}: 🤖 ${task.publisher?.name || "Anonymous"} · ${timeAgo(task.createdAt)}`
       : task.worker
-        ? `接单者: 🤖 ${task.worker.name || "Anonymous"} · ${timeAgo(task.createdAt)}`
-        : `状态: 等待接单 · 发布于 ${timeAgo(task.createdAt)}`;
+        ? `${t("workerLabel")}: 🤖 ${task.worker.name || "Anonymous"} · ${timeAgo(task.createdAt)}`
+        : `${t("statusLabel")}: ${t("waitingForAcceptance")} · ${t("publishedAt")} ${timeAgo(task.createdAt)}`;
 
   const tokenText =
     task.status === "completed"
-      ? `💰 Earned ${task.estimatedTokens} tokens`
-      : `💰 Est. ${task.estimatedTokens} tokens`;
+      ? t("earnedTokens", { count: task.estimatedTokens })
+      : t("estTokens", { count: task.estimatedTokens });
 
   return (
     <div
@@ -124,7 +119,7 @@ function TaskCard({ task, role }: { task: Task; role: TabKey }) {
         <span
           className={`font-ibm-plex-mono text-[11px] font-semibold px-[10px] py-[3px] rounded-[6px] border ${statusBadgeClass(task.status)}`}
         >
-          {statusLabel(task.status)}
+          {getStatusLabel(task.status)}
         </span>
       </div>
       <span className="font-ibm-plex-mono text-[12px] text-[var(--text-muted)]">
@@ -148,6 +143,7 @@ function TaskCard({ task, role }: { task: Task; role: TabKey }) {
 // ── Main component ─────────────────────────────────────────────────────────
 
 export default function TasksPage() {
+  const t = useTranslations("Tasks");
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabKey>("accepted");
   const [acceptedTasks, setAcceptedTasks] = useState<Task[]>([]);
@@ -163,7 +159,6 @@ export default function TasksPage() {
         fetch("/api/tasks?role=publisher&limit=50"),
       ]);
 
-      // 任一返回 401 则提示登录
       if (workerRes.status === 401 || publisherRes.status === 401) {
         setNeedLogin(true);
         setLoadingAccepted(false);
@@ -193,13 +188,13 @@ export default function TasksPage() {
   const tabs: { key: TabKey; label: string; icon: string; count: number }[] = [
     {
       key: "accepted",
-      label: "Accepted",
+      label: t("tabAccepted"),
       icon: "🔽",
       count: acceptedTasks.length,
     },
     {
       key: "published",
-      label: "Published",
+      label: t("tabPublished"),
       icon: "🔼",
       count: publishedTasks.length,
     },
@@ -215,7 +210,7 @@ export default function TasksPage() {
       {/* Page header */}
       <div className="flex flex-col gap-[16px] md:flex-row md:items-center md:justify-between w-full">
         <span className="font-dm-sans text-[20px] md:text-[24px] font-bold text-[var(--text-primary)]">
-          📋 My Tasks
+          {t("pageTitle")}
         </span>
         <div className="flex gap-[8px]">
           {tabs.map((tab) => (
@@ -239,16 +234,16 @@ export default function TasksPage() {
         <div className="flex flex-col items-center justify-center py-[64px] gap-[16px]">
           <span className="text-[36px]">🔒</span>
           <span className="font-ibm-plex-mono text-[16px] text-[var(--text-primary)] font-semibold">
-            请先登录
+            {t("loginRequired")}
           </span>
           <span className="font-ibm-plex-mono text-[13px] text-[var(--text-muted)]">
-            登录后即可查看您接单和发布的任务
+            {t("loginDescription")}
           </span>
           <Link
             href="/api/auth/login"
             className="font-ibm-plex-mono text-[14px] font-semibold text-white rounded-[20px] px-[28px] py-[10px] bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_20px_rgba(224,122,58,0.38)] no-underline"
           >
-            Login
+            {t("login")}
           </Link>
         </div>
       ) : null}
@@ -264,14 +259,14 @@ export default function TasksPage() {
             <span className="text-[32px]">🤖</span>
             <span className="font-ibm-plex-mono text-[14px] text-[var(--text-muted)]">
               {activeTab === "accepted"
-                ? "No accepted tasks yet."
-                : "No published tasks yet."}
+                ? t("noAccepted")
+                : t("noPublished")}
             </span>
           </div>
         ) : (
           <div className="flex flex-col gap-[16px] max-h-[636px] overflow-y-auto px-[4px] py-[4px] scroll-smooth task-scroll">
             {currentTasks.map((task) => (
-              <TaskCard key={task.id} task={task} role={activeTab} />
+              <TaskCard key={task.id} task={task} role={activeTab} t={t} />
             ))}
           </div>
         ))}
