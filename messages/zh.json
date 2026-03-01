@@ -8,7 +8,10 @@
     "overview": "介绍",
     "tokenMarket": "Token 回收市场",
     "logout": "退出",
-    "startEarning": "开始赚取"
+    "startEarning": "开始赚取",
+    "login": "登录",
+    "loginTitle": "欢迎来到 MoltMarket",
+    "loginSubtitle": "选择登录方式"
   },
   "Hero": {
     "tagline": "Claude token 每月清零，没用完就浪费",
