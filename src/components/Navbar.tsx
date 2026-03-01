@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { useLocale } from "next-intl";
+import { GoogleIcon, GitHubIcon } from "@/components/icons";
 
 export default function Navbar({
   userName,
@@ -15,6 +17,7 @@ export default function Navbar({
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const [loginOpen, setLoginOpen] = useState(false);
 
   const navLinks = [
     { href: "/" as const, label: t("home") },
@@ -27,6 +30,7 @@ export default function Navbar({
   }
 
   return (
+    <>
     <nav className="sticky top-0 z-50 flex items-center justify-between px-[16px] md:px-[48px] h-[60px] bg-[var(--bg-primary)]/95 backdrop-blur-sm border-b border-[var(--border-light)]">
       {/* Left: Logo */}
       <Link href="/" className="flex items-center gap-[8px] cursor-pointer hover:opacity-80 transition-opacity">
@@ -82,9 +86,7 @@ export default function Navbar({
           rel="noreferrer"
           className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/5 transition-colors"
         >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-          </svg>
+          <GitHubIcon className="w-4 h-4" />
           <span className="text-[15px] font-medium">GitHub</span>
         </a>
 
@@ -106,15 +108,70 @@ export default function Navbar({
             </a>
           </div>
         ) : (
-          // eslint-disable-next-line @next/next/no-html-link-for-pages
-          <a
-            href="/api/auth/login"
-            className="flex items-center justify-center font-inter text-[16px] font-semibold text-white rounded-[20px] px-5 py-2.5 bg-gradient-to-b from-[var(--accent-gradient-start)] to-[var(--accent-gradient-end)] shadow-[0_4px_16px_rgba(224,122,58,0.35)] hover:shadow-[0_6px_20px_rgba(224,122,58,0.45)] hover:scale-[1.02] transition-all"
+          <button
+            onClick={() => setLoginOpen(true)}
+            className="font-inter text-[15px] font-semibold text-white rounded-lg px-4 py-2 bg-[var(--accent)] hover:opacity-90 transition-opacity cursor-pointer"
           >
-            {t("startEarning")}
-          </a>
+            {t("login")}
+          </button>
         )}
       </div>
     </nav>
+
+    {loginOpen && (
+      <>
+        {/* Overlay */}
+        <div
+          className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm"
+          onClick={() => setLoginOpen(false)}
+        />
+        {/* Modal card */}
+        <div className="fixed inset-0 z-[101] flex items-center justify-center pointer-events-none">
+          <div className="pointer-events-auto w-[360px] bg-[var(--bg-primary)] rounded-2xl shadow-2xl p-8 flex flex-col gap-6">
+            {/* Header */}
+            <div className="flex items-start justify-between">
+              <div>
+                <h2 className="font-inter text-[20px] font-bold text-[var(--text-primary)]">
+                  {t("loginTitle")}
+                </h2>
+                <p className="font-inter text-[14px] text-[var(--text-muted)] mt-1">
+                  {t("loginSubtitle")}
+                </p>
+              </div>
+              <button
+                onClick={() => setLoginOpen(false)}
+                className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors text-[20px] leading-none cursor-pointer"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Login options */}
+            <div className="flex flex-col gap-3">
+              {/* Google */}
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+              <a
+                href="/api/auth/login?provider=google"
+                className="flex items-center gap-3 font-inter text-[15px] font-medium text-[var(--text-primary)] rounded-xl px-4 py-3 border border-[var(--border-medium)] hover:bg-[var(--bg-tag)] transition-colors"
+              >
+                <GoogleIcon className="w-5 h-5 shrink-0" />
+                Continue with Google
+              </a>
+
+              {/* GitHub */}
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+              <a
+                href="/api/auth/login?provider=github"
+                className="flex items-center gap-3 font-inter text-[15px] font-semibold text-white rounded-xl px-4 py-3 bg-[#24292e] hover:bg-[#1a1e22] transition-colors"
+              >
+                <GitHubIcon className="w-5 h-5 shrink-0" />
+                Continue with GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </>
+    )}
+    </>
   );
 }
