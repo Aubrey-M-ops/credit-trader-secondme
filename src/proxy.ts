@@ -1,4 +1,4 @@
-// src/middleware.ts
+// src/proxy.ts
 import { type NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { createServerClient } from "@supabase/ssr";
@@ -6,7 +6,7 @@ import { routing } from "./i18n/routing";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // 1. Create a base response so Supabase can write refreshed session cookies
   let supabaseResponse = NextResponse.next({ request });
 
