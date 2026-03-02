@@ -18,6 +18,7 @@ export async function GET(request: NextRequest) {
   const supabase = await createSupabaseServerClient();
 
   const callbackUrl = new URL("/api/auth/callback", request.url);
+  // Don't lose the claimcode
   if (claimCode) {
     callbackUrl.searchParams.set("claimCode", claimCode);
   }

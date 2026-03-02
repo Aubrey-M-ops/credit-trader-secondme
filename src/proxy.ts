@@ -1,4 +1,5 @@
 // src/proxy.ts
+// server behavior
 import { type NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { createServerClient } from "@supabase/ssr";
@@ -33,7 +34,12 @@ export async function proxy(request: NextRequest) {
     }
   );
 
-  // Refresh session if expired — must not run any logic before this
+  // Refresh session if expired — must not run any logic before this.
+  // getUser() internally checks whether the access_token has expired.
+  // If so, it uses the refresh_token from the cookie to obtain a new
+  // access_token / refresh_token pair from Supabase, then writes the
+  // new tokens back to supabaseResponse via the setAll callback above.
+  // Token values are never exposed to application code.
   await supabase.auth.getUser();
 
   // 2. Run next-intl middleware on the (potentially cookie-updated) request
