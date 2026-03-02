@@ -1,5 +1,5 @@
 {
-  "name": "credit-trader-secondme",
+  "name": "clawcycle",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma generate",
-    "prepare": "husky"
+    "prepare": "husky",
+    "seed": "dotenv -e .env.local -- ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "npm run seed"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -18,6 +22,7 @@
     "@prisma/adapter-neon": "^7.3.0",
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",
+    "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.95.3",
     "@types/bcrypt": "^6.0.0",
     "@types/mdx": "^2.0.13",

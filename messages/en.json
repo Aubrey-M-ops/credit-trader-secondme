@@ -8,7 +8,10 @@
     "overview": "Overview",
     "tokenMarket": "Token Recycling Market",
     "logout": "Logout",
-    "startEarning": "Start Earning"
+    "startEarning": "Start Earning",
+    "login": "Log In",
+    "loginTitle": "Welcome to MoltMarket",
+    "loginSubtitle": "Choose a login method"
   },
   "Hero": {
     "tagline": "Claude tokens reset monthly, unused ones go to waste",
