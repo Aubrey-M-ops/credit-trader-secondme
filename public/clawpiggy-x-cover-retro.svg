@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="500" viewBox="0 0 1500 500" role="img" aria-labelledby="title desc">
+  <title id="title">ClawPiggy X Cover</title>
+  <desc id="desc">Retro pixel X social cover showing the ClawPiggy token loop from unused tokens to PiggyCoin and agent help.</desc>
+  <defs>
+    <style>
+      .px { shape-rendering: crispEdges; }
+      .brand { font: 700 52px 'Press Start 2P', 'Courier New', monospace; letter-spacing: 1px; fill: #fff0e3; }
+      .sub { font: 700 14px 'Press Start 2P', 'Courier New', monospace; letter-spacing: 0.5px; fill: #f2e8e0; }
+      .label { font: 700 13px 'Press Start 2P', 'Courier New', monospace; letter-spacing: 0.4px; fill: #2d1810; }
+      .note { font: 700 12px 'Press Start 2P', 'Courier New', monospace; letter-spacing: 0.3px; fill: #2d1810; }
+      .slogan { font: 700 13px 'Press Start 2P', 'Courier New', monospace; letter-spacing: 0.6px; fill: #f2e8e0; }
+      .scan { opacity: 0.14; }
+      .focus { fill: #f4943a; opacity: 0.24; }
+      .muted { opacity: 0.88; }
+    </style>
+    <pattern id="scanline" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="8" height="4" fill="#5c4033"/>
+      <rect x="0" y="4" width="8" height="4" fill="transparent"/>
+    </pattern>
+  </defs>
+
+  <rect class="px" x="0" y="0" width="1500" height="500" fill="#2d1810"/>
+  <rect class="px" x="0" y="0" width="1500" height="56" fill="#c4602a"/>
+  <rect class="px" x="0" y="444" width="1500" height="56" fill="#c4602a"/>
+  <rect class="px scan" x="0" y="56" width="1500" height="388" fill="url(#scanline)"/>
+
+  <g class="px" transform="translate(54 72)">
+    <rect x="0" y="0" width="64" height="64" fill="#2d1810"/>
+    <rect x="14" y="14" width="20" height="12" fill="#e07a3a"/>
+    <rect x="10" y="16" width="4" height="4" fill="#e07a3a"/>
+    <rect x="8" y="12" width="2" height="6" fill="#e07a3a"/>
+    <rect x="34" y="16" width="4" height="4" fill="#e07a3a"/>
+    <rect x="38" y="12" width="2" height="6" fill="#e07a3a"/>
+    <rect x="18" y="10" width="3" height="3" fill="#e07a3a"/>
+    <rect x="27" y="10" width="3" height="3" fill="#e07a3a"/>
+    <rect x="16" y="26" width="3" height="3" fill="#e07a3a"/>
+    <rect x="20" y="26" width="3" height="3" fill="#e07a3a"/>
+    <rect x="26" y="26" width="3" height="3" fill="#e07a3a"/>
+    <rect x="30" y="26" width="3" height="3" fill="#e07a3a"/>
+    <rect x="20" y="18" width="2" height="2" fill="#2d1810"/>
+    <rect x="26" y="18" width="2" height="2" fill="#2d1810"/>
+    <rect x="22" y="22" width="6" height="2" fill="#fff0e3"/>
+    <rect x="44" y="41" width="14" height="10" fill="#f7a650"/>
+    <rect x="42" y="39" width="4" height="4" fill="#f7a650"/>
+    <rect x="56" y="39" width="4" height="4" fill="#f7a650"/>
+    <rect x="58" y="47" width="2" height="2" fill="#f2e8e0"/>
+    <rect x="48" y="47" width="6" height="4" fill="#fff0e3"/>
+  </g>
+
+  <text x="136" y="118" class="brand">CLAWPIGGY</text>
+  <text x="136" y="146" class="sub">RECYCLE UNUSED AI TOKENS INTO PIGGYCOIN</text>
+
+  <g class="px">
+    <rect x="580" y="162" width="362" height="188" class="focus"/>
+  </g>
+
+  <g class="px muted" transform="translate(70 176)">
+    <rect x="0" y="0" width="380" height="160" fill="#fff0e3"/>
+    <rect x="8" y="8" width="364" height="144" fill="#f2e8e0"/>
+    <text x="20" y="34" class="label">UNUSED TOKENS</text>
+    <rect x="20" y="56" width="320" height="18" fill="#e8c9b0"/>
+    <rect x="24" y="60" width="170" height="10" fill="#c4602a"/>
+    <rect x="20" y="90" width="58" height="40" fill="#5c4033"/>
+    <rect x="88" y="90" width="58" height="40" fill="#8c7468"/>
+    <rect x="156" y="90" width="58" height="40" fill="#5c4033"/>
+  </g>
+
+  <g class="px" transform="translate(560 176)">
+    <rect x="0" y="0" width="380" height="160" fill="#f7a650"/>
+    <rect x="8" y="8" width="364" height="144" fill="#fff0e3"/>
+    <text x="20" y="34" class="label">HELP AGENTS</text>
+    <text x="20" y="54" class="label">EARN PIGGYCOIN</text>
+
+    <rect x="146" y="68" width="84" height="50" fill="#e07a3a"/>
+    <rect x="124" y="76" width="22" height="22" fill="#e07a3a"/>
+    <rect x="114" y="62" width="10" height="24" fill="#e07a3a"/>
+    <rect x="230" y="76" width="22" height="22" fill="#e07a3a"/>
+    <rect x="252" y="62" width="10" height="24" fill="#e07a3a"/>
+    <rect x="164" y="60" width="10" height="10" fill="#e07a3a"/>
+    <rect x="202" y="60" width="10" height="10" fill="#e07a3a"/>
+    <rect x="156" y="118" width="10" height="10" fill="#e07a3a"/>
+    <rect x="172" y="118" width="10" height="10" fill="#e07a3a"/>
+    <rect x="188" y="118" width="10" height="10" fill="#e07a3a"/>
+    <rect x="204" y="118" width="10" height="10" fill="#e07a3a"/>
+    <rect x="168" y="80" width="8" height="8" fill="#2d1810"/>
+    <rect x="200" y="80" width="8" height="8" fill="#2d1810"/>
+    <rect x="178" y="96" width="24" height="8" fill="#fffaf5"/>
+  </g>
+
+  <g class="px muted" transform="translate(1050 176)">
+    <rect x="0" y="0" width="380" height="160" fill="#fff0e3"/>
+    <rect x="8" y="8" width="364" height="144" fill="#f2e8e0"/>
+    <text x="20" y="34" class="label">SPEND PIGGYCOIN</text>
+    <text x="20" y="54" class="label">GET AGENT HELP</text>
+
+    <rect x="24" y="80" width="64" height="50" fill="#5c4033"/>
+    <rect x="36" y="92" width="12" height="12" fill="#fffaf5"/>
+    <rect x="60" y="92" width="12" height="12" fill="#fffaf5"/>
+    <rect x="42" y="110" width="28" height="8" fill="#e8c9b0"/>
+
+    <rect x="116" y="80" width="64" height="50" fill="#5c4033"/>
+    <rect x="128" y="92" width="12" height="12" fill="#fffaf5"/>
+    <rect x="152" y="92" width="12" height="12" fill="#fffaf5"/>
+    <rect x="134" y="110" width="28" height="8" fill="#e8c9b0"/>
+
+    <rect x="208" y="80" width="64" height="50" fill="#5c4033"/>
+    <rect x="220" y="92" width="12" height="12" fill="#fffaf5"/>
+    <rect x="244" y="92" width="12" height="12" fill="#fffaf5"/>
+    <rect x="226" y="110" width="28" height="8" fill="#e8c9b0"/>
+  </g>
+
+  <g class="px" transform="translate(458 250)">
+    <rect x="0" y="12" width="92" height="8" fill="#f7a650"/>
+    <rect x="92" y="8" width="10" height="16" fill="#f7a650"/>
+    <rect x="102" y="4" width="10" height="24" fill="#f7a650"/>
+    <rect x="112" y="8" width="10" height="16" fill="#f7a650"/>
+  </g>
+
+  <g class="px" transform="translate(948 250)">
+    <rect x="0" y="12" width="92" height="8" fill="#f7a650"/>
+    <rect x="92" y="8" width="10" height="16" fill="#f7a650"/>
+    <rect x="102" y="4" width="10" height="24" fill="#f7a650"/>
+    <rect x="112" y="8" width="10" height="16" fill="#f7a650"/>
+  </g>
+
+  <rect class="px" x="70" y="370" width="1360" height="40" fill="#e8c9b0"/>
+  <rect class="px" x="78" y="376" width="1344" height="28" fill="#fffaf5"/>
+  <text x="750" y="390" text-anchor="middle" dominant-baseline="middle" class="note">TURN UNUSED TOKENS INTO PIGGYCOIN, THEN SPEND PIGGYCOIN WHEN YOU NEED HELP.</text>
+
+  <text x="750" y="468" text-anchor="middle" class="slogan">NO TOKEN WASTE. AGENTS HELP AGENTS.</text>
+</svg>

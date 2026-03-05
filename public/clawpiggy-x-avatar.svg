@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">ClawPiggy X Avatar</title>
+  <desc id="desc">Retro pixel avatar with piggy icon and token energy core.</desc>
+  <defs>
+    <style>
+      .px { shape-rendering: crispEdges; }
+      .scan { opacity: 0.12; }
+    </style>
+    <pattern id="scanline" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="16" height="8" fill="#5c4033"/>
+      <rect x="0" y="8" width="16" height="8" fill="transparent"/>
+    </pattern>
+    <clipPath id="avatarCircle">
+      <circle cx="512" cy="512" r="448"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#avatarCircle)">
+  <!-- square canvas (X will crop to circle) -->
+  <rect class="px" x="0" y="0" width="1024" height="1024" fill="#2d1810"/>
+  <rect class="px" x="0" y="0" width="1024" height="72" fill="#c4602a"/>
+  <rect class="px" x="0" y="952" width="1024" height="72" fill="#c4602a"/>
+  <rect class="px scan" x="0" y="72" width="1024" height="880" fill="url(#scanline)"/>
+
+  <!-- central safe zone ring -->
+  <rect class="px" x="176" y="176" width="672" height="672" fill="#e8c9b0" opacity="0.24"/>
+  <rect class="px" x="208" y="208" width="608" height="608" fill="#fff0e3" opacity="0.14"/>
+
+  <!-- pixel rays: abstract token flow -->
+  <g class="px" fill="#f7a650" opacity="0.95">
+    <rect x="496" y="130" width="32" height="70"/>
+    <rect x="496" y="824" width="32" height="70"/>
+    <rect x="130" y="496" width="70" height="32"/>
+    <rect x="824" y="496" width="70" height="32"/>
+
+    <rect x="252" y="252" width="52" height="24" transform="rotate(-45 278 264)"/>
+    <rect x="720" y="748" width="52" height="24" transform="rotate(-45 746 760)"/>
+    <rect x="720" y="252" width="52" height="24" transform="rotate(45 746 264)"/>
+    <rect x="252" y="748" width="52" height="24" transform="rotate(45 278 760)"/>
+  </g>
+
+  <!-- pig icon (upscaled from brand language) -->
+  <g class="px" transform="translate(40 226) scale(1.4)">
+    <rect x="172" y="128" width="248" height="144" fill="#f7a650"/>
+    <rect x="420" y="164" width="56" height="72" fill="#f7a650"/>
+    <rect x="148" y="148" width="24" height="56" fill="#f7a650"/>
+    <rect x="208" y="92" width="56" height="36" fill="#f7a650"/>
+    <rect x="328" y="92" width="56" height="36" fill="#f7a650"/>
+    <rect x="212" y="272" width="40" height="44" fill="#f7a650"/>
+    <rect x="340" y="272" width="40" height="44" fill="#f7a650"/>
+
+    <rect x="256" y="154" width="68" height="20" fill="#fff0e3"/>
+    <rect x="388" y="188" width="12" height="12" fill="#2d1810"/>
+    <rect x="238" y="184" width="12" height="12" fill="#c4602a"/>
+    <rect x="306" y="184" width="12" height="12" fill="#c4602a"/>
+
+    <!-- token spark -->
+    <rect x="446" y="264" width="64" height="44" fill="#e07a3a"/>
+    <rect x="438" y="256" width="16" height="16" fill="#e07a3a"/>
+    <rect x="510" y="256" width="16" height="16" fill="#e07a3a"/>
+    <rect x="514" y="286" width="8" height="8" fill="#f2e8e0"/>
+    <rect x="462" y="282" width="30" height="18" fill="#fff0e3"/>
+    <rect x="468" y="288" width="4" height="4" fill="#c4602a"/>
+    <rect x="482" y="288" width="4" height="4" fill="#c4602a"/>
+  </g>
+  </g>
+
+  <!-- visible circular frame -->
+  <circle cx="512" cy="512" r="452" fill="none" stroke="#f7a650" stroke-width="24"/>
+  <circle cx="512" cy="512" r="432" fill="none" stroke="#e8c9b0" stroke-width="8" opacity="0.9"/>
+</svg>
